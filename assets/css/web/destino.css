@@ -1,0 +1,129 @@
+
+.prodMenu{
+    margin-top: 15px;
+}
+.maxMenu{
+    height: 50px;
+    cursor: pointer;
+    text-align: center;
+    padding: 15px 0 0 20px;
+    background-color: #57af00;
+    border-top-right-radius: 10px 10px;
+    border-bottom-left-radius: 10px 10px;
+}
+
+.maxMenuSel{
+    cursor: default;
+    background-color: #000;
+}
+
+.minMenu p{
+    color: gray;
+    font-size: 13px;
+    padding: 10px 0 10px 15px;
+    margin-bottom: 0;
+}
+.minMenu p:hover {
+    cursor: pointer;
+    background-color: #ebebeb;
+}
+
+.publish{
+    margin-top: 15px;
+}
+
+.cintillo{
+	display: block;
+    margin: 0 auto;
+}
+
+.publicidad{
+    padding-right: 30px;
+    margin-bottom: 15px;
+}
+.nopadding{
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+/* -----------------  Contenido  ----------------- */
+.title p{
+    color: gray;
+    font-size: 35px;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 0;
+}
+
+.spaceBar{
+    margin-top: 20px;
+}
+.masterContainer{
+    min-height: 420px;
+    border-right: groove 3px;
+}
+.content{
+    min-height: 400px;
+}
+
+.thumb{
+    cursor: pointer;
+    margin: 0 0 10px 0;
+	opacity: 1;
+	filter: alpha(opacity=100);
+ 	-webkit-transition: opacity .25s linear;
+}
+.thumb:hover {
+	opacity: .5;
+	filter: alpha(opacity=50);
+ 	-webkit-transition: opacity .25s linear;
+}
+#panel1 .conoce{
+    color: gray;
+    font-size: 50px;
+    text-align: center;
+    margin: 20px 0;
+    
+}
+#panel1 .detail{
+    color: gray;
+    font-size: 16px;
+    margin: 20px;
+}
+.socialDestino{
+    width: 50%;
+    margin: 25px auto 0 auto;
+}
+.socialDestino img{
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+#gMap{
+    height: 100%;
+    min-height: 430px;
+    margin-left: 0;
+    margin-right: 0;
+}
+.tabs .tab-title.active a{
+    color: #fff;
+    background-color: #366904;
+}
+.tabs .tab-title > a{
+    color: #fff;
+    background-color: #000;
+    margin-right: 1px; 
+}
+.tabs .tab-title > a:hover{
+    color: #fff;
+    background-color: #366904;
+}
+.rowTmp{
+    margin-top: 20px;
+}    
+    
+    
+    
+    
+    
+    

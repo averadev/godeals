@@ -1,0 +1,125 @@
+body{
+    background: #0071a9;
+    margin: 0px;
+    background: -webkit-radial-gradient(#FFFFFF,#0071a9); /* Safari 5.1 to 6.0 */
+    background: -o-radial-gradient(#FFFFFF,#0071a9); /* For Opera 11.6 to 12.0 */
+    background: -moz-radial-gradient(#FFFFFF,#0071a9); /* For Firefox 3.6 to 15 */
+    background: radial-gradient( #FFFFFF,#0071a9); /* Standard syntax */
+}
+.contenido{
+    margin-left: auto ;
+    margin-right: auto ;
+    width: 900px;
+    min-height: 700px;
+    background: url('../../img/prox/bg.png') no-repeat top center;
+
+}
+.footer{
+    left: 0px;
+    bottom: 0px;
+    height: 150px;
+    width: 100%;
+    background: url('../../img/prox/bgHeader.png');
+    text-align: center;
+    padding-top: 25px;
+}
+
+.boton-footer{
+    margin-right: 80px;
+}
+
+#footer-legend{
+    margin-top: 30px;
+    color: #FFFFFF;
+    font-family: 'Chivo';
+    font-size: 16px;
+    font-style: italic;
+    line-height: 41px;
+}
+.text{
+    color: #fff;
+    font-family: 'Chivo';
+    width:250px;
+    position: relative;
+}
+.header{
+    background: url('../../img/prox/bgHeader.png');
+    height: 120px;
+    width: 100%;
+}
+
+.registro{
+    top: 210px;
+    left: 515px;
+    width: 374px;
+    height: 262px;
+    background: url('../../img/prox/bg-registro.png') no-repeat;
+    padding: 10px 0 0 60px;
+    border-bottom: 13px solid #65B614;
+    -webkit-box-shadow: 0 20px 20px -2px #222;
+    -moz-box-shadow: 0 20px 20px -2px #222;
+    box-shadow: 0 20px 20px -2px #222;
+}
+input{
+    margin: 5px 0;
+    width: 260px;
+    height: 42px;
+    border: 0px;
+    border-radius: 6px;
+    padding-left: 60px;
+    font-family: 'Chivo';
+}
+#logo-header{
+    background: url("../../img/prox/logo.png") no-repeat 0 25px;
+    padding-top: 25px;
+    width: 221px;
+    height: 95px;
+}
+#email{
+    background: #fff url("../../img/prox/imgUser.png") no-repeat 0 0;
+}
+#contrasenia, #contraseniaRe{
+    background: #fff url("../../img/prox/imgPass.png") no-repeat 0 0;
+}
+#btnEnviar{
+    cursor: pointer;
+    margin: 10px 0 0 105px;
+    width: 119px;
+    height: 35px;
+    border: 1px solid #65B614;
+    border-radius: 6px;
+    line-height: 35px;
+    text-align: center;
+    font-style: italic;
+}
+
+#footer-buttonsMenu{
+    width: 990px;
+
+}
+
+.footer-buttons-tit{
+    color: #FFFFFF;
+    font-family: 'Chivo';
+    font-size: 12px;
+    font-style: italic;
+    display: inline;
+
+}
+
+#footer-buttons-tit-1{
+    margin-left: 0px;
+
+}
+
+#footer-buttons-tit-2{
+    margin-left: 80px;
+}
+
+#footer-buttons-tit-3{
+    margin-left: 50px;
+}
+
+#footer-buttons-tit-4{
+    margin-left: 60px;
+}

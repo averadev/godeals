@@ -1,0 +1,57 @@
+
+.prodMenu{
+    margin-top: 15px;
+}
+.maxMenu{
+    height: 50px;
+    cursor: pointer;
+    text-align: center;
+    padding: 15px 0 0 20px;
+    background-color: #57af00;
+    border-top-right-radius: 10px 10px;
+    border-bottom-left-radius: 10px 10px;
+}
+
+.maxMenuSel{
+    cursor: default;
+    background-color: #000;
+}
+
+.minMenu p{
+    color: gray;
+    font-size: 13px;
+    padding: 10px 0 10px 15px;
+    margin-bottom: 0;
+}
+.minMenu p:hover {
+    cursor: pointer;
+    background-color: #ebebeb;
+}
+.minMenuSel {
+    border-top-right-radius: 10px 10px;
+    border-bottom-left-radius: 10px 10px;
+    background-color: #ebebeb !important;
+}
+
+.publish{
+    margin-top: 15px;
+}
+
+.cintillo{
+	display: block;
+    margin: 0 auto;
+}
+
+.noCoupons{
+    margin-right: 5px;
+    float: right;
+    display: block;
+    height: 20px;
+    width: 20px;
+    line-height: 20px;
+    -moz-border-radius: 10px; /* or 50% */
+    border-radius: 10px; /* or 50% */
+    background-color: black;
+    color: white;
+    text-align: center;
+}
