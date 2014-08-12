@@ -1,0 +1,39 @@
+.respuesta {color:grey;}
+.pregunta {color:black;}
+.maxMenu{
+    height: 40px;
+    cursor: pointer;
+    text-align: center;
+    padding: 8px 0 0 0px;
+    background-color: #57af00;
+    border-top-right-radius: 10px 10px ;
+    border-bottom-left-radius: 10px 10px;
+    border-top-left-radius:  10px 10px ;
+    border-bottom-right-radius:  10px 10px;
+}
+.maxMenuSel{
+    cursor: default;
+    background-color: #57AF00;
+}
+.temaMenu{
+    height: 40px;
+    cursor: pointer;
+    text-align: center;
+    padding: 8px 0 0 0px;
+    background-color: #ffffff;
+    border-top-right-radius: 10px 10px ;
+    border-bottom-left-radius: 10px 10px;
+    border-top-left-radius:  10px 10px ;
+    border-bottom-right-radius:  10px 10px;
+}
+.temaMenuSel{
+    cursor: default;
+    background-color: #ffffff;
+}
+a{
+  color:black;  
+}
+h1{
+    color: gray;
+    font-family: 'Chivo', sans-serif;
+}
