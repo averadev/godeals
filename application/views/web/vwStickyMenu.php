@@ -19,7 +19,7 @@
                         <div class="optHead">¿A DONDE IR?</div>
                     </div>
                     <div class="medium-2 columns optMenu">
-                        <a href="<?php echo base_url(); ?>sporttv"><img class="optImg" src="<?php echo base_url().IMG; ?>web/btnMinMenu2.png" /></a>
+                        <a href="<?php echo base_url(); ?>sporttv"><img class="optImg" src="<?php echo base_url().IMG; ?>web/btnMinMenu5.png" /></a>
                         <div class="optHead">SPORT TV</div>
                     </div>
                     <div class="medium-1 columns">&nbsp;</div>

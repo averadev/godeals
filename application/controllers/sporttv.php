@@ -16,44 +16,29 @@ class Sporttv extends CI_Controller {
         parent::__construct();
         $this->load->helper('url');
         $this->load->database('default');
-        $this->load->model('event_db');
-    }
-    
-    /**
-     * Obtiene las categorias
-     */
-    public function getEventCategories(){
-        if($this->input->is_ajax_request()){
-            $data = $this->event_db->getEventCategories($_POST['id']);
-            echo json_encode($data);
-        }
+        $this->load->model('sporttv_db');
     }
 
     /**
      * Despliega la pantalla de eventos
      */
     public function index(){
-        // Get data from database
-        $data['fav'] = $this->event_db->getFav();
-        $data['available'] = $this->event_db->getAvailable();
-        // Meses
-        $data['month'] = array('', 'ENERO','FEBRERO','MARZO','ABRIL','MAYO','JUNIO','JULIO','AGOSTO','SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE');
-        $data['natMonth'] = array('', 'Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre');
-        $data['minMonth'] = array('', 'ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SEP','OCT','NOV','DIC');
-        // Get Months
-        $curMonth = -1;
-        $lastMonth = -1;
-        $months = array();
-        foreach ($data['available'] as $item):
-            $curMonth = date('n', strtotime($item->date));
-            if ($curMonth != $lastMonth){ 
-                    array_push($months, $data['minMonth'][$curMonth]);
+        // Get available dates
+        $data['dates'] = $this->sporttv_db->getDates();
+        // Get available events by date
+        foreach ($data['dates'] as $item):
+            $item->events = $this->sporttv_db->getEventDate($item->date);
+             // Get available bars by event
+            for ($i = 0; $i < count($item->events); $i++) {
+                $item->events[$i]->bars = $this->sporttv_db->getEventBar($item->events[$i]->id);
             }
-            $lastMonth = $curMonth;
         endforeach;
-        $data['months'] = $months;
+       
+        // Meses
+        $data['minMonth'] = array('', 'ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SEP','OCT','NOV','DIC');
+        
         // Get View
-        $this->load->view('web/vwEventos', $data);
+        $this->load->view('web/vwSporttv', $data);
     }
     
 

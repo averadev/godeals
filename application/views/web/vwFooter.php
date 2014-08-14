@@ -26,7 +26,7 @@
                 <p>
                     <a class="footMainMenu">Navega</a><br/>
                     <a class="footSubMenu">Aplicación móvil</a><br/>
-                    <a class="footSubMenu">Ayuda</a><br/>
+                    <a class="footSubMenu" href="<?php echo base_url(); ?>faq">Ayuda</a><br/>
                     <a class="footSubMenu">Contacto</a><br/>
                 </p>
             </div>

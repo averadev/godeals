@@ -98,27 +98,30 @@
         <!-- Menu Buttons -->
         <div class="mainMenu">
             <div class="row">
-                <div class="large-12 columns">
-                    <div class="large-3 small-3 columns optMenu">
-                        <a href="<?php echo base_url(); ?>eventos"><img class="optImg" src="<?php echo base_url().IMG; ?>web/btnMenu1.png" /></a>
-                        <div class="optHead">EVENTOS</div>
-                        <div class="optDesc">Toda la información de los eventos en tu ciudad y descuentos especiales.</div>
-                    </div>
-                    <div class="large-3 small-3 columns optMenu">
-                        <a href="<?php echo base_url(); ?>entretenimiento"><img class="optImg" src="<?php echo base_url().IMG; ?>web/btnMenu2.png" /></a>
-                        <div class="optHead">ENTRETENIMIENTO</div>
-                        <div class="optDesc">Bares, antros, restaurantes y mas con increibles promociones.</div>
-                    </div>
-                    <div class="large-3 small-3 columns optMenu">
-                        <a href="<?php echo base_url(); ?>productos"><img class="optImg optProductos" src="<?php echo base_url().IMG; ?>web/btnMenu3.png" /></a>
-                        <div class="optHead">PRODUCTOS Y SERVICIOS</div>
-                        <div class="optDesc">Date un gusto a ti y a tu economia.</div>
-                    </div>
-                    <div class="large-3 small-3 columns optMenu">
-                        <a href="<?php echo base_url(); ?>adondeir"><img class="optImg" src="<?php echo base_url().IMG; ?>web/btnMenu4.png" /></a>
-                        <div class="optHead">¿A DONDE IR?</div>
-                        <div class="optDesc">Los lugares para conocer en destinos cercanos. ¡Viaja con Go Deals como guía!.</div>
-                    </div>
+                <div class="homeMenu optMenu">
+                    <a href="<?php echo base_url(); ?>eventos"><img class="optImg" src="<?php echo base_url().IMG; ?>web/btnMenu1.png" /></a>
+                    <div class="optHead">EVENTOS</div>
+                    <div class="optDesc">Toda la información de los eventos en tu ciudad y descuentos especiales.</div>
+                </div>
+                <div class="homeMenu optMenu">
+                    <a href="<?php echo base_url(); ?>entretenimiento"><img class="optImg" src="<?php echo base_url().IMG; ?>web/btnMenu2.png" /></a>
+                    <div class="optHead">ENTRETENIMIENTO</div>
+                    <div class="optDesc">Bares, antros, restaurantes y mas con increibles promociones.</div>
+                </div>
+                <div class="homeMenu optMenu">
+                    <a href="<?php echo base_url(); ?>productos"><img class="optImg optProductos" src="<?php echo base_url().IMG; ?>web/btnMenu3.png" /></a>
+                    <div class="optHead">PRODUCTOS Y SERVICIOS</div>
+                    <div class="optDesc">Date un gusto a ti y a tu economia.</div>
+                </div>
+                <div class="homeMenu optMenu">
+                    <a href="<?php echo base_url(); ?>adondeir"><img class="optImg" src="<?php echo base_url().IMG; ?>web/btnMenu4.png" /></a>
+                    <div class="optHead">¿A DONDE IR?</div>
+                    <div class="optDesc">Los lugares para conocer en destinos cercanos. ¡Viaja con Go Deals como guía!.</div>
+                </div>
+                <div class="homeMenu optMenu">
+                    <a href="<?php echo base_url(); ?>sporttv"><img class="optImg" src="<?php echo base_url().IMG; ?>web/btnMenu5.png" /></a>
+                    <div class="optHead">SPORT TV</div>
+                    <div class="optDesc">Disfruta tus eventos deportivos con las mejores promociones.</div>
                 </div>
             </div>
         </div>

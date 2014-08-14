@@ -5,8 +5,6 @@
         <title>Go Deals</title>
         <link href='http://fonts.googleapis.com/css?family=Chivo' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="<?php echo base_url() . FOUND; ?>css/foundation.css" />
-        <link rel="stylesheet" href="<?php echo base_url() . SHAPE; ?>css/component.css" />
-        <link rel="stylesheet" href="<?php echo base_url() . CAPTION; ?>css/component.css" />
         <script type="text/javascript" src="<?php echo base_url() . FOUND; ?>js/vendor/modernizr.js"></script>
         <link rel="stylesheet" href="<?php echo base_url() . CSS; ?>web/home.css" />
         <link rel="stylesheet" href="<?php echo base_url() . CSS; ?>web/faq.css" />
@@ -14,29 +12,9 @@
     <body>
 
         <!-- Modal Cupones -->
-        <div id="couponModal" class="reveal-modal" data-reveal>
-            <div id="topbarEvent">
-                <img id="eventFb" src="<?php echo base_url() . IMG; ?>web/eventFb.png">
-                <img id="eventTw" src="<?php echo base_url() . IMG; ?>web/eventTw.png">
-                <img id="eventClose" src="<?php echo base_url() . IMG; ?>web/eventClose.png">
-            </div>
-            <div class="large-10 medium-9 columns nospc">
-                <center><img id="imgFull" src="<?php echo base_url() . IMG; ?>app/coupon/max/00.png"></center>
-            </div>
-            <div class="large-2 medium-3 columns nospc" id="modalContent">
-            </div>
-        </div>
 
         <?php $this->load->view('web/vwStickyMenu'); ?>
 
-
-        <div id="slideout">
-            <div id="slideout_inner">
-                <a><img src="<?php echo base_url() . IMG; ?>web/btnApp1.png" /></a><br/>
-                <a><img src="<?php echo base_url() . IMG; ?>web/btnApp2.png" /></a>
-            </div>
-            <img id="showApps" src="<?php echo base_url() . IMG; ?>web/btnApps.png" alt="Feedback" />
-        </div>
 
         <?php $this->load->view('web/vwHeader'); ?>
 
@@ -48,7 +26,7 @@
             </div>
             <hr>
         </div>
-        <br/><br/><br/><br/>
+        <br/><br/>
 
 
         <div class="preguntas">
@@ -157,9 +135,6 @@
         <script type="text/javascript" src="<?php echo base_url() . FOUND; ?>js/foundation.min.js"></script>
         <script type="text/javascript" src="<?php echo base_url() . FOUND; ?>js/foundation/foundation.tab.js"></script>
         <script type="text/javascript" src="<?php echo base_url() . FOUND; ?>js/foundation/foundation.accordion.js"></script>
-        <script type="text/javascript" src="<?php echo base_url() . SHAPE; ?>js/snap.svg-min.js"></script>
-        <script type="text/javascript" src="<?php echo base_url() . SHAPE; ?>js/hovers.js"></script>
-        <script type="text/javascript" src="<?php echo base_url() . CAPTION; ?>js/toucheffects.js"></script>
         <script type="text/javascript" src="<?php echo base_url(); ?>assets/api/hachiko/hachiko.min.js"></script>
         <script type="text/javascript" src="<?php echo base_url() . JS; ?>web/faq.js"></script>
     </body>

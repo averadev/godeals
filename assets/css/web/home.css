@@ -277,6 +277,15 @@ body {
     margin-bottom: 30px;
 }
 
+.homeMenu{
+    width: 195px;
+    display: inline-block;
+    vertical-align: top;
+}
+.homeMenu img{
+    margin-bottom: 10px;
+}
+
 /* -----------------  Seccion de los cupones  ----------------- */
 .mainCoupon{
 }

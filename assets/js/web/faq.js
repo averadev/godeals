@@ -1,6 +1,9 @@
 $(function() {
 
     $(document).foundation();
+    
+    // Stik menu
+    $('.mainMenu').hachiko();
 
 });
 

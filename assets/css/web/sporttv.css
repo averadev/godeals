@@ -1,0 +1,87 @@
+
+.prodMenu{
+    margin-top: 15px;
+}
+.maxMenu{
+    height: 50px;
+    cursor: pointer;
+    text-align: center;
+    padding: 15px 0 0 20px;
+    background-color: #57af00;
+    border-top-right-radius: 10px 10px;
+    border-bottom-left-radius: 10px 10px;
+}
+
+.maxMenuSel{
+    cursor: default;
+    background-color: #000;
+}
+
+.minMenu p{
+    color: gray;
+    font-size: 13px;
+    padding: 10px 0 10px 15px;
+    margin-bottom: 0;
+}
+.minMenu p:hover {
+    cursor: pointer;
+    background-color: #ebebeb;
+}
+
+.publish{
+    margin-top: 15px;
+}
+
+.cintillo{
+	display: block;
+    margin: 0 auto;
+}
+
+.titleMonth p{
+    color: gray;
+    font-size: 50px;
+    text-align: center;
+}
+.dateRow{
+    margin-top: 40px !important;
+}
+
+.rowBar{
+    height: 20px;
+    width: 100%;
+}
+.lblEvent{
+    height: 55px;
+    padding-left: 70px;
+    color: #525252;
+    font-size: 22px;
+}
+.lblEventTitle{
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.eventLine{
+    padding-right: 0;
+    border-right: gray 4px solid;
+}
+.eventLine p{
+    position: absolute;
+    top: 40%;
+    right: 10px;
+    color: gray;
+    font-size: 20px;
+    line-height: 1;
+    margin-right: 10px;
+}
+.eventLine p span{
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.bars{
+    margin: 10px 0;
+}
+.eventos{
+    color: #000;
+}

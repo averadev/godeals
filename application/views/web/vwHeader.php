@@ -5,8 +5,8 @@
             <div class="large-10 small-10 columns">
                 <div class="row collapse topMenu">
                     <a>Aplicación Móvil</a>
-                    <a>Preguntas frecuentes</a>
-                    <a class="green">Contacto</a>
+                    <a href="<?php echo base_url(); ?>faq">Preguntas frecuentes</a>
+                    <a href="<?php echo base_url(); ?>contact" class="green">Contacto</a>
                     <a><img src="<?php echo base_url().IMG; ?>web/btnUsa.png"></a>
                 </div>                
             </div>
