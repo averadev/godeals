@@ -104,6 +104,106 @@ Class coupon_db extends CI_MODEL
         return  $this->db->get()->result();
     }
 
+	public function getAllActive(){
+        
+        //id,descripcion,cliente,ciudad,fechainicio,fechafin
+        
+        $this->db->select ('coupon.id, coupon.description, coupon.cityId, coupon.partnerId, coupon.iniDate, coupon.endDate');
+        $this->db->select ('partner.name as partnerName, city.name as cityName');
+        $this->db->from('coupon');
+        $this->db->join('partner', 'coupon.partnerId = partner.id ');
+        $this->db->join('city', 'coupon.cityId = city.id ');
+        $this->db->where('coupon.status = 1');
+		$this->db->order_by("id", "asc");
+        return  $this->db->get()->result();
+    }
+	
+	/**
+	* obtiene la descripcion, clientes y ubicacion de la busqueda relacionada
+	**/
+	
+	public function getallSearch($dato,$column,$order){
+		$this->db->select ('coupon.id, coupon.description, coupon.cityId, coupon.partnerId, coupon.iniDate, coupon.endDate');
+		 $this->db->select ('partner.name as partnerName, city.name as cityName');
+        $this->db->from('coupon');
+		$this->db->join('partner', 'coupon.partnerId = partner.id ');
+        $this->db->join('city', 'coupon.cityId = city.id ');
+		$this->db->where('coupon.status = 1');
+		/*$this->db->like('coupon.description', $dato);
+		$this->db->or_like('partner.name', $dato);
+		$this->db->or_like('city.name', $dato);*/
+		$this->db->where('(coupon.description LIKE \'%'.$dato.'%\' OR partner.name LIKE \'%'.$dato.'%\' 
+		OR city.name LIKE \'%' . $dato . '%\')', NULL); 
+		$this->db->order_by($column , $order);
+        return  $this->db->get()->result();
+	}
+	
+	public function getId($id){
+        $this->db->select ('coupon.timer, coupon.image, coupon.description, coupon.detail, coupon.iniDate, coupon.endDate');
+        $this->db->select ('coupon.partnerId, coupon.cityId, partner.name as partnerName, city.name as cityName');
+        $this->db->from('coupon');
+        $this->db->join('partner', 'coupon.partnerId = partner.id ');
+        $this->db->join('city', 'coupon.cityId = city.id ');
+        $this->db->where('coupon.id = ', $id);
+        $this->db->where('coupon.status = 1');
+        return  $this->db->get()->result();
+    }
+	
+	public function updateCoupon($id,$partnerId,$cityId,$timer,$image,$description,$detail,$iniDate,$endDate,$idCatalog){
+        $data = array(
+				'partnerId' => $partnerId,
+			   'cityId' => $cityId,
+			   'timer' => $timer,
+			   'image' => $image,
+               'description' => $description,
+               'detail' => $detail,
+               'iniDate' => $iniDate,
+			   'endDate' => $endDate
+            );
+		$this->db->where('id', $id);
+		$this->db->update('coupon', $data);
+		$this->db->delete('xref_coupon_catalog', array('couponId' => $id));
+		$data2;
+		foreach($idCatalog as $idC){
+			$data2 = array(
+				'couponId' => $id,
+				'catalogId'=> $idC
+			);
+			$this->db->insert('xref_coupon_catalog', $data2);	
+		}
+    }
+	
+	public function deleteCoupon($id){
+        $data = array(
+				'status' => 0
+            );
+		$this->db->where('id', $id);
+		$this->db->update('coupon', $data);
+    }
+
+	public function insertCoupon($partnerId,$cityId,$timer,$image,$description,$detail,$iniDate,$endDate,$idCatalog){
+		$data = array(
+   			'partnerId' => $partnerId,
+   			'cityId' => $cityId ,
+   			'timer' => $timer,
+			'image' => $image,
+			'description' => $description,
+			'detail' => $detail,
+			'iniDate' => $iniDate,
+			'endDate' => $endDate,
+			'status' => 1
+		);
+		$this->db->insert('coupon', $data);	
+		$id = $this->db->insert_id();
+		$data2;
+		foreach($idCatalog as $idC){
+			$data2 = array(
+				'couponId' => $id,
+				'catalogId'=> $idC
+			);
+			$this->db->insert('xref_coupon_catalog', $data2);	
+		}
+	}
 
 }
 //end model
