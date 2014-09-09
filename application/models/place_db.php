@@ -55,6 +55,39 @@ Class place_db extends CI_MODEL
     /**
      * Obtiene todos los registros activos del catalogo
      */
+    public function getBars($id){
+        $this->db->select('nombre, info, address, phone');
+        $this->db->from('place_bar');
+        $this->db->where('status = 1');
+        $this->db->where('placeId', $id);
+        return  $this->db->get()->result();
+    }
+    
+    /**
+     * Obtiene todos los registros activos del catalogo
+     */
+    public function getHotels($id){
+        $this->db->select('nombre, info, address, phone');
+        $this->db->from('place_hotel');
+        $this->db->where('status = 1');
+        $this->db->where('placeId', $id);
+        return  $this->db->get()->result();
+    }
+    
+    /**
+     * Obtiene todos los registros activos del catalogo
+     */
+    public function getRestaurants($id){
+        $this->db->select('nombre, info, address, phone');
+        $this->db->from('place_restaurant');
+        $this->db->where('status = 1');
+        $this->db->where('placeId', $id);
+        return  $this->db->get()->result();
+    }
+    
+    /**
+     * Obtiene todos los registros activos del catalogo
+     */
     public function getPhotos($id){
         $this->db->select('image');
         $this->db->from('place_photo');
@@ -85,6 +118,8 @@ Class place_db extends CI_MODEL
         $this->db->where('type', $type);
         return  $this->db->get()->result();
     }
+    
+    
 
 
 }

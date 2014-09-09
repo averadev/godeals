@@ -44,6 +44,8 @@ Class event_db extends CI_MODEL
         $this->db->order_by("event.date", "asc");
         return  $this->db->get()->result();
     }
+    
+    
 
 
 }
