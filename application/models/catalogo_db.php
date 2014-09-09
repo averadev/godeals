@@ -33,6 +33,21 @@ Class catalogo_db extends CI_MODEL
         return  $this->db->get()->result();
     }
     
-    
+    public function getCatalogOfCoupon($couponId){
+		
+		$this->db->select('xref_coupon_catalog.catalogId');
+        $this->db->from('xref_coupon_catalog');
+		$this->db->where('xref_coupon_catalog.couponId',$couponId);
+        return  $this->db->get()->result();
+			
+	}
+	
+	public function getCatalog($type){
+		$this->db->select('catalog.id, catalog.name');
+		$this->db->from('catalog');
+		$this->db->where('catalog.type',$type);
+		$this->db->where('catalog.status = 1');
+		return $this->db->get()->result();
+	}
 }
 //end model
