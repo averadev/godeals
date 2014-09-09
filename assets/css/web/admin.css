@@ -1,0 +1,78 @@
+@charset "utf-8";
+/* CSS Document */
+
+input:-webkit-autofill { -webkit-box-shadow: 0 0 0px 1000px white inset; }
+
+
+/*---------------Paginador */
+
+.btnSearch{
+	background-color:#e6e6e6;
+	padding: 6px 12px;
+	borde: 1px solid #ccc;
+	text-align:center;
+	line-height: 1;
+	font-size:14px;
+	color:#000;
+	border-top-right-radius: 5px 5px;
+        border-bottom-right-radius: 5px 5px;
+	height:37px;
+}
+
+.txtSearch{
+    font-size: 16px;
+    border-top-left-radius: 5px 5px;
+    border-bottom-left-radius: 5px 5px;
+    padding-left: 15px;
+}
+
+.btnAdd{
+	padding: 4px 15px;
+	border: 1px solid #ccc;
+	text-align:center;
+	line-height: 1;
+	font-size:14px;
+	border-radius:5px 5px;
+	height:30px;
+	float:right;
+}
+
+.arrowUp{
+	position:relative;
+	top:-5px;
+	left:15px;
+}
+
+.arrowDown{
+	position:relative;
+	top:5px;
+}
+
+table tr td{
+	font-family:Georgia, "Times New Roman", Times, serif;
+}
+
+.imgDelete{
+	width:25px;
+	height:25px;
+}
+
+.btnAceptarE,#btnCancelarE{//botones de eliminacion
+	background:#F93;
+	border: 1px solid #F00;
+	padding: 4px 10px;
+	margin:-5px 10px;
+	text-align:center;
+	line-height: 1;
+	font-size:12px;
+	border-radius:5px 5px;
+	height:25px;
+	float:right;
+}
+
+
+/*--------------------- Formulario*/
+
+.field{
+    font-weight: bold;
+}
