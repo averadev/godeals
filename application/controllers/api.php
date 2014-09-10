@@ -20,6 +20,7 @@ class Api extends REST_Controller {
         $this->load->model('user_db');
         $this->load->model('api_db');
         $this->load->model('place_db');
+        $this->load->model('sporttv_db');
     }
 
 	public function index_get()
@@ -164,6 +165,7 @@ class Api extends REST_Controller {
                     $item->type = 6;
                     $item->path = 'sporttv/app/';
                     $item->subtitle2 = date('d', strtotime($item->date)) . ' de ' . $months[date('n', strtotime($item->date))] . ' - ' . $item->time;
+                    $item->bars = $this->sporttv_db->getEventBar($item->id);
                     unset($item->date);
                     unset($item->time);
                 endforeach;
@@ -266,6 +268,7 @@ class Api extends REST_Controller {
                     $item->type = 6;
                     $item->path = 'sporttv/app/';
                     $item->subtitle2 = date('d', strtotime($item->date)) . ' de ' . $months[date('n', strtotime($item->date))] . ' - ' . $item->time;
+                    $item->bars = $this->sporttv_db->getEventBar($item->id);
                     unset($item->date);
                     unset($item->time);
                 endforeach;

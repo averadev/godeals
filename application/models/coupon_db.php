@@ -139,7 +139,7 @@ Class coupon_db extends CI_MODEL
 	}
 	
 	public function getId($id){
-        $this->db->select ('coupon.timer, coupon.image, coupon.description, coupon.detail, coupon.iniDate, coupon.endDate');
+        $this->db->select ('coupon.timer, coupon.image, coupon.description, coupon.clauses, coupon.iniDate, coupon.endDate');
         $this->db->select ('coupon.partnerId, coupon.cityId, partner.name as partnerName, city.name as cityName');
         $this->db->from('coupon');
         $this->db->join('partner', 'coupon.partnerId = partner.id ');
@@ -149,14 +149,14 @@ Class coupon_db extends CI_MODEL
         return  $this->db->get()->result();
     }
 	
-	public function updateCoupon($id,$partnerId,$cityId,$timer,$image,$description,$detail,$iniDate,$endDate,$idCatalog){
+	public function updateCoupon($id,$partnerId,$cityId,$timer,$image,$description,$clauses,$iniDate,$endDate,$idCatalog){
         $data = array(
 				'partnerId' => $partnerId,
 			   'cityId' => $cityId,
 			   'timer' => $timer,
 			   'image' => $image,
                'description' => $description,
-               'detail' => $detail,
+               'clauses' => $clauses,
                'iniDate' => $iniDate,
 			   'endDate' => $endDate
             );
@@ -181,14 +181,14 @@ Class coupon_db extends CI_MODEL
 		$this->db->update('coupon', $data);
     }
 
-	public function insertCoupon($partnerId,$cityId,$timer,$image,$description,$detail,$iniDate,$endDate,$idCatalog){
+	public function insertCoupon($partnerId,$cityId,$timer,$image,$description,$clauses,$iniDate,$endDate,$idCatalog){
 		$data = array(
    			'partnerId' => $partnerId,
    			'cityId' => $cityId ,
    			'timer' => $timer,
 			'image' => $image,
 			'description' => $description,
-			'detail' => $detail,
+			'clauses' => $clauses,
 			'iniDate' => $iniDate,
 			'endDate' => $endDate,
 			'status' => 1

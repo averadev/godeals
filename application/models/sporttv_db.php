@@ -38,12 +38,11 @@ Class sporttv_db extends CI_MODEL
      * Obtiene el registro del catalogo
      */
     public function getEventBar($id){
-        $this->db->select ('sporttv_bar.image');
-        $this->db->from('sporttv');
-        $this->db->join('sporttv_bar', 'sporttv.id = sporttv_bar.sporttvId');
-        $this->db->where('sporttv.id', $id);
+        $this->db->select ('partner.name, partner.address, sporttv_bar.image');
+        $this->db->from('sporttv_bar');
+        $this->db->join('partner', 'sporttv_bar.partnerId = partner.id');
+        $this->db->where('sporttv_bar.sporttvId', $id);
         $this->db->where('sporttv_bar.status = 1');
-        $this->db->order_by("sporttv.date");
         return  $this->db->get()->result();
     }
 
