@@ -19,6 +19,19 @@ input:-webkit-autofill { -webkit-box-shadow: 0 0 0px 1000px white inset; }
 	height:37px;
 }
 
+.btnSearch:hover{
+	background-color:#CCCCCC;
+	padding: 6px 12px;
+	border: 1px solid #ccc;
+	text-align:center;
+	line-height: 1;
+	font-size:14px;
+	color:#000;
+	border-top-right-radius: 5px 5px;
+        border-bottom-right-radius: 5px 5px;
+	height:37px;
+}
+
 .txtSearch{
     font-size: 16px;
     border-top-left-radius: 5px 5px;
@@ -57,9 +70,10 @@ table tr td{
 	height:25px;
 }
 
-.btnAceptarE,#btnCancelarE{//botones de eliminacion
-	background:#F93;
-	border: 1px solid #F00;
+.btnAceptarE,#btnCancelarE,.btnCancelE,.btnAcceptE,#btnCancelC,#btnAcceptC{//botones de eliminacion
+	background-color:#000000;
+	background:#000;
+	border: 1px solid #900;
 	padding: 4px 10px;
 	margin:-5px 10px;
 	text-align:center;

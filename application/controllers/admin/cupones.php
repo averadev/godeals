@@ -78,27 +78,63 @@ class Cupones extends CI_Controller {
         }
 	}
 	
-	public function updateCoupon(){
+	public function saveCoupon(){
 		if($this->input->is_ajax_request()){
-            $data = $this->coupon_db->updateCoupon($_POST['id'],$_POST['partnerId'],$_POST['cityId'],$_POST['timer'],$_POST['image'],
-			$_POST['description'],$_POST['detail'],$_POST['iniDate'],$_POST['endDate'],json_decode(stripslashes($_POST['idCatalog'])));
+			
+			if($_POST['id'] == 0){
+				
+				$insert = array(
+				'partnerId' => $_POST['partnerId'],
+				'cityId' => $_POST['cityId'],
+				'timer' => $_POST['timer'],
+				'image' => $_POST['image'],
+				'description' => $_POST['description'],
+				'detail' => $_POST['detail'],
+				'iniDate' => $_POST['iniDate'],
+				'endDate' => $_POST['endDate'],
+				'status' => 1);
+				
+				$data = $this->coupon_db->insertCoupon($insert,json_decode(stripslashes($_POST['idCatalog'])));
+			} else {
+				
+				$update = array(
+				'id' => $_POST['id'],
+				'partnerId' => $_POST['partnerId'],
+				'cityId' => $_POST['cityId'],
+				'timer' => $_POST['timer'],
+				'image' => $_POST['image'],
+				'description' => $_POST['description'],
+				'detail' => $_POST['detail'],
+				'iniDate' => $_POST['iniDate'],
+				'endDate' => $_POST['endDate']);
+				
+				$delete = array('couponId' => $_POST['id']);
+				
+				$catalog = array();
+				$idCatalog = json_decode(stripslashes($_POST['idCatalog']));
+				foreach($idCatalog as $idC){
+					array_push($catalog, array(
+						'couponId' => $_POST['id'],
+						'catalogId'=> $idC));
+				}
+				
+				$data = $this->coupon_db->updateCoupon($update,$delete,$catalog);
+			}
             echo json_encode($data);
         }
 	}
 	
 	public function deleteCoupon(){
 		if($this->input->is_ajax_request()){
-            $data = $this->coupon_db->deleteCoupon($_POST['id']);
+			
+			$delete = array(
+				'id' => $_POST['id'],
+				'status' => 0
+			);
+			
+            $data = $this->coupon_db->deleteCoupon($delete);
             echo json_encode($data);
         }
-	}
-	
-	public function insertCoupon(){
-		if($this->input->is_ajax_request()){
-			$data = $this->coupon_db->insertCoupon($_POST['partnerId'],$_POST['cityId'],$_POST['timer'],$_POST['image'],
-			$_POST['description'],$_POST['detail'],$_POST['iniDate'],$_POST['endDate'],json_decode(stripslashes($_POST['idCatalog'])));
-			echo json_encode($data);
-		}	
 	}
 	
 	public function subirImagen(){

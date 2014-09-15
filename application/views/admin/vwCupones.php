@@ -30,8 +30,8 @@
         <br/><br/>
 
 		<div class="cupones">
-        <!--- divicion "vistaCupones" que muestra la lista de cupones --->
-        	<div id="vistaCupones">
+        <!--- divicion "viewEvent" que muestra la lista de cupones --->
+        	<div id="viewEvent">
             	<div class="row">
                 	<div class="large-12 columns">
                     	<!--- divicion que contiene el buscador --->
@@ -42,7 +42,7 @@
                                 
         					</div>
         					<div class="small-2 columns">
-         					 	<button class="btnSearch" id="btnSearchCoupon"><img src="../assets/img/web/iconSearch.png">Buscar</button>
+         					 	<button class="btnSearch" id="txtSearchCoupon"><img src="../assets/img/web/iconSearch.png">Buscar</button>
         					</div>
                         </div>
                         <!--- fin de la divicion buscar --->
@@ -53,29 +53,39 @@
                         <div class="large-11" id="divMenssagewarning" style="display:none">
                         	<div data-alert class="alert-box warning" id="alertMessagewarning">
                             estas seguro que desea eliminar el coupon
-                            <button id="btnCancelarE">cancelar</button>
-                            <button id="btnAceptarE">aceptar</button>
+                            <button class ="btnCancelC" id="btnCancelC">cancelar</button>
+                            <button class="btnAcceptC" id="btnAcceptC">aceptar</button>
 							</div>
                         </div>
                         <!--- divicion "tabla" --->
                         <!--- contiene la lista decupones --->
                         <div id="tabla" class="large-11">
                         
-                        	<table id="tableCupones">
+                        	<table id="tableCoupon">
                             <!--- encabezado de la tabla --->
                             	<thead>
                                 	<tr>
                                     	<td id="titulo" colspan="7">lista de Cupones
-                                        <button id="btnagregarCupon">Agregar</button>
+                                        <button id="btnAddCoupon" class="btnAdd">Agregar</button>
                                         </td>
                                     </tr>
                         			<tr>
                             			<th>#</th>
                                 		<th width="250px">Descripcion</th>
-                                		<th width="150px">Cliente</th>
+                                		<th width="170px">Cliente</th>
                                 		<th width="150px">Ciudad</th>
-                                		<th width="150px">Fecha Inicio<img id="arrowUpFI" src="../assets/img/web/arrowGreen2.png"><img id="arrowDownFI" src="../assets/img/web/arrowGreen.png"></th>
-                                		<th width="150px">Fecha Fin<img id="arrowUpFF" src="../assets/img/web/arrowGreen2.png"><img id="arrowDownFF" src="../assets/img/web/arrowGreen.png"></th>
+                                		<th width="160px">Fecha Inicio
+                                        	<a class="arrowUp" id="iniDate" value="coupon">
+                                            <img src="../assets/img/web/arrowGreen2.png"></a>
+                                        	<a class="arrowDown" id="iniDate" value="coupon">
+                                            <img src="../assets/img/web/arrowGreen.png"></a>
+                                        </th>
+                                		<th width="150px">Fecha Fin
+                                        	<a class="arrowUp" id="endDate" value="coupon">
+                                            <img src="../assets/img/web/arrowGreen2.png"></a>
+                                            <a class="arrowDown" id="endDate" value="coupon">
+                                            <img src="../assets/img/web/arrowGreen.png"></a>
+                                        </th>
                                 		<th>Eliminar</th>
                             		</tr>
                                 </thead>
@@ -89,7 +99,7 @@
                                 	<tr>
                                 		<td><?php echo $con;?></td>
                                         <td>
-                                        <a  id="modificarDescription"><?php echo $item->description;?><input type="hidden" id="idCoupon" value="<?php echo $item->id;?>" ></a>
+                                        <a  id="showCoupon"><?php echo $item->description;?><input type="hidden" id="idCoupon" value="<?php echo $item->id;?>" ></a>
                                         </td>
                                         <td><?php echo $item->partnerName;?></td>
                                         <td><?php echo $item->cityName;?></td>
@@ -108,33 +118,37 @@
                         	</table>
                             <!--- muestra la paginacion --->
                             <ul class="pagination">
-  								<li id="btnPaginadorCoupon" value="0" class="arrow primero unavailable"><a>&laquo;</a></li>
+  								<li id="btnPaginadorCoupon" value="0" class=btnPaginador "arrow primero unavailable">
+                                <a>&laquo;</a></li>
                                 <?php 
 								for($i = 1;$i<=($totalPaginador+1);$i++){
 									if($i == 1){
 									?>
-                                    <li value="<?php echo $i ?>" id="btnPaginadorCoupon" class="current"><a><?php echo $i ?></a></li>
+                                    <li value="<?php echo $i ?>" id="btnPaginadorCoupon" class="btnPaginador current">
+                                    <a><?php echo $i ?></a></li>
                                     <?php
 									}
 									else {
 									?>
-                                    <li value="<?php echo $i ?>" id="btnPaginadorCoupon"><a><?php echo $i ?></a></li>
+                                    <li value="<?php echo $i ?>" id="btnPaginadorCoupon" class="btnPaginador">
+                                    <a><?php echo $i ?></a></li>
                                     <?php	
 									}
 								}
 								?>
-  								<li value="<?php echo ($totalPaginador+1) ?>" id="btnPaginadorCoupon" class="arrow ultimo"><a>&raquo;</a></li>
+  								<li value="<?php echo ($totalPaginador+1) ?>" id="btnPaginadorCoupon" 
+                                class="btnPaginador arrow ultimo"><a>&raquo;</a></li>
 							</ul>
                         </div>
                         <!--- fin divicion "tabla" --->
                     </div>
                 </div>
             </div>
-            <!--- fin de la divicion "vistaCupones" --->
+            <!--- fin de la divicion "viewEvent" --->
             
-            <!--- divicion "FormularioCupones" --->
+            <!--- divicion "FormEvent" --->
             <!--- muestra el formulario para agregar y modificar cupones --->
-            	<div id="FormularioCupones" style="display:none">
+            	<div id="FormEvent" style="display:none">
                     <div class="row">
                     	<!-- primera columna -->
                     	<div class="large-6 columns">
@@ -238,7 +252,8 @@
                             <div class="row">
                                 <div class="medium-10 columns" id="imagen">
                                     <a><img id="imgImagen" src="http://placehold.it/500x300&text=[ad]"/></a>
-                                    <input type="hidden" id="imagenName" value="0" />
+                                    <input type="hidden" id="imagenName" 
+                                    value="http://placehold.it/500x300&text=[ad]" />
                                     <input style="display:none" type="file" id="fileImagen" style="color:#003" name="archivos[]" multiple />
                                     <small id="alertImage" class="error" style="display:none"></small>
                                 </div>
@@ -280,9 +295,9 @@
                             </div>
                             <div class="row">
                                 <div class="medium-10 columns">
-                                    <button id="btnCancelar" class="button small alert radius ">Cancelar</button>
-                                    <button id="btnguardarCupon" class="button small success radius ">Guardar</button>
-                                    <button id="btnRegistrarCupon" class="button small success radius ">Guardar</button>
+                                    <button id="btnCancel" class="button small alert radius ">Cancelar</button>
+                                    <button id="btnSaveCoupon" class="button small success radius ">Guardar</button>
+                                    <button id="btnRegisterCoupon" class="button small success radius ">Guardar</button>
                                 </div>
                             </div>
                             <div id="cargados"></div>
@@ -290,7 +305,7 @@
                         <!-- fin segunda columna -->
                     </div>
             	</div>
-                <!--- fin divicion "FormularioCupones" --->
+                <!--- fin divicion "FormEvent" --->
         </div>
         
         
