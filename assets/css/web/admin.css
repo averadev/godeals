@@ -9,7 +9,20 @@ input:-webkit-autofill { -webkit-box-shadow: 0 0 0px 1000px white inset; }
 .btnSearch{
 	background-color:#e6e6e6;
 	padding: 6px 12px;
-	borde: 1px solid #ccc;
+	border: 1px solid #ccc;
+	text-align:center;
+	line-height: 1;
+	font-size:14px;
+	color:#000;
+	border-top-right-radius: 5px 5px;
+        border-bottom-right-radius: 5px 5px;
+	height:37px;
+}
+
+.btnSearch:hover{
+	background-color:#CCCCCC;
+	padding: 6px 12px;
+	border: 1px solid #ccc;
 	text-align:center;
 	line-height: 1;
 	font-size:14px;
@@ -39,8 +52,8 @@ input:-webkit-autofill { -webkit-box-shadow: 0 0 0px 1000px white inset; }
 
 .arrowUp{
 	position:relative;
-	top:-5px;
-	left:15px;
+	top:-8px;
+	left:18.5px;
 }
 
 .arrowDown{
@@ -57,9 +70,15 @@ table tr td{
 	height:25px;
 }
 
-.btnAceptarE,.btnCancelarE{//botones de eliminacion
-	background:#F93;
-	border: 1px solid #F00;
+#imgImagen{
+	width:400px;
+	height:250px;
+}
+
+.btnAceptarE,#btnCancelarE,.btnCancelE,.btnAcceptE,#btnCancelC,#btnAcceptC{//botones de eliminacion
+	background-color:#000000;
+	background:#000;
+	border: 1px solid #900;
 	padding: 4px 10px;
 	margin:-5px 10px;
 	text-align:center;
@@ -76,5 +95,3 @@ table tr td{
 .field{
     font-weight: bold;
 }
-
-

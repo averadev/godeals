@@ -26,15 +26,21 @@ $('.txtSearch').keyup(function(e){
                 switch(tipo){
                     case "coupon":
                         url = "../admin/cupones/paginadorArray";
-			$('ul #btnPaginadorCoupon').removeClass('current');
+						$('ul #btnPaginadorCoupon').removeClass('current');
                     break;
                     case "partner":
                         url = "../admin/partners/paginadorArray";
-			$('ul #btnPaginadorPartner').removeClass('current');
+						$('ul #btnPaginadorPartner').removeClass('current');
                     break;
                     case "event":
                         url = "../admin/eventos/paginadorArray";
                         $('ul #btnPaginadorEvent').removeClass('current');
+					break;
+					case "sporttv":
+						url = "../admin/sporttv/paginadorArray";
+						$('ul #btnPaginadorSporttv').removeClass('current');
+					break;
+
                 }
                     
 		$(selecionado).addClass('current');
@@ -126,6 +132,21 @@ $('.txtSearch').keyup(function(e){
 								"</tr>");
                         }
                     break;
+					
+					case "sporttv":
+                       $('#tableSporttv tbody').empty();
+					   		for(var i = 0;i<total;i++){
+                            num = parseInt(cantidad) + parseInt((i+1));
+                            $('#tableSporttv tbody').append("<tr>" +
+								"<td>"+ (num) +"</td>"+
+								"<td><a id='showSporttv'>"+data[i].name+"<input type='hidden' id='idSporttv' value='" + 
+								data[i].id + "' ></a></td>"+
+								"<td>"+data[i].torneo+"</td>"+
+								"<td>"+data[i].date+"</td>"+
+								"<td><a id='imageDelete' value='" + data[i].id +"'><img class='imgDelete' "+
+								"src='../assets/img/web/deleteRed.png'/></a></td>" +
+								"</tr>");
+                        	}
                 }            	
             }
         });	
@@ -135,6 +156,7 @@ $('.txtSearch').keyup(function(e){
 	function OrdenarPorFechas(typeOrder,typeTable){
 		tableOrder = $(typeTable).attr('id');
 		column = tableOrder;
+		order = typeOrder;
 		typeTable = $(typeTable).attr('value');
 		if(typeTable == "coupon"){
 			
@@ -146,6 +168,9 @@ $('.txtSearch').keyup(function(e){
 			case "event":
 			url = "../admin/eventos/getallSearch";
 			break;
+			case "sporttv":
+			url = "../admin/sporttv/getallSearch";
+            break;
 		}
 		
 		//llama a la funcion "ajax" que se encarga de mostrar los datos en la tabla
@@ -176,11 +201,14 @@ $('.txtSearch').keyup(function(e){
 				}
 				//elimina el contenido de la tabla selecionada
 				if(tipoTabla == "coupon"){
-				$('#tableCoupon tbody').empty();
+					$('#tableCoupon tbody').empty();
 				} else if(tipoTabla == "event"){
-                                    $('#tableEvents tbody').empty();
-                                }else if(tipoTabla == "partner")
-                                    $('#tablePartners tbody').empty();
+					$('#tableEvents tbody').empty();
+				}else if(tipoTabla == "partner"){
+					$('#tablePartners tbody').empty();
+				} else if(tipoTabla == "sporttv"){
+					$('#tableSporttv tbody').empty();
+				}
                                 
 				$('.pagination').empty();
 				for(var i = 0;i<10;i++){
@@ -190,13 +218,9 @@ $('.txtSearch').keyup(function(e){
 						break;	
 					}
                                         
-                                        switch(tipoTabla)
-                                        {
-                                            
-                                            //muestra los datos en la tabla cupones
-                                            //if(tipoTabla == "coupon"){
-                                            case "coupon":                                      
-                                        
+                    switch(tipoTabla)
+					{
+						case "coupon":
 						$('#tableCoupon tbody').append("<tr>" + 
 							"<td>"+(num+1)+"</td>"+
 							"<td><a id='showCoupon'>"+data[num].description+"<input type='hidden' " + 
@@ -210,39 +234,52 @@ $('.txtSearch').keyup(function(e){
 							"src='../assets/img/web/deleteRed.png'/></a></td>" +
 							"</tr>");
 						btnPaginador = "btnPaginadorCoupon";
-                                                break;
-                                                
-                                          
-                                            case "partner":
-                                                $('#tablePartners tbody').append("<tr>" + 
-							"<td>"+(num+1)+"</td>"+
-							"<td><a id='showPartner'>"+data[num].name+"<input type='hidden' " + 
-							"id='idPartner' value='" + data[num].id + "' >" +
-							"</a></td>"+
-							"<td>"+data[num].categoryName+"</td>"+
-							"<td>"+data[num].phone+"</td>"+
-							"<td><a id='imageDelete' value='" + data[num].id +"'><img id='imgDelete' "+
-							"src='../assets/img/web/deleteRed.png'/></a></td>" +
-							"</tr>");
+                        break;
+						
+						case "partner":
+							$('#tablePartners tbody').append("<tr>" + 
+								"<td>"+(num+1)+"</td>"+
+								"<td><a id='showPartner'>"+data[num].name+"<input type='hidden' " + 
+								"id='idPartner' value='" + data[num].id + "' >" +
+								"</a></td>"+
+								"<td>"+data[num].categoryName+"</td>"+
+								"<td>"+data[num].phone+"</td>"+
+								"<td><a id='imageDelete' value='" + data[num].id +"'><img id='imgDelete' "+
+								"src='../assets/img/web/deleteRed.png'/></a></td>" +
+								"</tr>");
                             btnPaginador = "btnPaginadorPartner"
 							break;
                                         
                             case "event":
 								
 								$('#tableEvents tbody').append("<tr>" +
-								"<td>"+ (num+1) +"</td>"+
-								"<td><a id='showEvent'>"+data[num].name+"<input type='hidden' id='idEvent' value='" + 
-								data[num].id + "' ></a></td>"+
-								"<td>"+data[num].place+"</td>"+
-								"<td>"+data[num].city+"</td>"+
-								"<td>"+data[num].date+"</td>"+
-								"<td><a id='imageDelete' value='" + data[num].id +"'><img id='imgDelete' "+
-								"src='../assets/img/web/deleteRed.png'/></a></td>" +
-								"</tr>");
+									"<td>"+ (num+1) +"</td>"+
+									"<td><a id='showEvent'>"+data[num].name+"<input type='hidden' id='idEvent' value='" + 
+									data[num].id + "' ></a></td>"+
+									"<td>"+data[num].place+"</td>"+
+									"<td>"+data[num].city+"</td>"+
+									"<td>"+data[num].date+"</td>"+
+									"<td><a id='imageDelete' value='" + data[num].id +"'><img id='imgDelete' "+
+									"src='../assets/img/web/deleteRed.png'/></a></td>" +
+									"</tr>");
 								btnPaginador = "btnPaginadorEvent";
 								break;
-							}
-                           }
+								
+							case "sporttv":
+							$('#tableSporttv tbody').append("<tr>" +
+								"<td>"+ (num+1) +"</td>"+
+								"<td><a id='showSporttv'>"+data[num].name+"<input type='hidden'" +
+								"id='idSporttv' value='" + 
+								data[num].id + "' ></a></td>"+
+								"<td>"+data[num].torneo+"</td>"+
+								"<td>"+data[num].date+"</td>"+
+								"<td><a id='imageDelete' value='" + data[num].id +"'><img class='imgDelete' "+
+								"src='../assets/img/web/deleteRed.png'/></a></td>" +
+								"</tr>");
+							btnPaginador = "btnPaginadorSporttv";
+							break;
+					}
+                }
 							
 				$('.pagination').append(
 					"<li value=" + cantidad + " id='" + btnPaginador + "' class='btnPaginador arrow primero'><a>&laquo;</a></li>"
@@ -275,18 +312,22 @@ $('.txtSearch').keyup(function(e){
                 switch(type){
                     case "coupon":
                         palabra = $('#txtSearchCoupon').val();
-			url = "../admin/cupones/getallSearch";
+						url = "../admin/cupones/getallSearch";
                     break;
                     case "event":
                         palabra = $('#txtSearchEvent').val();
-			url = "../admin/eventos/getallSearch";
+						url = "../admin/eventos/getallSearch";
                     break;
                 
                     case "partner":
                         palabra = $('#txtSearchPartner').val();
-			url = "../admin/partners/getallSearch";
+						url = "../admin/partners/getallSearch";
                     break;
-                    
+					
+					case "sporttv":
+                        palabra = $('#txtSearchSporttv').val();
+						url = "../admin/sporttv/getallSearch";
+                    break;
                 }
 		
 		column = "id";
