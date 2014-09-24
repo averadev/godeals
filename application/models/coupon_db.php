@@ -139,7 +139,7 @@ Class coupon_db extends CI_MODEL
 	}
 	
 	public function getId($id){
-        $this->db->select ('coupon.timer, coupon.image, coupon.description, coupon.clauses, coupon.iniDate, coupon.endDate');
+        $this->db->select ('coupon.timer, coupon.image, coupon.description, coupon.detail, coupon.iniDate, coupon.endDate');
         $this->db->select ('coupon.partnerId, coupon.cityId, partner.name as partnerName, city.name as cityName');
         $this->db->from('coupon');
         $this->db->join('partner', 'coupon.partnerId = partner.id ');
@@ -149,23 +149,8 @@ Class coupon_db extends CI_MODEL
         return  $this->db->get()->result();
     }
 	
-<<<<<<< HEAD
-	public function updateCoupon($id,$partnerId,$cityId,$timer,$image,$description,$clauses,$iniDate,$endDate,$idCatalog){
-        $data = array(
-				'partnerId' => $partnerId,
-			   'cityId' => $cityId,
-			   'timer' => $timer,
-			   'image' => $image,
-               'description' => $description,
-               'clauses' => $clauses,
-               'iniDate' => $iniDate,
-			   'endDate' => $endDate
-            );
-		$this->db->where('id', $id);
-=======
 	public function updateCoupon($data,$delete,$Catalog){
 		$this->db->where('id', $data['id']);
->>>>>>> 99ee7d0fa78614b18938423cc73573a1303cb55b
 		$this->db->update('coupon', $data);
 		$this->db->delete('xref_coupon_catalog',$delete);
 		$this->db->insert_batch('xref_coupon_catalog', $Catalog);
@@ -176,23 +161,8 @@ Class coupon_db extends CI_MODEL
 		$this->db->update('coupon', $data);
     }
 
-<<<<<<< HEAD
-	public function insertCoupon($partnerId,$cityId,$timer,$image,$description,$clauses,$iniDate,$endDate,$idCatalog){
-		$data = array(
-   			'partnerId' => $partnerId,
-   			'cityId' => $cityId ,
-   			'timer' => $timer,
-			'image' => $image,
-			'description' => $description,
-			'clauses' => $clauses,
-			'iniDate' => $iniDate,
-			'endDate' => $endDate,
-			'status' => 1
-		);
-=======
 	public function insertCoupon($data,$idCatalog){
 		
->>>>>>> 99ee7d0fa78614b18938423cc73573a1303cb55b
 		$this->db->insert('coupon', $data);	
 		$id = $this->db->insert_id();
 		$catalog = array();
