@@ -149,6 +149,7 @@ Class coupon_db extends CI_MODEL
         return  $this->db->get()->result();
     }
 	
+<<<<<<< HEAD
 	public function updateCoupon($id,$partnerId,$cityId,$timer,$image,$description,$clauses,$iniDate,$endDate,$idCatalog){
         $data = array(
 				'partnerId' => $partnerId,
@@ -161,26 +162,21 @@ Class coupon_db extends CI_MODEL
 			   'endDate' => $endDate
             );
 		$this->db->where('id', $id);
+=======
+	public function updateCoupon($data,$delete,$Catalog){
+		$this->db->where('id', $data['id']);
+>>>>>>> 99ee7d0fa78614b18938423cc73573a1303cb55b
 		$this->db->update('coupon', $data);
-		$this->db->delete('xref_coupon_catalog', array('couponId' => $id));
-		$data2;
-		foreach($idCatalog as $idC){
-			$data2 = array(
-				'couponId' => $id,
-				'catalogId'=> $idC
-			);
-			$this->db->insert('xref_coupon_catalog', $data2);	
-		}
+		$this->db->delete('xref_coupon_catalog',$delete);
+		$this->db->insert_batch('xref_coupon_catalog', $Catalog);
     }
 	
-	public function deleteCoupon($id){
-        $data = array(
-				'status' => 0
-            );
-		$this->db->where('id', $id);
+	public function deleteCoupon($data){
+		$this->db->where('id', $data['id']);
 		$this->db->update('coupon', $data);
     }
 
+<<<<<<< HEAD
 	public function insertCoupon($partnerId,$cityId,$timer,$image,$description,$clauses,$iniDate,$endDate,$idCatalog){
 		$data = array(
    			'partnerId' => $partnerId,
@@ -193,16 +189,19 @@ Class coupon_db extends CI_MODEL
 			'endDate' => $endDate,
 			'status' => 1
 		);
+=======
+	public function insertCoupon($data,$idCatalog){
+		
+>>>>>>> 99ee7d0fa78614b18938423cc73573a1303cb55b
 		$this->db->insert('coupon', $data);	
 		$id = $this->db->insert_id();
-		$data2;
+		$catalog = array();
 		foreach($idCatalog as $idC){
-			$data2 = array(
+			array_push($catalog, array(
 				'couponId' => $id,
-				'catalogId'=> $idC
-			);
-			$this->db->insert('xref_coupon_catalog', $data2);	
+				'catalogId'=> $idC));	
 		}
+		$this->db->insert_batch('xref_coupon_catalog', $catalog);
 	}
 
 }

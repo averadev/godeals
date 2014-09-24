@@ -57,7 +57,7 @@ table tr td{
 	height:25px;
 }
 
-.btnAceptarE,#btnCancelarE{//botones de eliminacion
+.btnAceptarE,.btnCancelarE{//botones de eliminacion
 	background:#F93;
 	border: 1px solid #F00;
 	padding: 4px 10px;
@@ -76,3 +76,5 @@ table tr td{
 .field{
     font-weight: bold;
 }
+
+

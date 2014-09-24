@@ -1,30 +1,36 @@
 // JavaScript Document
 var originalDate = "";
 
-$("#btnagregarCupon").click(function() { agregarCupon(); });
-$(document).on('click','#modificarDescription',function(){ muestraDatos(this); });
-$('#btnguardarCupon').click(function() { GuardarCupon(); });
-$('#btnRegistrarCupon').click(function() { registrarCupon(); });
-$("#btnCancelar").click(function() {CancelarForm()});
-$(document).on('click','#imageDelete',function(){ eliminarCoupon(this); });
-$("#btnAceptarE").click(function() {AceptarEliminar(this)});
-$("#btnCancelarE").click(function() {CancelarEliminar()});
-$("#imgImagen").click(function() {cambiarImagen()});
+$("#txtPartner").keyup(function() { autocomplete("partner"); });
+$("#txtCity").keyup(function() { autocomplete("city"); });
 
-$("#txtPartner").keyup(function() { autocompletar("partner"); });
-$("#txtCity").keyup(function() { autocompletar("city"); });
+$("#btnAddCoupon").click(function() { showFormAdd(); });
+$(document).on('click','#showCoupon',function(){ ShowFormEdit(this); });
+$(document).on('click','#imageDelete',function(){ ShowFormDelete(this); });
+
+
+$('#btnRegisterCoupon').click(function() { eventAdd(); });
+$('#btnSaveCoupon').click(function() { eventEdit(); });
+$("#btnCancel").click(function() {eventCancel()});
+
+$(".btnAcceptC").click(function() {eventDelete()});
+$(".btnCancelC").click(function() {eventCancelDelete()});
+
+$("#imgImagen").click(function() {changeImage()});
 
 //visualizar imagen
 
 	$(window).load(function(){
  $(function() {
-  $('#fileImagen').change(function(e) {
-	  $('#alertImage').hide();
-	  $('#imgImagen').attr("src","http://placehold.it/500x300&text=[ad]");
-	  if($('#imagenName').val() != 0){
+	 $('#fileImagen').change(function(e) {
+	 $('#alertImage').hide();
+	 $('#imgImagen').attr("src","http://placehold.it/500x300&text=[ad]");
+	 if($('#imagenName').val() != 0){
 		 $('#imgImagen').attr("src",URL_IMG + "app/coupon/max/" + $('#imagenName').val())
-	  }
-      addImage(e); 
+	 }
+	 if(e.target.files[0] != undefined){
+		 addImage(e); 
+	 }
      });
 
      function addImage(e){
@@ -56,11 +62,14 @@ $("#txtCity").keyup(function() { autocompletar("city"); });
     });
   });
 
-// fin visualizar imagen
+	//abre el explorador de archivos cuando le das click a la imagen de cupones
+	function changeImage(){
+		$('#fileImagen').click();
+	}
 
- //polanco
+// fin visualizar imagen¿
 
-function autocompletar(elemento){
+function autocomplete(elemento){
     url = '';
     palabra = '';
     datalist = '';
@@ -76,10 +85,10 @@ function autocompletar(elemento){
 			url = "../admin/cities/getallSearch";
 			datalist = "cityList";
     }
-	buscadorAutocomplete(palabra, url, datalist);//busca las palabras que tengan la palabra
+	finderAutocomplete(palabra, url, datalist);//busca las palabras que tengan la palabra
 }
 
-function buscadorAutocomplete( palabra, url, datalist){
+function finderAutocomplete( palabra, url, datalist){
 	$.ajax({
 		type: "POST",
 		url: url,
@@ -113,14 +122,165 @@ function buscadorAutocomplete( palabra, url, datalist){
         });
 	}
 	
-	//muestra los datos a modificar
-	function muestraDatos(id){
-		limpiarCampos();
-		$('#btnRegistrarCupon').hide();
-		$('#btnguardarCupon').show();
+	//muestra el formulario para agregar cupones
+	function showFormAdd(){
+		cleanFields();
+		$('#btnSaveCoupon').hide();
+		$('#btnRegisterCoupon').show();
+		$('#viewEvent').hide();
+		$('#FormEvent').show();
+		$('#imagenName').val(0);
+		originalDate = "";
+	}
+	
+	//muestra el formulario para modificar datos
+	function ShowFormEdit(id){
+		cleanFields();
 		id = $(id).find('input').val();
-		$('#btnguardarCupon').val(id);
+		$('#btnSaveCoupon').val(id);
+		showCoupon(id);
+		$('#btnRegisterCoupon').hide();
+		$('#btnSaveCoupon').show();
+	}
+	
+	//muestra el formulario para eliminar cupones
+	function ShowFormDelete(idCoupon){
+		$('.btnAcceptC').val($(idCoupon).attr("value"));
+		$('#divMenssagewarning').hide(500);
+		$('#divMenssage').hide();
+		$('#divMenssagewarning').show(1000);
+	}
+	
+	//valida y llama a la funcion para registrar cupones
+	function eventAdd(){
+		var result;
+		result = validations();
+		if(result == true){
+			uploadImage(0);
+		} 
+	}
+	
+	//llama a la funcion para editar cupones
+	function eventEdit(){
 		
+		var result = validations()
+		
+		if(result == true){
+			id = $('#btnSaveCoupon').val();
+			var nameImage = $('#imagenName').val();
+			if(document.getElementById('fileImagen').value == ""){
+				ajaxSaveCoupon(nameImage,id);
+			} else {
+				deleteImage(nameImage,id);
+			}
+		}
+	}
+	
+	//elimina las imagen del directorio assets/img/app/coupon
+	function deleteImage(deleteImage,id){
+		$.ajax({
+            type: "POST",
+            url: "../admin/cupones/deleteImage",
+            dataType:'json',
+            data: { 
+				deleteImage:deleteImage
+			},
+            error: function(){
+				uploadImage(id)
+			}
+		});	
+	}
+	
+	//sube las imagen al directorio assets/img/app/coupon
+	function uploadImage(id){
+		var archivos = document.getElementById("fileImagen");//Damos el valor del input tipo file
+ 		var archivo = archivos.files; //obtenemos los valores de la imagen
+		
+		//creamos la variable Request 
+		if(window.XMLHttpRequest) {
+ 			var Req = new XMLHttpRequest(); 
+ 		}else if(window.ActiveXObject) { 
+ 			var Req = new ActiveXObject("Microsoft.XMLHTTP"); 
+ 		}
+		
+		var data = new FormData();
+	
+		data.append('archivo',archivo[0]);
+		
+		//cargamos los parametros para enviar la imagen
+		Req.open("POST", "../admin/cupones/subirImagen", true);
+		
+		//nos devuelve los resultados
+		Req.onload = function(Event) {
+			//Validamos que el status http sea ok 
+		if (Req.status == 200) {
+ 	 		//Recibimos la respuesta de php
+  			var nameImage = Req.responseText;
+			ajaxSaveCoupon(nameImage,id);
+			} else { 
+  			//console.log(Req.status); //Vemos que paso.
+			} 	
+		};
+		
+		//Enviamos la petición 
+ 		Req.send(data);
+	}
+	
+	//registra o modifica los datos de cupones
+	function ajaxSaveCoupon(nameImage,id){
+		
+		valorPartner = $('#txtPartner').val();
+		var idPartner = $('datalist option[value="' + valorPartner + '"]').attr('id')
+		valorCity = $('#txtCity').val();
+		var idCity = $('datalist option[value="' + valorCity + '"]').attr('id')
+		var idCatalog = new Array();
+		$('input[name=catalog]:checked').each(function() {
+			idCatalog.push($(this).val());
+        });
+		var timer = 0;
+		$('input[name=tiempoLimitado]:checked').each(function() {
+			timer = 1;
+        });
+		var jsonIdCatalog = JSON.stringify(idCatalog);
+		
+		numPag = $('ul .current').val();
+			$.ajax({
+            	type: "POST",
+            	url: "../admin/cupones/saveCoupon",
+            	dataType:'json',
+            	data: {
+					id:id,
+                	partnerId:idPartner,
+					cityId:idCity,
+					timer:timer,
+					image:nameImage,
+					description:$('#txtDescription').val(),
+					detail:$('#txtDetail').val(),
+					iniDate:$('#dateIniDate').val(),
+					endDate:$('#dateEndDate').val(),
+					idCatalog:jsonIdCatalog	
+            	},
+            	success: function(){
+					ajaxMostrarTabla(column,order,"../admin/cupones/getallSearch",(numPag-1),"coupon");
+					$('#FormEvent').hide();
+					$('#viewEvent').show();
+					$('#alertMessage').empty();
+					if(id == 0){
+						$('#alertMessage').append("Se ha agregado un nuevo Cupon");
+					} else {
+						$('#alertMessage').append("Se ha editado los datos de coupon");
+					}
+					$('#divMenssage').show(1000).delay(1500);
+					$('#divMenssage').toggle(1000);
+            	},
+				error: function(){
+					alert("error al insertar datos");
+				}
+        	});
+	}
+	
+	//muestra los datos de un cupon
+	function showCoupon(id){
 		$.ajax({
             type: "POST",
             url: "../admin/cupones/getID",
@@ -141,8 +301,8 @@ function buscadorAutocomplete( palabra, url, datalist){
 				$('#dateIniDate').val(data[0].iniDate);
 				$('#dateEndDate').val(data[0].endDate);
 				originalDate = $('#dateIniDate').val();
-				$('#vistaCupones').hide();
-				$('#FormularioCupones').show();
+				$('#viewEvent').hide();
+				$('#FormEvent').show();
 				if(data[0].timer == 1){
 					$('input[name=tiempoLimitado]').prop('checked', true);	
 				}
@@ -171,285 +331,55 @@ function buscadorAutocomplete( palabra, url, datalist){
         });
 	}
 	
-	
-	//imagen
-	
-	//abre el explorador de archivos cuando le das click a la imagen de cupones
-	function cambiarImagen(){
-		$('#fileImagen').click();
-	}
-
-function agregarCupon(){
-	limpiarCampos();
-	$('#btnguardarCupon').hide();
-	$('#btnRegistrarCupon').show();
-	$('#vistaCupones').hide();
-	$('#FormularioCupones').show();
-	$('#imagenName').val(0);
-	originalDate = "";
-}
-
-//registra nuevos cupones en la base de datos
-
-function registrarCupon(){
-	
-	var result;
-	result = validacion();
-	
-	if(result == true){
-		var description = $('#txtDescription').val();
-		valorPartner = $('#txtPartner').val();
-		var idPartner = $('datalist option[value="' + valorPartner + '"]').attr('id')
-		valorCity = $('#txtCity').val();
-		var idCity = $('datalist option[value="' + valorCity + '"]').attr('id')
-		var detail = $('#txtDetail').val();
-		var iniDate = $('#dateIniDate').val();
-		var endDate = $('#dateEndDate').val();
-		var idCatalog = new Array();
-		$('input[name=catalog]:checked').each(function() {
-			idCatalog.push($(this).val());
-        });
-		var timer = 0;
-		$('input[name=tiempoLimitado]:checked').each(function() {
-			timer = 1;
-        });
-		var jsonIdCatalog = JSON.stringify(idCatalog);
-		
-		var archivos = document.getElementById("fileImagen");//Damos el valor del input tipo file
- 		var archivo = archivos.files; //obtenemos los valores de la imagen
-		
-		//creamos la variable Request 
-		if(window.XMLHttpRequest) {
- 			var Req = new XMLHttpRequest(); 
- 		}else if(window.ActiveXObject) { 
- 			var Req = new ActiveXObject("Microsoft.XMLHTTP"); 
- 		}
-		
-		var data = new FormData();
-	
-		data.append('archivo',archivo[0]);
-		
-		//cargamos los parametros para enviar la imagen
-		Req.open("POST", "../admin/cupones/subirImagen", true);
-		
-		//nos devuelve los resultados
-		Req.onload = function(Event) {
-			//Validamos que el status http sea ok 
-		if (Req.status == 200) {
- 	 		//Recibimos la respuesta de php
-  			var nombreImagen = Req.responseText;
-			numPag = $('ul .current').val();
-				$.ajax({
-            		type: "POST",
-            		url: "../admin/cupones/insertCoupon",
-            		dataType:'json',
-            		data: { 
-                		partnerId:idPartner,
-						cityId:idCity,
-						timer:timer,
-						image:nombreImagen,
-						description:description,
-						detail:detail,
-						iniDate:iniDate,
-						endDate:endDate,
-						idCatalog:jsonIdCatalog
-						
-            		},
-            		success: function(){
-						ajaxMostrarTabla(column,order,"../admin/cupones/getallSearch",(numPag-1),"coupon");
-						$('#FormularioCupones').hide();
-						$('#vistaCupones').show();
-						$('#alertMessage').empty();
-						$('#alertMessage').append("Se ha agregado un nuevo Cupon");
-						$('#divMenssage').show(1000).delay(4000);
-						$('#divMenssage').toggle(2000);
-            		},
-					error: function(){
-						alert("error al insertar datos");
-					}
-        		});
-				
-			} else { 
-  			//console.log(Req.status); //Vemos que paso.
-			} 	
-		};
-		
-		//Enviamos la petición 
- 		Req.send(data);
-	} 
- }
-	
-	//modifica los datos de cupones
-	function GuardarCupon(){
-		
-		var result = validacion()
-		
-		if(result == true){
-		
-			var nameImage = $('#imagenName').val();
-			if(document.getElementById('fileImagen').value == ""){
-				ajaxGuardar(nameImage);
-			} else {
-		
-				upImage(nameImage);
-			}
-		}
-		
-	}
-	
-	//sube las imagenes al servidor
-	function upImage(deleteImage){
-		$.ajax({
-            type: "POST",
-            url: "../admin/cupones/deleteImage",
-            dataType:'json',
-            data: { 
-				deleteImage:deleteImage
-			},
-            error: function(){
-				//subimos la nueva imagen
-				var archivos = document.getElementById("fileImagen");//Damos el valor del input tipo file
- 				var archivo = archivos.files;
-		
-				if(window.XMLHttpRequest) {
- 					var Req = new XMLHttpRequest();
- 				}else if(window.ActiveXObject) { 
- 					var Req = new ActiveXObject("Microsoft.XMLHTTP");
- 				}
-		
-				var data = new FormData();
-	
-				//cargamos los atributos de la imagen
-				data.append('archivo',archivo[0]);
-		
-				//abrimos la conexion para subir una imagen
-				Req.open("POST", "../admin/cupones/subirImagen", true);
-				//verificamos si se executo correctamente el metodo
-				Req.onload = function(Event) {
-				//Validamos que el status http sea ok 
-				if (Req.status == 200) {
- 	 				//Recibimos la respuesta de php
-					nombreImage = Req.responseText;
-					ajaxGuardar(nombreImage);
-				} else { 
-  					//console.log(Req.status); //Vemos que paso.
-				} 		
-			};
-			//Enviamos la petición 
- 			Req.send(data);		
-            }
-        });
-	}
-	
-	function ajaxGuardar(nameImage){
-		
-		var description = $('#txtDescription').val();
-		var detail = $('#txtDetail').val();
-		var iniDate = $('#dateIniDate').val();
-		var endDate = $('#dateEndDate').val();
-		//regresa la id del partner
-		valorPartner = $('#txtPartner').val();
-		idPartner = $('datalist option[value="' + valorPartner + '"]').attr('id')
-		//regresa la id de la ciudad
-		valorCity = $('#txtCity').val();
-		idCity = $('datalist option[value="' + valorCity + '"]').attr('id')
-		var idCatalog = new Array();
-		$('input[name=catalog]:checked').each(function() {
-			idCatalog.push($(this).val());
-        });
-		var timer = 0;
-		$('input[name=tiempoLimitado]:checked').each(function() {
-			timer = 1;
-        });
-		var jsonIdCatalog = JSON.stringify(idCatalog);
-		numPag = $('ul .current').val();
-		$.ajax({
-            	type: "POST",
-            	url: "../admin/cupones/updateCoupon",
-            	dataType:'json',
-            	data: { 
-					id:$('#btnguardarCupon').val(),
-					partnerId:idPartner,
-					cityId:idCity,
-					timer:timer,
-					image:nameImage,
-					description:description,
-					detail:detail,
-					iniDate:iniDate,
-					endDate:endDate,
-					idCatalog:jsonIdCatalog
-            	},
-            	success: function(data){
-					
-					ajaxMostrarTabla(column,order,"../admin/cupones/getallSearch",(numPag-1),"coupon");
-					$('#FormularioCupones').hide();
-					$('#vistaCupones').show();
-					$('#alertMessage').empty();
-					$('#alertMessage').append("Se han editado los datos de coupon");
-					$('#divMenssage').show(1000).delay(1500);
-					$('#divMenssage').hide(1000);
-            	}
-        	});
-	}
-	
-	//muestra la opcion de eliminar coupon
-	function eliminarCoupon(idCoupon){
-		$('#btnAceptarE').val($(idCoupon).attr("value"));
-		$("#divMenssagewarning").hide();
-		$('#divMenssagewarning').show(1000);
-	}
-	
 	//oculta la opcion de eliminar
-	function CancelarEliminar(){
+	function eventCancelDelete(){
 		$('#divMenssagewarning').hide(1000);
 	}
 	
 	//funcion que elimina el cupon(cambia el status a 0)
-	function AceptarEliminar(idCoupon){
+	function eventDelete(idCoupon){
 		numPag = $('ul .current').val();
 		$.ajax({
             	type: "POST",
             	url: "../admin/cupones/deleteCoupon",
             	dataType:'json',
             	data: { 
-					id:$(idCoupon).val()
+					id:$('.btnAcceptC').val()
             	},
             	success: function(data){
+					//verifica si se elimino la ultima fila de la tabla
+					var aux = 0;
+					$('#tableCoupon tbody tr').each(function(index) {
+                        aux++;
+                    });
+					
+					//si es uno regarga la tabla con un indice menos
+					if(aux == 1){
+						numPag = numPag-1;
+					}
+					ajaxMostrarTabla(column,order,"../admin/cupones/getallSearch",(numPag-1),"coupon");
 					$("#divMenssagewarning").hide(1000);
 					$('#alertMessage').empty();
 					$('#alertMessage').append("Se han eliminado el coupon");
 					$('#divMenssage').show(1000).delay(1500);
 					$('#divMenssage').hide(1000);
-					
-					//verifica si se elimino la ultima fila de la tabla
-					var aux = 0;
-					$('#tableCupones tbody tr').each(function(index) {
-                        aux++;
-                    });
-					
-					//si es uno regarga la tabla con un numero menos
-					if(aux == 1){
-						numPag = numPag-1;
-					}
-					ajaxMostrarTabla(column,order,"../admin/cupones/getallSearch",(numPag-1),"coupon");
             	}
         	});
 	}
 	
-	
-	
-	//regresa a la tabla de 
-	function CancelarForm(){
-		$('#FormularioCupones').hide();	
-		$('#vistaCupones').show();
-		ocultarAlertas();
+	//regresa a la tabla de cupones
+	function eventCancel(){
+		cleanFields();
+		$('#FormEvent').hide();	
+		$('#viewEvent').show();
+		hideAlerts();
 	}
 	
 	//funcion para validar los campos
-	function validacion(){
+	function validations(){
 		var result = true;
 		
-		ocultarAlertas();
+		hideAlerts();
 		
 		var f = new Date();
 		var dia = f.getDate();
@@ -591,7 +521,7 @@ function registrarCupon(){
 		return result;
 	}
 	
-	function ocultarAlertas(){
+	function hideAlerts(){
 		$('#alertDescription').hide()
 		$('#alertPartner').hide();
 		$('#alertCity').hide();
@@ -611,7 +541,7 @@ function registrarCupon(){
 		$('#labelProductos').removeClass('error');
 	}
 	
-	function limpiarCampos(){
+	function cleanFields(){
 		$('#txtDescription').val("");
 		$('#txtPartner').val("");
 		$('#txtCity').val("");
