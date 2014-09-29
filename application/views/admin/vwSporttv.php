@@ -32,10 +32,10 @@
                     <div class="large-12 columns">
                         <!--- division que contiene el buscador --->
                         <div id="buscar" class="row collapse">
-                            <div class="small-10 columns">
+                            <div class="small-8 medium-10 large-10 columns">
                                 <input class="txtSearch" id="txtSearchSporttv" type="text" placeholder="Busqueda por nombre, torneo y tipo" />
                             </div>
-                            <div class="small-2 columns">
+                            <div class="small-4 medium-2 large-2 columns">
                                 <button class="btnSearch" id="btnSearchSporttv">
                                 <img src="../assets/img/web/iconSearch.png">Buscar</button>
                             </div>
@@ -48,8 +48,8 @@
 						<div class="large-11" id="divMenssagewarning" style="display:none">
 							<div data-alert class="alert-box warning" id="alertMessagewarning">
 								¿Estas seguro que desea eliminar el sporttv?
-								<button class="btnCancelE">Cancelar</button>
-								<button class="btnAcceptE">Aceptar</button>
+								<button id="btnCancelC" class="btnCancelE">Cancelar</button>
+								<button id="btnCancelC" class="btnAcceptE">Aceptar</button>
 							</div>
 						</div>
 
@@ -135,12 +135,12 @@
             <!--- division "FormSporttv" --->
             <!--- muestra el formulario para agregar y modificar Sporttvos --->
             	<div id="FormSporttv" style="display:none">
+					<!--- formulario de sporrtv --->
                     <div class="row">
-                        
                         <!-- primera columna -->
-                    	<div class="large-6 columns">
+                    	<div class="small-12 medium-6 large-6 columns">
                             <div class="row">
-                                <div class="medium-10 columns">
+                                <div class="small-12 medium-10 large-10 columns">
                                     <label class="field" id="lblSporttvName">*Nombre
                                         <input type="text" id="txtSporttvName" class="radius"/>
                                     </label>
@@ -150,7 +150,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="medium-10 columns">
+                                <div class="small-12 medium-10 large-10 columns">
                                     <label id="lblSporttvTournament" class="field">*Torneo
                                         <input type="text" id="txtSporttvTournament" class="radius"/>
                                     </label>
@@ -160,7 +160,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                            	<div class="medium-10 columns">
+                            	<div class="small-12 medium-10 large-10 columns">
                                     <label id="lblSporttvType" class="field" >*Tipo
                                     	<select id="txtSporttvType" class="radius" >
                                         	<?php
@@ -181,7 +181,7 @@
                                 </div>
                             </div>
                               <div class="row">
-                                <div class="medium-10 columns">
+                                <div class="small-12 medium-10 large-10 columns">
                                     <label id="lblSporttvDate" class="field">*Fecha
                                         <input type="datetime-local" id="dtSporttvDate" class="radius" />
                                     </label>
@@ -193,10 +193,10 @@
                         <!-- fin primera columna -->    
                         
                         <!-- segunda columna -->
-                    	<div class="large-6 columns">
+                    	<div class="small-12 medium-6 large-6 columns">
                             
                             <div class="row">
-                                <div class="medium-10 columns" id="imagen">
+                                <div class="small-12 medium-10 large-10 columns" id="imagen">
                                     <a><img id="imgImagen" src="http://placehold.it/500x300&text=[ad]"/></a>
                                     <input type="hidden" id="imagenName" value="0" />
                                     <input style="display:none" type="file" id="fileImagen" style="color:#003" name="archivos[]" multiple />
@@ -206,16 +206,85 @@
                             <br/><br/>
                             
                              <div class="row">
-                                <div class="medium-10 columns">
-                                    <button id="btnCancel" class="button small alert radius ">Cancelar</button>
-                                    <button id="btnSaveSporttv" class="button small success radius ">Guardar</button>
-                                    <button  id="btnRegisterSporttv" class="button small success radius ">Guardar</button>
+                                <div class="small-8 medium-8 large-6 columns">
+                                    <button id="btnCancel" class="button small alert radius bntSave">
+                                    Cancelar</button>
+                                    <button id="btnSaveSporttv" class="button small success radius bntSave">
+                                    Guardar</button>
+                                    <button  id="btnRegisterSporttv" class="button small success radius bntSave">
+                                    Guardar</button>
+                                </div>
+                                <div class="loading small-2 medium-2 large-2 columns" id="load1">
                                 </div>
                             </div>
                             
                         </div>   
                         
                     </div>
+					<!--- fin del formulario de sporrtv --->
+					
+					<!--- formulario de sporttv bar --->
+					
+					<div class="row">
+                    	<hr></hr>
+                        <h3  class="text-center">SportTv Bar</h3>
+                        <!-- primera columna -->
+                    	<div class="small-12 medium-6 large-6 columns">
+                            <div class="row">
+                                <div class="small-12 medium-12 large-12 columns">
+                                    <label id="lblSporttvPartner"><strong>*Partner</strong>
+                                    	<input type="text" id="txtSporttvPartner" list="partnerList" 
+                                        autocomplete="on" class="radius"> 
+                                        <datalist id="partnerList"> </datalist>
+                                    </label>
+                                    <small id="alertPartner" class="error" style="display:none">
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="small-12 medium-12 large-12 columns">
+                                    <a><img id="imgImageSporttv" src="http://placehold.it/500x300&text=[ad]"/></a>
+                                    <input type="hidden" id="imagenName" value="0" />
+                                    <input style="display:none" type="file" id="fileImageBar" style="color:#003" name="archivos[]" multiple />
+                                    <small id="alertImageBar" class="error" style="display:none"></small>
+                                </div>
+                            </div>
+                            </br>
+                            <div class="row">
+                                <div class="medium-10 columns">
+                                <button id="btnaddSporttv_bar" class="button tiny success radius ">agregar</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- fin primera columna -->    
+                        
+                        <!-- segunda columna -->
+                    	<div class="small-12 medium-6 large-6 columns">
+                            
+                            <div class="row">
+                            	<div id="gridImages" class="small-12 medium-12 large-12 columns">
+                                </div>
+                            </div>
+                            <br/><br/>
+                            
+                             <div class="row">
+                                <div class="small-8 medium-4 large-6 columns">
+                                    <button id="btnCancel" class="button small alert radius bntSave">
+                                    Cancelar</button>
+                                    <button id="btnSaveSporttv" class="btnS2 button small success radius bntSave">
+                                    Guardar</button>
+                                    <button  id="btnRegisterSporttv" class="btnR2 button small success radius bntSave ">
+                                    Guardar</button>
+                                </div>
+                                <div class="loading small-2 medium-2 large-2 columns" id="load2">
+                                </div>
+                            </div>
+                            
+                        </div>   
+                        
+                    </div>
+					<!--- fin del formulario de sporttv bar --->
+					
                 </div>
             
             

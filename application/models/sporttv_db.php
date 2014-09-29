@@ -86,6 +86,18 @@ Class sporttv_db extends CI_MODEL
         $this->db->where('sporttv.id = ', $id);
         return  $this->db->get()->result();
 	}
+	
+	/**
+	*obtiene todo los sporttv bar por id
+	*/
+	public function getSporttvBarId($id){
+		$this->db->select('sporttv_bar.sporttvId, sporttv_bar.partnerId, sporttv_bar.image, partner.name as namePartner');
+        $this->db->from('sporttv_bar');
+		$this->db->join('partner', 'sporttv_bar.partnerId = partner.id');
+        $this->db->where('sporttv_bar.status = 1');
+        $this->db->where('sporttv_bar.sporttvId = ', $id);
+        return  $this->db->get()->result();
+	}
 
 	/**
 	*obtiene todos los tipos de sporttv activos
@@ -98,10 +110,21 @@ Class sporttv_db extends CI_MODEL
 	}
 	
 	/**
+	*obtiene todos los sporttv_bar por id
+	*/
+	public function getAllSporttvBarId($id){
+		$this->db->select('sporttv_bar.partnerId');
+		$this->db->from('sporttv_bar');
+        $this->db->where('sporttv_bar.sporttvId = ', $id);
+		return $this->db->get()->result();
+	}
+	
+	/**
 	*inserta los datos de sporttv
 	*/
 	public function insertSporttv($data){
-		$this->db->insert('sporttv', $data);	
+		$this->db->insert('sporttv', $data);
+		return $this->db->insert_id();
 	}
 	
 	/**
@@ -119,6 +142,20 @@ Class sporttv_db extends CI_MODEL
 		$this->db->where('id', $data['id']);
 		$this->db->update('sporttv', $data);
 	}
-
+	
+	public function insertSporttvBar($data){
+		$this->db->insert_batch('sporttv_bar', $data);
+	}
+	
+	public function updateSporttvBar($data){
+		$this->db->where('sporttvId', $data['sporttvId']);
+		$this->db->where('partnerId', $data['partnerId']);
+		$this->db->update('sporttv_bar', $data);	
+	}
+	
+	public function deleteSporttvBar($data){
+		$this->db->update_batch('sporttv_bar', $data, 'image'); 	
+	}
+	
 }
 //end model

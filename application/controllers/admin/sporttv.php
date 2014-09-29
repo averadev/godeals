@@ -71,6 +71,13 @@ class Sporttv extends CI_Controller {
         }
 	}
 	
+	public function getSporttvBarId(){
+		if($this->input->is_ajax_request()){
+            $data = $this->sporttv_db->getSporttvBarId($_POST['id']);
+            echo json_encode($data);
+        }	
+	}
+	
 	public function saveSporttv(){
 		if($this->input->is_ajax_request()){
 			if($_POST['id'] == 0){
@@ -83,6 +90,11 @@ class Sporttv extends CI_Controller {
 					'status' => 1
 				);
 				$data = $this->sporttv_db->insertSporttv($insert);
+				if($_POST['partnerId'] != '0'){
+					$data = $this->saveSporttvBar($data,json_decode(stripslashes($_POST['partnerId']))
+					,json_decode(stripslashes($_POST['nameImage'])));	
+				}
+				$data = "Se han agregado un nuevo sporttv";
 			} else {
 				$update = array(
 					'id' => $_POST['id'],
@@ -93,9 +105,56 @@ class Sporttv extends CI_Controller {
 					'date' => $_POST['date']
 				);
 				$data = $this->sporttv_db->updateSporttv($update);
+				
+				if($_POST['partnerId'] != '0'){
+					$data = $this->saveSporttvBar($_POST['id'],json_decode(stripslashes($_POST['partnerId']))
+					,json_decode(stripslashes($_POST['nameImage'])));
+				}
+				$data = "Se han editado los datos del sporttv";
 			}
             echo json_encode($data);
         }
+	}
+	
+	public function saveSporttvBar($id,$partnerId,$nameImage){
+			$data2 = $this->sporttv_db->getAllSporttvBarId($id);
+			$total = count($partnerId);
+			
+			$array = array();
+			
+			for($i=0;$i<$total;$i++){
+				$cont = 0;
+				
+				foreach ($data2 as $row)
+				{
+					if($row->partnerId == $partnerId[$i]){
+						
+						$update = array(
+						'sporttvId' => $id,
+						'partnerId' => $partnerId[$i],
+						'image' => $nameImage[$i],
+						'status' => 1
+						);	
+						$data = $this->sporttv_db->updateSporttvBar($update);
+						$cont++;
+						
+					}
+				}
+				
+				if($cont == 0){
+					array_push($array, array(
+						'sporttvId' => $id,
+						'partnerId' => $partnerId[$i],
+						'image' => $nameImage[$i],
+						'status' => 1
+					));
+				}
+			}
+			if(count($array) > 0){
+				$data = $this->sporttv_db->insertSporttvBar($array);	
+			}
+			
+			return ($data2);
 	}
 	
 	public function deleteSporttv(){
@@ -105,13 +164,33 @@ class Sporttv extends CI_Controller {
 					'status' => 0
 			);
 			$data = $this->sporttv_db->deleteSporttv($delete);
+			$data = "se ha eliminado el sporttvo";
+			echo json_encode($data);
+		}
+	}
+	
+	public function deleteSporttvBar(){
+		
+		if($this->input->is_ajax_request()){
+		
+			$deleteImage = json_decode(stripslashes($_POST['deleteImage']));
+			
+			$delete = array();
+			
+			foreach($deleteImage as $image){
+					array_push($delete, array(
+						'image' => $image,
+						'status'=> 0
+					));
+			}
+			
+			$data = $this->sporttv_db->deleteSporttvBar($delete);
 			echo json_encode($data);
 		}
 	}
 	
 	public function uploadImage(){
 		$rutaMax="assets/img/app/sporttv/max/";
-		$rutaMin="assets/img/app/sporttv/min/";
   		foreach ($_FILES as $key) {
     		if($key['error'] == UPLOAD_ERR_OK ){//Verificamos si se subio correctamente
       			$nombre = $key['name'];//Obtenemos el nombre del archivo
@@ -122,12 +201,9 @@ class Sporttv extends CI_Controller {
 				//definimos el ancho y alto que tendra la imagen
 				$max_ancho = 700;
 				$max_alto = 525;
-				$min_ancho = 320;
-				$min_alto = 240;
 				list($ancho,$alto)=getimagesize($temporal);
 				//Creamos una imagen en blanco con el ancho y alto final
 				$tmpMax=imagecreatetruecolor($max_ancho,$max_alto);
-				$tmpMin=imagecreatetruecolor($min_ancho,$min_alto);	
 				
 				//detecta si la imagen es png
 				if($tipo == "image/png"){
@@ -144,22 +220,18 @@ class Sporttv extends CI_Controller {
 					$nombreTimeStamp = $fecha->getTimestamp();
 				
 				//toma la ruta de la imagen a crear
-					$patch_imagenMax=$rutaMax . "sporttv_" . $nombreTimeStamp .".jpg";
-					$patch_imagenMin=$rutaMin . "sporttv_" . $nombreTimeStamp . ".jpg";
+					$patch_imagenMax=$rutaMax . "sport_" . $nombreTimeStamp .".jpg";
 				
 				//Copiamos la imagen sobre la imagen que acabamos de crear en blanco
 					imagecopyresampled($tmpMax,$imagen,0,0,0,0,$max_ancho, $max_alto,$ancho,$alto);
 					imagejpeg($tmpMax,$patch_imagenMax,100);
-					
-					imagecopyresampled($tmpMin,$imagen,0,0,0,0,$min_ancho, $min_alto,$ancho,$alto);
-					imagejpeg($tmpMin,$patch_imagenMin,100);
 	
 					//Se destruye variable $img_original para liberar memoria
 					imagedestroy($imagen);
       			
 				//echo json_encode($_FILES);
 				
-					echo "sporttv_" . $nombreTimeStamp . ".jpg";
+					echo "sport_" . $nombreTimeStamp . ".jpg";
 				
     		}else{
 				
@@ -170,9 +242,59 @@ class Sporttv extends CI_Controller {
 	public function deleteImage(){
 		if($this->input->is_ajax_request()){
             $rutaMax="assets/img/app/event/max/";
-			$rutaMin="assets/img/app/event/min/";
 			unlink($rutaMax . $_POST['deleteImage']);
-			unlink($rutaMin . $_POST['deleteImage']);
         }
+	}
+	
+	public function uploadImageBar(){
+		$rutaMax="assets/img/app/sporttv/min/";
+		
+		$max_ancho = 320;
+		$max_alto = 240;
+		
+		$i = 0;
+		
+  		foreach ($_FILES as $key) {
+    		if($key['error'] == UPLOAD_ERR_OK ){//Verificamos si se subio correctamente
+      			$nombre = $key['name'];//Obtenemos el nombre del archivo
+      			$temporal = $key['tmp_name']; //Obtenemos la dirrecion del archivo
+      			$tamano= ($key['size'] / 1000)."Kb"; //Obtenemos el tamaño en KB
+				$tipo = $key['type']; //obtenemos el tipo de imagen
+				
+				list($ancho,$alto)=getimagesize($temporal);
+				
+				$tmpMax=imagecreatetruecolor($max_ancho,$max_alto);
+				
+				if($tipo == "image/png"){
+					//toma la ruta de la imagen
+					$imagen = imagecreatefrompng($temporal); 
+				//detecta si la imagen es tipo gif 	
+				} else if($tipo == "image/gif"){
+					$imagen = imagecreatefromgif($temporal);	
+				} else {
+					$imagen = imagecreatefromjpeg($temporal); 
+				}
+				
+				$fecha = new DateTime();
+				$nombreTimeStamp = $fecha->getTimestamp();
+				
+				//toma la ruta de la imagen a crear
+				$patch_imagenMax=$rutaMax . "sport_" . $nombreTimeStamp . $i .".jpg";
+				
+				//Copiamos la imagen sobre la imagen que acabamos de crear en blanco
+				imagecopyresampled($tmpMax,$imagen,0,0,0,0,$max_ancho, $max_alto,$ancho,$alto);
+				imagejpeg($tmpMax,$patch_imagenMax,100);
+	
+				//Se destruye variable $img_original para liberar memoria
+				imagedestroy($imagen);
+				
+				echo "sport_" . $nombreTimeStamp . $i .".jpg*-*";
+				
+				$i++;
+				
+    		}else{
+				
+    		}
+		}
 	}
 }
