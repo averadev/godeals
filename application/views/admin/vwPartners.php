@@ -1,53 +1,33 @@
 
-<!doctype html>
-<html class="no-js" lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>Go Deals</title>
-        <link href='http://fonts.googleapis.com/css?family=Chivo' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="<?php echo base_url().FOUND; ?>css/foundation.css" />
-        <link rel="stylesheet" href="<?php echo base_url().SHAPE; ?>css/component.css" />
-        <link rel="stylesheet" href="<?php echo base_url().CAPTION; ?>css/component.css" />
-	<script type="text/javascript" src="<?php echo base_url().FOUND; ?>js/vendor/modernizr.js"></script>
-        <link rel="stylesheet" href="<?php echo base_url().CSS; ?>web/home.css" />
-        <link rel="stylesheet" href="<?php echo base_url() . CSS; ?>web/admin.css" />
-        
-    </head>
-    <body>
-        
-        
-        <?php $this->load->view('web/vwStickyMenu'); ?>
+<?php
+$this->load->view('admin/vwHeader');
+?>
 
-        <?php $this->load->view('web/vwHeader'); ?>
-
-        <?php $this->load->view('web/vwMainMenu'); ?>
-        <br/>
-        
-         <div class="row">
-            <div class="large-12 columns">
-                <h1  class="text-center">SOCIOS</h1>
-            </div>
-            <hr>
-        </div>
-        <br/><br/>
-        
-        <div class="partners">
+<div class="row">
+    <div class="page-header header">
+        <h1><small>Comercios</small></h1>
+        <hr/>
+    </div>
+    
+    <div class="partners">
             <!--- division "vistaPartners" que muestra la lista de Partners --->
             <div id="vistaPartners">
                 <div class="row">
                     <div class="large-12 columns">
                         <!--- buscador --->
-                    	<div id="buscar" class="row collapse">
-                        	<div class="small-7 columns">
+                        <div class="large-8 large-centered columns">
+                            <div id="buscar" class="row collapse">
+                                <div class="small-10 columns">
                                     <input class="txtSearch" id="txtSearchPartner" type="text" placeholder="Busqueda por nombre del socio, categoria" />
                                 </div>
-        			<div class="small-5 columns">
-                                    <button class="btnSearch" id="btnSearchPartner"><img src="../assets/img/web/iconSearch.png">Buscar</button>
-        			</div>
+                                <div class="small-2 columns">
+                                        <button class="btnSearch" id="btnSearchPartner"><img src="../assets/img/web/iconSearch.png">Buscar</button>
+                                </div>
+                            </div>
                         </div>
                         <!--- fin buscador --->
                         
-                        <div class="large-8" id="divMenssage" style="display:none">
+                        <div class="large-8 large-centered columns" id="divMenssage" style="display:none">
                             <div data-alert class="alert-box success" id="alertMessage">
                             </div>
                         </div>
@@ -60,7 +40,7 @@
                         </div>
                          <!--- division "tabla" --->
                         <!--- contiene la lista de partners --->
-                        <div id="tabla" class="large-8" >
+                        <div id="tabla" class="large-8 large-centered columns" >
                         
                             <table id="tablePartners">
                                 <!--- encabezado de la tabla --->
@@ -82,9 +62,9 @@
                                 <tbody>
                                 <?php 
                                 $con = 0;
-				foreach ($partner as $item):
-				$con++;
-				?>
+                                foreach ($partner as $item):
+                                $con++;
+                                ?>
                                     <tr>
                                         <td><?php echo $con;?></td>
                                         
@@ -280,33 +260,21 @@
                     </div>
             	</div>
                 <!--- fin divicion "FormularioCupones" --->
-            
-            
         </div>
-        
-        
-        
-        <div class="clear">
-            <br/><br/>
-        </div>
+    
+</div>
 
-        <?php $this->load->view('web/vwFooter'); ?>
-        
 
-        <!-- Commons -->
-        <script>
-            var URL_IMG = '<?php echo base_url() . IMG; ?>';
-            var URL_BASE = '<?php echo base_url(); ?>';
-        </script>
-        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        <script type="text/javascript" src="<?php echo base_url() . FOUND; ?>js/foundation.min.js"></script>
-        <script type="text/javascript" src="<?php echo base_url() . FOUND; ?>js/foundation/foundation.tab.js"></script>
-        <script type="text/javascript" src="<?php echo base_url() . FOUND; ?>js/foundation/foundation.accordion.js"></script>
-        <script type="text/javascript" src="<?php echo base_url(); ?>assets/api/hachiko/hachiko.min.js"></script>
-        <script type="text/javascript" src="<?php echo base_url() . JS; ?>web/admin/partners.js"></script>
-        <script type="text/javascript" src="<?php echo base_url() . JS; ?>web/admin/paginadorYBuscador.js"></script>
-  
-    </body>
-</html>
+<?php
+$this->load->view('admin/vwFooter');
+?>
+    
+<script type="text/javascript" src="<?php echo base_url() . FOUND; ?>js/foundation/foundation.tab.js"></script>
+<script type="text/javascript" src="<?php echo base_url() . FOUND; ?>js/foundation/foundation.accordion.js"></script>
+<script type="text/javascript" src="<?php echo base_url().JS; ?>admin/partners.js"></script>
+<script type="text/javascript" src="<?php echo base_url().JS; ?>admin/paginadorYBuscador.js"></script>
+
+
+
         
         

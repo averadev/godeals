@@ -1,31 +1,16 @@
-<!doctype html>
-<html class="no-js" lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>Go Deals</title>
-        <link href='http://fonts.googleapis.com/css?family=Chivo' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="<?php echo base_url() . FOUND; ?>css/foundation.css" />
-        <script type="text/javascript" src="<?php echo base_url() . FOUND; ?>js/vendor/modernizr.js"></script>
-        <link rel="stylesheet" href="<?php echo base_url() . CSS; ?>web/home.css" />
-        <link rel="stylesheet" href="<?php echo base_url() . CSS; ?>web/admin.css" />
-    </head>
-    <body>
 
-        <?php $this->load->view('web/vwStickyMenu'); ?>
+<?php
+$this->load->view('admin/vwHeader');
+?>
 
-        <?php $this->load->view('web/vwHeader'); ?>
 
-        <?php $this->load->view('web/vwMainMenu'); ?>
-        <br/>
-        <div class="row">
-            <div class="large-12 columns">
-                <h1  class="text-center">SportTv</h1>
-            </div>
-            <hr>
-        </div>
-        <br/><br/>
-        
-        <div class="Sporttv">
+<div class="row">
+    <div class="page-header header">
+        <h1><small>Sport TV</small></h1>
+        <hr/>
+    </div>
+    
+    <div class="Sporttv">
             <!--- division "viewSporttv" que muestra la lista de Sporttv --->
             <div id="viewSporttv" >
                 <div class="row">
@@ -65,7 +50,7 @@
 									</tr>
 									<tr>
 										<th>#</th>
-										<th width="250px">Nombre</th>
+										<th width="300px">Nombre</th>
 										<th width="300px">Torneo</th>
 										<!--<th width="200px">tipo</th>-->
 										<th width="200px">Fecha
@@ -268,7 +253,7 @@
                             <br/><br/>
                             
                              <div class="row">
-                                <div class="small-8 medium-4 large-6 columns">
+                                <div class="small-8 medium-6 large-6 columns">
                                     <button id="btnCancel" class="button small alert radius bntSave">
                                     Cancelar</button>
                                     <button id="btnSaveSporttv" class="btnS2 button small success radius bntSave">
@@ -289,22 +274,21 @@
             
             
         </div><!-- fin div class"Sporttv" -->
-
-        
-          <!-- Commons -->
-        <script>
-            var URL_IMG = '<?php echo base_url() . IMG; ?>';
-            var URL_BASE = '<?php echo base_url(); ?>';
-        </script>
-        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        <script type="text/javascript" src="<?php echo base_url() . FOUND; ?>js/foundation.min.js"></script>
-        <script type="text/javascript" src="<?php echo base_url() . FOUND; ?>js/foundation/foundation.tab.js"></script>
-        <script type="text/javascript" src="<?php echo base_url() . FOUND; ?>js/foundation/foundation.accordion.js"></script>
-        <script type="text/javascript" src="<?php echo base_url(); ?>assets/api/hachiko/hachiko.min.js"></script>
-        <script type="text/javascript" src="<?php echo base_url() . JS; ?>web/admin/sporttv.js"></script>
-        <script type="text/javascript" src="<?php echo base_url() . JS; ?>web/admin/paginadorYBuscador.js"></script>
     
-    </body>
-</html>
+</div>
+
+
+<?php
+$this->load->view('admin/vwFooter');
+?>
+    
+<script type="text/javascript" src="<?php echo base_url() . FOUND; ?>js/foundation/foundation.tab.js"></script>
+<script type="text/javascript" src="<?php echo base_url() . FOUND; ?>js/foundation/foundation.accordion.js"></script>
+<script type="text/javascript" src="<?php echo base_url().JS; ?>admin/sporttv.js"></script>
+<script type="text/javascript" src="<?php echo base_url().JS; ?>admin/paginadorYBuscador.js"></script>
+
+
+
+
 
 

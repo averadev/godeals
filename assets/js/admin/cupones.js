@@ -82,7 +82,7 @@ function autocomplete(elemento){
 			break;
         case 'city':
 			palabra = $("#txtCity").val();
-			url = "../admin/cities/getallSearch";
+			url = "../admin/catalogos/getCities";
 			datalist = "cityList";
     }
 	finderAutocomplete(palabra, url, datalist);//busca las palabras que tengan la palabra
@@ -294,7 +294,7 @@ function finderAutocomplete( palabra, url, datalist){
 				$('#partnerList').append("<option id='" + data[0].partnerId + "' value='" +  data[0].partnerName + "' />" );
 				$('#txtCity').val(data[0].cityName);
 				$('#cityList').append("<option id='" + data[0].cityId + "' value='" +  data[0].cityName + "' />" );
-				$('#txtDetail').val(data[0].detail);
+				$('#txtDetail').val(data[0].clauses);
 				$('#imgImagen').attr("src",URL_IMG + "app/coupon/max/" + data[0].image)
 				$('#imagenName').val(data[0].image);
 				$('#imgImagen').attr("hidden",data[0].image)

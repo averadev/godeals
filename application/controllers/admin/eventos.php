@@ -14,15 +14,19 @@ class Eventos extends CI_Controller {
     public function __construct(){
         parent::__construct();
         $this->load->helper('url');
-	$this->load->database('default');
+	   $this->load->database('default');
         $this->load->model('event_db');
+        if (!$this->session->userdata('username')) {
+            redirect('admin');
+        }
     }
 
     /**
      * Despliega la pantalla de eventos
      */
     
-	public function index($offset = 0){        
+	public function index($offset = 0){          
+        $data['page'] = 'eventos';     
         $data['event'] = $this->sortSliceArray($this->event_db->getAllEvents(),10);//se obtiene los primero 10
 		$data['total'] = $this->totalArray($this->event_db->getAllEvents());
         

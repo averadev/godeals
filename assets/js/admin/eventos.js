@@ -80,7 +80,7 @@ $("#imgImagen").click(function() {changeImage()});
 		palabra = $('#txtEventCity').val();
 		$.ajax({
 			type: "POST",
-			url: "../admin/cities/getallSearch",
+			url: "../admin/catalogos/getCities",
 			dataType:'json',
 			data: {
 				dato:palabra

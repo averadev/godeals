@@ -1,32 +1,14 @@
-<!doctype html>
-<html class="no-js" lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>Go Deals</title>
-        <link href='http://fonts.googleapis.com/css?family=Chivo' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="<?php echo base_url() . FOUND; ?>css/foundation.css" />
-        <script type="text/javascript" src="<?php echo base_url() . FOUND; ?>js/vendor/modernizr.js"></script>
-        <link rel="stylesheet" href="<?php echo base_url() . CSS; ?>web/home.css" />
-        <link rel="stylesheet" href="<?php echo base_url() . CSS; ?>web/admin.css" />
-        <link rel="stylesheet" href="<?php echo base_url() . CSS; ?>web/cupones.css" />
-    </head>
-    <body>
+<?php
+$this->load->view('admin/vwHeader');
+?>
 
-        <?php $this->load->view('web/vwStickyMenu'); ?>
-
-        <?php $this->load->view('web/vwHeader'); ?>
-
-        <?php $this->load->view('web/vwMainMenu'); ?>
-        <br/>
-        <div class="row">
-            <div class="large-12 columns">
-                <h1  class="text-center">Eventos</h1>
-            </div>
-            <hr>
-        </div>
-        <br/><br/>
-        
-        <div class="eventos">
+<div class="row">
+    <div class="page-header header">
+        <h1><small>Eventos</small></h1>
+        <hr/>
+    </div>
+    
+    <div class="eventos">
             <!--- division "viewEvent" que muestra la lista de eventos --->
             <div id="viewEvent" >
                 <div class="row">
@@ -225,24 +207,20 @@
                     </div>
                 </div>
             
-            
-        </div><!-- fin div class"eventos" -->
-
-        
-          <!-- Commons -->
-        <script>
-            var URL_IMG = '<?php echo base_url() . IMG; ?>';
-            var URL_BASE = '<?php echo base_url(); ?>';
-        </script>
-        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        <script type="text/javascript" src="<?php echo base_url() . FOUND; ?>js/foundation.min.js"></script>
-        <script type="text/javascript" src="<?php echo base_url() . FOUND; ?>js/foundation/foundation.tab.js"></script>
-        <script type="text/javascript" src="<?php echo base_url() . FOUND; ?>js/foundation/foundation.accordion.js"></script>
-        <script type="text/javascript" src="<?php echo base_url(); ?>assets/api/hachiko/hachiko.min.js"></script>
-        <script type="text/javascript" src="<?php echo base_url() . JS; ?>web/admin/eventos.js"></script>
-        <script type="text/javascript" src="<?php echo base_url() . JS; ?>web/admin/paginadorYBuscador.js"></script>
+        </div>
     
-    </body>
-</html>
+</div>
+
+
+<?php
+$this->load->view('admin/vwFooter');
+?>
+
+<script type="text/javascript" src="<?php echo base_url() . FOUND; ?>js/foundation/foundation.tab.js"></script>
+<script type="text/javascript" src="<?php echo base_url() . FOUND; ?>js/foundation/foundation.accordion.js"></script>
+<script type="text/javascript" src="<?php echo base_url().JS; ?>admin/eventos.js"></script>
+<script type="text/javascript" src="<?php echo base_url().JS; ?>admin/paginadorYBuscador.js"></script>
+
+
 
 

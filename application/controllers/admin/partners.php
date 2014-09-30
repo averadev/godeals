@@ -13,13 +13,17 @@ class Partners extends CI_Controller {
  
     public function __construct(){
         parent::__construct();
-        $this->load->model('partner_db');
-        $this->load->model('map_category_db');//para el dropdown de map_cat
         $this->load->helper('url');
         $this->load->database('default');
+        $this->load->model('partner_db');
+        $this->load->model('map_category_db');
+        if (!$this->session->userdata('username')) {
+            redirect('admin');
+        }
     }
     
-	public function index($offset = 0){       
+	public function index($offset = 0){           
+        $data['page'] = 'partners';  
         $data['partner'] = $this->sortSliceArray($this->partner_db->getAllActive(),10);
         $data['total'] = $this->totalArray($this->partner_db->getAllActive());//numero total de partners
 	

@@ -14,15 +14,21 @@ class Cities extends CI_Controller {
      public function __construct(){
         parent::__construct();
         $this->load->database('default');
-         $this->load->helper('url');
+        $this->load->helper('url');
         $this->load->model('city_db');
+        $this->load->model('map_category_db');
     }
     
-    
-     public function getallSearch(){
-       
+    public function getCities(){
         if($this->input->is_ajax_request()){
             $data = $this->city_db->getNameSearch($_POST['dato']);
+            echo json_encode($data);
+        }
+    }
+    
+    public function getMapCategories(){
+        if($this->input->is_ajax_request()){
+            $data = $this->map_category_db->getNameSearch($_POST['dato']);
             echo json_encode($data);
         }
     }

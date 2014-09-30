@@ -17,6 +17,9 @@ class Cupones extends CI_Controller {
 		$this->load->database('default');
         $this->load->model('coupon_db');
         $this->load->model('catalogo_db');
+        if (!$this->session->userdata('username')) {
+            redirect('admin');
+        }
     }
 
     /**
@@ -24,11 +27,11 @@ class Cupones extends CI_Controller {
      */
     
 	public function index($offset = 0){        
+        $data['page'] = 'cupones';
         $data['coupon'] = $this->sortSliceArray($this->coupon_db->getAllActive(),10);//se obtiene los primero 10
 		$data['total'] = $this->totalArray($this->coupon_db->getAllActive());//numeor todal de cupones
-		
 		$data['entretenimiento'] = $this->catalogo_db->getCatalog(2);//catalogo de tipo entretenimiento
-            $data['servicio'] = $this->catalogo_db->getCatalog(1);//catalogo de tipo servicio o producto
+        $data['servicio'] = $this->catalogo_db->getCatalog(1);//catalogo de tipo servicio o producto
 		
         $this->load->view('admin/vwCupones',$data);   
 	}
@@ -89,7 +92,7 @@ class Cupones extends CI_Controller {
 				'timer' => $_POST['timer'],
 				'image' => $_POST['image'],
 				'description' => $_POST['description'],
-				'detail' => $_POST['detail'],
+				'clauses' => $_POST['detail'],
 				'iniDate' => $_POST['iniDate'],
 				'endDate' => $_POST['endDate'],
 				'status' => 1);
@@ -104,7 +107,7 @@ class Cupones extends CI_Controller {
 				'timer' => $_POST['timer'],
 				'image' => $_POST['image'],
 				'description' => $_POST['description'],
-				'detail' => $_POST['detail'],
+				'clauses' => $_POST['detail'],
 				'iniDate' => $_POST['iniDate'],
 				'endDate' => $_POST['endDate']);
 				

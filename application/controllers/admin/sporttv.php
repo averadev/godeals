@@ -15,13 +15,17 @@ class Sporttv extends CI_Controller {
         $this->load->helper('url');
         $this->load->database('default');
         $this->load->model('sporttv_db');
+        if (!$this->session->userdata('username')) {
+            redirect('admin');
+        }
     }
 
     /**
      * Despliega la pantalla de eventos
      */
     public function index(){
-        // Get available dates
+        // Get available dates        
+        $data['page'] = 'sporttv';  
        $data['sporttv'] = $this->sortSliceArray($this->sporttv_db->getAllSporttv(),10);//se obtiene los primero 10
 	   $data['total'] = $this->totalArray($this->sporttv_db->getAllSporttv());
 	   $data['type'] = $this->sporttv_db->getAllSporttvType();

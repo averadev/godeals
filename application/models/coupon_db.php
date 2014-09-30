@@ -139,7 +139,7 @@ Class coupon_db extends CI_MODEL
 	}
 	
 	public function getId($id){
-        $this->db->select ('coupon.timer, coupon.image, coupon.description, coupon.detail, coupon.iniDate, coupon.endDate');
+        $this->db->select ('coupon.timer, coupon.image, coupon.description, coupon.clauses, coupon.iniDate, coupon.endDate');
         $this->db->select ('coupon.partnerId, coupon.cityId, partner.name as partnerName, city.name as cityName');
         $this->db->from('coupon');
         $this->db->join('partner', 'coupon.partnerId = partner.id ');
