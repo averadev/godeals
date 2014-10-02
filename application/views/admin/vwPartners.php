@@ -17,10 +17,10 @@ $this->load->view('admin/vwHeader');
                         <!--- buscador --->
                         <div class="large-8 large-centered columns">
                             <div id="buscar" class="row collapse">
-                                <div class="small-10 columns">
+                                <div class="small-8 medium-10 large-10 columns">
                                     <input class="txtSearch" id="txtSearchPartner" type="text" placeholder="Busqueda por nombre del socio, categoria" />
                                 </div>
-                                <div class="small-2 columns">
+                                <div class="small-4 medium-2 large-2 columns">
                                         <button class="btnSearch" id="btnSearchPartner"><img src="../assets/img/web/iconSearch.png">Buscar</button>
                                 </div>
                             </div>
@@ -31,11 +31,11 @@ $this->load->view('admin/vwHeader');
                             <div data-alert class="alert-box success" id="alertMessage">
                             </div>
                         </div>
-                        <div class="large-8" id="divMenssagewarning" style="display:none">
+                        <div class="large-8 large-centered columns" id="divMenssagewarning" style="display:none">
                             <div data-alert class="alert-box warning" id="alertMessagewarning">
-                                ¿Estas seguro que desea eliminar el socio?
-                                <button class="btnCancelarE" id="btnCancelP" >Cancelar</button>
-                                <button class="btnAceptarE"  id="btnAcceptP" >Aceptar </button>
+                                ¿Desea eliminar el socio?
+                                <button class="btnCancelarE" id="btnCancelC" >Cancelar</button>
+                                <button class="btnAceptarE"  id="btnAcceptC" >Aceptar </button>
                             </div>
                         </div>
                          <!--- division "tabla" --->
@@ -116,10 +116,10 @@ $this->load->view('admin/vwHeader');
             	<div id="FormularioPartners" style="display:none">
                     <div class="row">
                     	<!-- primera columna -->
-                    	<div class="large-6 columns">
+                    	<div class="small-12 medium-6 large-6 columns">
                             <div class="row">
-                                <div class="medium-10 columns">
-                                    <label id="lblPartnerName" class="field">*Nombre
+                                <div class="small-12 medium-11 large-10 columns">
+                                    <label id="lblPartnerName" class="field"><strong>*Nombre</strong>
                                     	<input type="text" id="txtPartnerName" class="radius"/>
                                     </label>
                                     <small id="alertPartnerName" class="error" style="display:none">
@@ -129,8 +129,8 @@ $this->load->view('admin/vwHeader');
                             </div>
                             
                             <div class="row">
-                            	<div class="medium-10 columns">
-                                    <label id="lblPartnerMapCat" class="field" >*Categoria
+                            	<div class="small-12 medium-11 large-10 columns">
+                                    <label id="lblPartnerMapCat" class="field" ><strong>*Categoria</strong>
                                         <select name="map_category" id="selMapCat">
                                         <option>
                                                 
@@ -151,8 +151,8 @@ $this->load->view('admin/vwHeader');
                             </div>
                             
                             <div class="row">
-                            	<div class="medium-10 columns">
-                                    <label id="lblPartnerAddress" class="field">*Direccion
+                            	<div class="small-12 medium-11 large-10 columns">
+                                    <label id="lblPartnerAddress" class="field"><strong>*Direccion</strong>
                                     	<textarea id="txtPartnerAddress" class="radius"></textarea>
                                     </label>
                                     <small id="alertPartnerAddress" class="error" style="display:none">
@@ -162,8 +162,8 @@ $this->load->view('admin/vwHeader');
                             </div>
                             
                             <div class="row">
-                                <div class="medium-10 columns">
-                                    <label id="lblPartnerPhone" class="field">*Telefono
+                                <div class="small-12 medium-11 large-10 columns">
+                                    <label id="lblPartnerPhone" class="field"><strong>Telefono</strong>
                                         <input type="text" id="txtPartnerPhone" class="radius" />
                                     </label>
                                     <small id="alertPartnerPhone" class="error" style="display: none">
@@ -173,8 +173,8 @@ $this->load->view('admin/vwHeader');
                             </div>
                             
                              <div class="row">
-                                <div class="medium-10 columns">
-                                    <label id="lblPartnerMail" class="field">*Correo
+                                <div class="small-12 medium-11 large-10 columns">
+                                    <label id="lblPartnerMail" class="field"><strong>Correo</strong>
                                         <input type="text" id="txtPartnerMail" class="radius" />
                                     </label>
                                     <small id="alertPartnerMail" class="error" style="display: none">
@@ -184,8 +184,8 @@ $this->load->view('admin/vwHeader');
                             </div>
                             
                              <div class="row">
-                                <div class="medium-10 columns">
-                                    <label id="lblPartnerTwitter" class="field">*Twitter
+                                <div class="small-12 medium-11 large-10 columns">
+                                    <label id="lblPartnerTwitter" class="field"><strong>Twitter</strong>
                                         <input type="text" id="txtPartnerTwitter" class="radius" />
                                     </label>
                                     <small id="alertPartnerTwitter" class="error" style="display: none">
@@ -195,8 +195,8 @@ $this->load->view('admin/vwHeader');
                             </div>
                             
                              <div class="row">
-                                <div class="medium-10 columns">
-                                    <label id="lblPartnerFacebook" class="field">*Facebook
+                                <div class="small-12 medium-11 large-10 columns">
+                                    <label id="lblPartnerFacebook" class="field"><strong>Facebook</strong>
                                         <input type="text" id="txtPartnerFacebook" class="radius" />
                                     </label>
                                     <small id="alertPartnerFacebook" class="error" style="display: none">
@@ -211,10 +211,11 @@ $this->load->view('admin/vwHeader');
                         
                    
                         <!-- segunda columna -->
-                        <div class="large-6 columns">
+                        <div class="small-12 medium-6 large-6 columns">
                             
                             <div class="row">
-                                <div class="medium-10 columns" id="imagen">
+                                <div class="small-12 medium-11 large-10 columns" id="imagen">
+                                	<label id="lblPartnerImage" class="field"><strong>*Imagen</strong></label>
                                     <a><img id="imgImagen" src="http://placehold.it/500x300&text=[ad]"/></a>
                                     <input type="hidden" id="imagenName" value="0" />
                                     <input style="display:none" type="file" id="fileImagen" style="color:#003" name="archivos[]" multiple />
@@ -224,8 +225,8 @@ $this->load->view('admin/vwHeader');
                             <br/><br/>
                             
                             <div class="row">
-                                <div class="medium-10 columns">
-                                    <label id="lblPartnerLatitude" class="field">*Latitud
+                                <div class="small-12 medium-11 large-10 columns">
+                                    <label id="lblPartnerLatitude" class="field"><strong>Latitud</strong>
                                         <input type="text" id="txtPartnerLatitude" class="radius"/>
                                     </label>
                                     <small id="alertPartnerLatitude" class="error" style="display: none">
@@ -235,8 +236,8 @@ $this->load->view('admin/vwHeader');
                             </div>
                            
                             <div class="row">
-                                <div class="medium-10 columns">
-                                    <label id="lblPartnerLongitude" class="field">*Longitud
+                                <div class="small-12 medium-11 large-10 columns">
+                                    <label id="lblPartnerLongitude" class="field"><strong>Longitud</strong>
                                         <input type="text" id="txtPartnerLongitude" class="radius" />
                                     </label>
                                     <small id="alertPartnerLongitude" class="error" style="display: none">
@@ -248,11 +249,15 @@ $this->load->view('admin/vwHeader');
                             
                             
                             <div class="row">
-                                <div class="medium-10 columns">
-                                    <button id="btnCancel" class="button small alert radius ">Cancelar</button>
-                                    <button id="btnSavePartner" class="button small success radius ">Guardar</button>
-                                    <button id="btnRegisterPartner" class="button small success radius ">Guardar</button>
+                                <div class="small-7 medium-9 large-6 columns">
+                                    <button id="btnCancel" class="bntSave button small alert radius ">
+                                    Cancelar</button>
+                                    <button id="btnSavePartner" class="bntSave button small success radius ">
+                                    Guardar</button>
+                                    <button id="btnRegisterPartner" class="bntSave button small success radius ">
+                                    Guardar</button>
                                 </div>
+                                <div class="loading small-2 medium-2 large-2 columns" id="load1"></div>
                             </div>
                             <div id="cargados"></div>
                         </div>

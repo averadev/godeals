@@ -1,3 +1,5 @@
+@charset "utf-8";
+/* CSS Document */
 
 .header h1{
     margin-top: 30px !important;
@@ -88,13 +90,14 @@ table tr td{
 	background:#000;
 	border: 1px solid #900;
 	padding: 4px 10px;
-	margin:-5px 10px;
+	margin:-5px 2px;
 	text-align:center;
-	line-height: 1;
+	line-height:1;
 	font-size:12px;
 	border-radius:5px 5px;
 	height:25px;
 	float:right;
+	right:-20px;
 }
 
 #imageBar{
@@ -143,10 +146,6 @@ table tr td{
 .field{
     font-weight: bold;
 }
-
-
-@charset "utf-8";
-/* CSS Document */
 
 #txtSearch{
     font-size: 16px;
@@ -197,17 +196,6 @@ table tr td{
 
 table tr td{
 	font-family:Georgia, "Times New Roman", Times, serif;
-}
-
-#arrowUpFI , #arrowUpFF{
-	position:relative;
-	top:-5px;
-	left:15px;
-}
-
-#arrowDownFI, #arrowDownFF{
-	position:relative;
-	top:5px;
 }
 
 #tableEntretenimiento, #tableProductos{

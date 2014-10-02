@@ -32,7 +32,7 @@ $this->load->view('admin/vwHeader');
 						</div>
 						<div class="large-11" id="divMenssagewarning" style="display:none">
 							<div data-alert class="alert-box warning" id="alertMessagewarning">
-								¿Estas seguro que desea eliminar el sporttv?
+								¿Desea eliminar el sporttv?
 								<button id="btnCancelC" class="btnCancelE">Cancelar</button>
 								<button id="btnCancelC" class="btnAcceptE">Aceptar</button>
 							</div>
@@ -182,6 +182,7 @@ $this->load->view('admin/vwHeader');
                             
                             <div class="row">
                                 <div class="small-12 medium-10 large-10 columns" id="imagen">
+                                	<label id="lblSporttvImage"><strong>*Imagen</strong></label>
                                     <a><img id="imgImagen" src="http://placehold.it/500x300&text=[ad]"/></a>
                                     <input type="hidden" id="imagenName" value="0" />
                                     <input style="display:none" type="file" id="fileImagen" style="color:#003" name="archivos[]" multiple />
@@ -216,7 +217,7 @@ $this->load->view('admin/vwHeader');
                         <!-- primera columna -->
                     	<div class="small-12 medium-6 large-6 columns">
                             <div class="row">
-                                <div class="small-12 medium-12 large-12 columns">
+                                <div class="small-12 medium-11 large-10 columns">
                                     <label id="lblSporttvPartner"><strong>*Partner</strong>
                                     	<input type="text" id="txtSporttvPartner" list="partnerList" 
                                         autocomplete="on" class="radius"> 
@@ -227,11 +228,13 @@ $this->load->view('admin/vwHeader');
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="small-12 medium-12 large-12 columns">
+                                <div class="small-12 medium-11 large-10 columns">
+                                	<label id="lblSporttvImageBar"><strong>*Imagen Partner</strong></label>
                                     <a><img id="imgImageSporttv" src="http://placehold.it/500x300&text=[ad]"/></a>
                                     <input type="hidden" id="imagenName" value="0" />
                                     <input style="display:none" type="file" id="fileImageBar" style="color:#003" name="archivos[]" multiple />
-                                    <small id="alertImageBar" class="error" style="display:none"></small>
+                                    <small id="alertImageBar" class="error small-9 medium-11 large-10 columns" 
+                                    style="display:none"></small>
                                 </div>
                             </div>
                             </br>

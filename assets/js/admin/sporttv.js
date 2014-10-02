@@ -24,7 +24,7 @@ $('#btnaddSporttv_bar').click(function() {sporttv_barAdd()});
 $(document).on('click','#imgDeleteBlack',function(){ sporttvBarDelete(this); });
 $(document).on('click','#imgDeleteBlack2',function(){ sporttvBarDelete2(this); });
 
-//botones para el formulario de eliminar sporttvos
+//botones para el formulario de eliminar sporttv
 $('.btnAcceptE').click(function() {sporttvDelete()});
 $('.btnCancelE').click(function() {sporttvCancelDelete()});
 
@@ -39,6 +39,7 @@ $("#imgImageSporttv").click(function() {changeImageBar()});
 			//detecta cada vez que hay un cambio en el formulario de imagen
  			$('#fileImagen').change(function(e) {
 	  		$('#alertImage').hide();
+			$('#lblSporttvImage').removeClass('error');
 			$('#imgImagen').attr("src","http://placehold.it/500x300&text=[ad]");
 	  		if($('#imagenName').val() != 0){
 		 		$('#imgImagen').attr("src",URL_IMG + "app/sporttv/max/" + $('#imagenName').val())
@@ -62,6 +63,7 @@ $("#imgImageSporttv").click(function() {changeImageBar()});
 			  	$('#alertImage').empty();
 			  	$('#alertImage').append("Selecione una imagen");
 			  	$('#alertImage').show();
+				$('#lblSporttvImage').addClass('error');
 		  	}
        	return;
 	  	}
@@ -82,6 +84,7 @@ $("#imgImageSporttv").click(function() {changeImageBar()});
 	 
 	 $('#fileImageBar').change(function(e) {
 	  		$('#alertImageBar').hide();
+			$('#lblSporttvImageBar').removeClass('error');
 			$('#imgImageSporttv').attr("src","http://placehold.it/500x300&text=[ad]");
 			if(e.target.files[0] != undefined){
 				addImage2(e); 
@@ -99,6 +102,7 @@ $("#imgImageSporttv").click(function() {changeImageBar()});
 			  	$('#alertImageBar').empty();
 			  	$('#alertImageBar').append("Selecione una imagen");
 			  	$('#alertImageBar').show();
+				$('#lblSporttvImageBar').addClass('error');
        	return;
 	  	}
   		//carga la imagen
@@ -132,7 +136,7 @@ $("#imgImageSporttv").click(function() {changeImageBar()});
 		palabra = $('#txtSporttvPartner').val();
 		$.ajax({
 			type: "POST",
-			url: "../admin/partners/getallSearch",
+			url: "../admin/partners/getPartner",
 			dataType:'json',
 			data: {
 				dato:palabra
@@ -152,6 +156,7 @@ $("#imgImageSporttv").click(function() {changeImageBar()});
 	function showFormAdd(){
 		cleanFields();
 		hideAlert();
+		hideAlertBar();
 		$('#btnSaveSporttv').hide();
 		$('#btnRegisterSporttv').show();
 		$('.btnS2').hide();
@@ -164,6 +169,7 @@ $("#imgImageSporttv").click(function() {changeImageBar()});
 	function ShowFormEdit(id){
 		cleanFields();
 		hideAlert();
+		hideAlertBar();
 		id = $(id).find('input').val();
 		$('#btnSaveSporttv').val(id); 
 		showsSporttv(id);
@@ -184,14 +190,16 @@ $("#imgImageSporttv").click(function() {changeImageBar()});
 		$('#divMenssagewarning').show(1000);
 	}
 	
-	//regresa a la tabla de sporttvos
+	//regresa a la tabla de sporttv
 	function sporttvCancel(){
 		cleanFields();
+		hideAlert();
+		hideAlertBar();
 		$('#FormSporttv').hide();	
 		$('#viewSporttv').show();
 	}
 	
-	//llama a la funcion para agregar un sporttvo
+	//llama a la funcion para agregar un sporttv
 	function sporttvAdd(){
 		var result;
 		result = validations();
@@ -214,7 +222,6 @@ $("#imgImageSporttv").click(function() {changeImageBar()});
 			$('.bntSave').attr('disabled',true);
 			if(document.getElementById('fileImagen').value == ""){
 				var nameImage = $('#imagenName').val();
-				
 				if(idImagenBarArray.length == 0 || contBar == 0 ){
 					ajaxSaveSporttv(id,nameImage,0,0);
 				} else {
@@ -272,8 +279,8 @@ $("#imgImageSporttv").click(function() {changeImageBar()});
 				if(idImagenBarArray[i] == valueImage){
 					idImagenBarArray[i] = "";	
 				}
-				contBar--;
 			}
+			contBar--;
 		} else {
 			classImage = $(selector).attr('class');
 			deleteImagenBarArray.push(classImage);
@@ -325,7 +332,7 @@ $("#imgImageSporttv").click(function() {changeImageBar()});
 		nameImage = $('#imagenName').val();
 		$.ajax({
             type: "POST",
-            url: "../admin/sporttvos/deleteImage",
+            url: "../admin/sporttv/deleteImage",
             dataType:'json',
             data: { 
 				deleteImage:nameImage
@@ -416,7 +423,6 @@ $("#imgImageSporttv").click(function() {changeImageBar()});
 		if(deleteImagenBarArray.length > 0){
 			ajaxDeleteImageBar();	
 		}
-		
 		numPag = $('ul .current').val();
 		
 		if(nameImage2 != 0){
@@ -444,7 +450,6 @@ $("#imgImageSporttv").click(function() {changeImageBar()});
             	},
 				
             	success: function(data){
-					console.log(data);
 						ajaxMostrarTabla(column,order,"../admin/sporttv/getallSearch",(numPag-1),"sporttv");
 						$('#FormSporttv').hide();
 						$('#viewSporttv').show();
@@ -484,7 +489,7 @@ $("#imgImageSporttv").click(function() {changeImageBar()});
         	});	
 	}
 	
-	//muestra los datos del sporttvo a modificar
+	//muestra los datos del sporttv a modificar
 	function showsSporttv(id){
 		$.ajax({
             	type: "POST",
@@ -566,6 +571,7 @@ $("#imgImageSporttv").click(function() {changeImageBar()});
 			$('#alertImage').empty();
 			$('#alertImage').append("Campo vacio. Selecione una imagen");
 			$('#alertImage').show();
+			$('#lblSporttvImage').addClass('error');
 			result = false;
 		}
 		
@@ -595,6 +601,7 @@ $("#imgImageSporttv").click(function() {changeImageBar()});
 			$('#alertImageBar').empty();
 			$('#alertImageBar').append("Campo vacio. Selecione una imagen");
 			$('#alertImageBar').show();
+			$('#lblSporttvImageBar').addClass('error');
 			result = false;
 		}
 		
@@ -634,6 +641,7 @@ $("#imgImageSporttv").click(function() {changeImageBar()});
 		$('#lblSporttvTournament').removeClass('error');
 		$('#lblSporttvType').removeClass('error');
 		$('#lblSporttvDate').removeClass('error');
+		$('#lblSporttvImage').removeClass('error');
 	}
 	
 	//oculta las alertas del formulario sporttv bar
@@ -642,6 +650,7 @@ $("#imgImageSporttv").click(function() {changeImageBar()});
 		$('#alertPartner').hide();
 		
 		$('#lblSporttvPartner').removeClass('error');
+		$('#lblSporttvImageBar').removeClass('error');
 	}
 	
 	//limpia los campos del formulario

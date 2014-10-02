@@ -105,13 +105,13 @@ $('.txtSearch').keyup(function(e){
                             num = parseInt(cantidad) + parseInt((i+1));
                             $('#tablePartners tbody').append("<tr>" + 
                             "<td>"+ num +"</td>"+
-                            "<td><a id='showPartner'>"+data[i].name+"<input type='hidden' id='idPartner' value='" + data[i].id + "' >" +
+                            "<td><a class='showPartner'>"+data[i].name+"<input type='hidden' id='idPartner' value='" + data[i].id + "' >" +
                             "</a></td>"+
                             "<td>"+data[i].categoryName+"</td>"+
                             "<td>"+data[i].phone+"</td>"+
-                            "<td><a id='imageDelete' value='" + data[i].id +"'><img id='imgDelete' "+
-                            "src='../assets/img/web/deleteRed.png'/></a></td>" +
-                            "</tr>");
+                            "<td><a class='imageDelete' value='" + data[i].id +"'><img id='imgDelete' "+
+								"src='../assets/img/web/deleteRed.png'/></a></td>" +
+								"</tr>");
                         }
                     break;
                     
@@ -239,14 +239,14 @@ $('.txtSearch').keyup(function(e){
 						case "partner":
 							$('#tablePartners tbody').append("<tr>" + 
 								"<td>"+(num+1)+"</td>"+
-								"<td><a id='showPartner'>"+data[num].name+"<input type='hidden' " + 
+								"<td><a class='showPartner'>"+data[num].name+"<input type='hidden' " + 
 								"id='idPartner' value='" + data[num].id + "' >" +
 								"</a></td>"+
 								"<td>"+data[num].categoryName+"</td>"+
 								"<td>"+data[num].phone+"</td>"+
-								"<td><a id='imageDelete' value='" + data[num].id +"'><img id='imgDelete' "+
-								"src='../assets/img/web/deleteRed.png'/></a></td>" +
-								"</tr>");
+								"<td><a class='imageDelete' value='" + data[num].id +"'><img id='imgDelete' "+
+							"src='../assets/img/web/deleteRed.png'/></a></td>" +
+							"</tr>");
                             btnPaginador = "btnPaginadorPartner"
 							break;
                                         

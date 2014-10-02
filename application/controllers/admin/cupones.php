@@ -98,6 +98,7 @@ class Cupones extends CI_Controller {
 				'status' => 1);
 				
 				$data = $this->coupon_db->insertCoupon($insert,json_decode(stripslashes($_POST['idCatalog'])));
+				$data = "Se ha agregado un nuevo Cupon";
 			} else {
 				
 				$update = array(
@@ -122,6 +123,7 @@ class Cupones extends CI_Controller {
 				}
 				
 				$data = $this->coupon_db->updateCoupon($update,$delete,$catalog);
+				$data = "Se ha editado los datos del coupon";
 			}
             echo json_encode($data);
         }

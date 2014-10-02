@@ -26,6 +26,7 @@ $("#imgImagen").click(function() {changeImage()});
  		$(function() {
 			//detecta cada vez que hay un cambio en el formulario de imagen
  			$('#fileImagen').change(function(e) {
+			$('#lblEventImage').removeClass('error');
 	  		$('#alertImage').hide();
 			$('#imgImagen').attr("src","http://placehold.it/500x300&text=[ad]");
 	  		if($('#imagenName').val() != 0){
@@ -48,6 +49,7 @@ $("#imgImagen").click(function() {changeImage()});
 		  	if($('#imagenName').val() != 0){
 			  	$('#imgImagen').attr("src",URL_IMG + "app/event/max/" + $('#imagenName').val())
 		  	} else {
+				$('#lblEventImage').addClass('error');
 			  	$('#alertImage').empty();
 			  	$('#alertImage').append("Selecione una imagen");
 			  	$('#alertImage').show();
@@ -100,6 +102,7 @@ $("#imgImagen").click(function() {changeImage()});
 	//muestra el formulario para agregar eventos
 	function showFormAdd(){
 		cleanFields();
+		hideAlert();
 		$('#btnSaveEvent').hide();
 		$('#btnRegisterEvent').show();
 		$('#viewEvent').hide();
@@ -109,6 +112,7 @@ $("#imgImagen").click(function() {changeImage()});
 	//muestra el formulario para modificar eventos
 	function ShowFormEdit(id){
 		cleanFields();
+		hideAlert();
 		id = $(id).find('input').val();
 		$('#btnSaveEvent').val(id); 
 		showsEvent(id);
@@ -130,6 +134,7 @@ $("#imgImagen").click(function() {changeImage()});
 	//regresa a la tabla de eventos
 	function eventCancel(){
 		cleanFields();
+		hideAlert();
 		$('#FormEvent').hide();	
 		$('#viewEvent').show();
 	}
@@ -139,6 +144,9 @@ $("#imgImagen").click(function() {changeImage()});
 		var result;
 		result = validations();
 		if(result){
+			$('.loading').show();
+			$('.loading').html('<img src="../assets/img/web/loading.gif" height="40px" width="40px" />');
+			$('.bntSave').attr('disabled',true);
 			upImage(0);	
 		}	
 	}
@@ -149,6 +157,9 @@ $("#imgImagen").click(function() {changeImage()});
 		result = validations();
 		id = $('#btnSaveEvent').val();
 		if(result){
+			$('.loading').show();
+			$('.loading').html('<img src="../assets/img/web/loading.gif" height="40px" width="40px" />');
+			$('.bntSave').attr('disabled',true);
 			if(document.getElementById('fileImagen').value == ""){
 				var nameImage = $('#imagenName').val();
 				ajaxSaveEvent(nameImage,id);
@@ -270,19 +281,24 @@ $("#imgImagen").click(function() {changeImage()});
 					fav:fav
             	},
             	success: function(data){
-					
 					ajaxMostrarTabla(column,order,"../admin/eventos/getallSearch",(numPag-1),"event");
 					$('#FormEvent').hide();
 					$('#viewEvent').show();
 					$('#alertMessage').empty();
-					if(id==0){
-						$('#alertMessage').append("Se han agregado un nuevo evento");
-					} else {
-						$('#alertMessage').append("Se han editado los datos del evento");	
-					}
+					$('#alertMessage').html(data);
 					$('#divMenssage').show(1000).delay(1500);
 					$('#divMenssage').hide(1000);
-            	}
+					$('.loading').hide();
+					$('.bntSave').attr('disabled',false);
+            	},
+				error: function(){
+					ajaxMostrarTabla(column,order,"../admin/eventos/getallSearch",(numPag-1),"event");
+					$('#FormEvent').hide();
+					$('#viewEvent').show();
+					$('.loading').hide();
+					$('.bntSave').attr('disabled',false);
+					alert("error al insertar datos")
+				}
         	});
 	}
 	
@@ -351,6 +367,7 @@ $("#imgImagen").click(function() {changeImage()});
 			$('#alertImage').empty();
 			$('#alertImage').append("Campo vacio. Selecione una imagen");
 			$('#alertImage').show();
+			$('#lblEventImage').addClass('error');
 			result = false;
 		}
 		
@@ -401,6 +418,7 @@ $("#imgImagen").click(function() {changeImage()});
 		$('#lblEventCity').removeClass('error');
 		$('#lblEventWord').removeClass('error');
 		$('#lblEventDate').removeClass('error');
+		$('#lblEventImage').removeClass('error');
 	}
 	
 	//limpia los campos del formulario

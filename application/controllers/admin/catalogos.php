@@ -9,7 +9,7 @@ if (!defined('BASEPATH'))
 
 setlocale(LC_ALL,"es_ES@euro","es_ES","esp");
 
-class Cities extends CI_Controller {
+class Catalogos extends CI_Controller {
 
      public function __construct(){
         parent::__construct();

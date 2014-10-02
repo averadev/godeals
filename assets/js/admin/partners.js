@@ -7,8 +7,8 @@ $('#btnAddPartner').click(function(){showAddForm();});
 $(document).on('click','.imageDelete',function(){ showDeleteForm(this);});
 
 //botones para el formulario de eliminar partners --barra dinamica que aparece cuando se pulsa el boton de eliminar
-$('#btnAcceptP').click(function() {deletePartner();});
-$('#btnCancelP').click(function() {cancelDeletePartner();});
+$('#btnAcceptC').click(function() {deletePartner();});
+$('#btnCancelC').click(function() {cancelDeletePartner();});
 
 
 $('#btnRegisterPartner').click(function() {addPartner();});
@@ -24,6 +24,7 @@ $(window).load(function(){
  $(function() {
   $('#fileImagen').change(function(e) {
 	  $('#alertImage').hide();
+	  $('#lblPartnerImage').removeClass('error');
 	  $('#imgImagen').attr("src","http://placehold.it/500x300&text=[ad]");
 	  if($('#imagenName').val() != 0){
 		 $('#imgImagen').attr("src",URL_IMG + "app/coupon/max/" + $('#imagenName').val())
@@ -44,6 +45,7 @@ $(window).load(function(){
 			  $('#alertImage').empty();
 			  $('#alertImage').append("Selecione una imagen");
 			  $('#alertImage').show();
+			  $('#lblPartnerImage').addClass('error');
 		  }		  
        return;
 	  }
@@ -87,7 +89,7 @@ function showEditForm(partner){
 //muestra el formulario para eliminar eventos
 function showDeleteForm(id){
     id = $(id).attr('value');
-    $('#btnAcceptP').val(id);
+    $('#btnAcceptC').val(id);
     $('#divMenssagewarning').hide(500);
     $('#divMenssage').hide();
     $('#divMenssagewarning').show(1000);
@@ -136,6 +138,9 @@ function addPartner(){
     result = validations();
 
     if(result){
+		$('.loading').show();
+		$('.loading').html('<img src="../assets/img/web/loading.gif" height="40px" width="40px" />');
+		$('.bntSave').attr('disabled',true);
         uploadImage(0);	
     }	
 }
@@ -146,7 +151,9 @@ function editPartner(){
     result = validations();
     var id = $('#btnSavePartner').val();
     if(result){
-        
+        $('.loading').show();
+		$('.loading').html('<img src="../assets/img/web/loading.gif" height="40px" width="40px" />');
+		$('.bntSave').attr('disabled',true);
         if(document.getElementById('fileImagen').value == ""){
             var nameImage = $('#imagenName').val();
             console.log('a' +  id);
@@ -159,7 +166,7 @@ function editPartner(){
 
 //elimina el evento selecionado de la base de datos
 function deletePartner(){
-    id = $('#btnAcceptP').val();
+    id = $('#btnAcceptC').val();
 
     numPag = $('ul .current').val();
     
@@ -280,17 +287,19 @@ function ajaxSavePartner(nameImage,id){
             ajaxMostrarTabla(column,order,"../admin/partners/getAllSearch",(numPag-1),"partner");
             $('#FormularioPartners').hide();
             $('#vistaPartners').show();
-            $('#alertMessage').empty();
-            if(id==0){
-                $('#alertMessage').append("Se han agregado un nuevo partner");
-            } else {
-                $('#alertMessage').append("Se han editado los datos del partner");	
-            }
+            $('#alertMessage').html(data);
             $('#divMenssage').show(1000).delay(1500);
             $('#divMenssage').hide(1000);
+			$('.loading').hide();
+			$('.bntSave').attr('disabled',false);
         },
-        error: function(){
-            alert("error al insertar datos");   
+        error: function(data){
+			ajaxMostrarTabla(column,order,"../admin/partners/getAllSearch",(numPag-1),"partner");
+            $('#FormularioPartners').hide();
+            $('#vistaPartners').show();
+			$('.loading').hide();
+			$('.bntSave').attr('disabled',false);
+            alert("error al insertar datos");  
         }
     });
 }
@@ -307,6 +316,7 @@ function validations(){
         $('#alertImage').empty();
         $('#alertImage').append("Campo vacio. Selecione una imagen");
         $('#alertImage').show();
+		$('#lblPartnerImage').addClass('error');
         result = false;
     }
     
@@ -416,5 +426,6 @@ function ocultarAlertas(){
     $('#lblPartnerFacebook').removeClass('error');
     $('#lblPartnerLatitude').removeClass('error');
     $('#lblPartnerLongitude').removeClass('error');
+	$('#lblPartnerImage').removeClass('error');
 }
 	

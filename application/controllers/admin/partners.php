@@ -67,13 +67,18 @@ class Partners extends CI_Controller {
             echo json_encode($data);
         }    
     }
+	
+	public function getPartner(){
+        if($this->input->is_ajax_request()){
+            $data = $this->partner_db->getNameSearch($_POST['dato']);
+            echo json_encode($data);
+        }
+    }
     
     public function savePartner(){
          if($this->input->is_ajax_request()){
              if($_POST['id']==0){
-                
-                $data = $this->partner_db->insertPartner(
-                    array(
+                $data = $this->partner_db->insertPartner(array(
                     'name'      => $_POST['name'],
                     'logo'      => $_POST['logo'],
                     'idCatMap'  => $_POST['idCatMap'],
@@ -87,8 +92,8 @@ class Partners extends CI_Controller {
                     'status'    => 1
                     )
                 ); 
-                echo json_encode($data);
-                
+				$data = "Se han agregado un nuevo partner";
+               // echo json_encode($data);
             }
             else {
                 $data = $this->partner_db->updatePartner(array(
@@ -106,6 +111,7 @@ class Partners extends CI_Controller {
                     'status'    => 1
                     )
                 );
+				$data = "Se han editado los datos del partner";
             }
             echo json_encode($data);
         }

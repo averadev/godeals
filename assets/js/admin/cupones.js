@@ -23,15 +23,16 @@ $("#imgImagen").click(function() {changeImage()});
 	$(window).load(function(){
  $(function() {
 	 $('#fileImagen').change(function(e) {
-	 $('#alertImage').hide();
-	 $('#imgImagen').attr("src","http://placehold.it/500x300&text=[ad]");
-	 if($('#imagenName').val() != 0){
-		 $('#imgImagen').attr("src",URL_IMG + "app/coupon/max/" + $('#imagenName').val())
-	 }
-	 if(e.target.files[0] != undefined){
-		 addImage(e); 
-	 }
-     });
+		$('#labelImage').removeClass('error');
+	 	$('#alertImage').hide();
+	 	$('#imgImagen').attr("src","http://placehold.it/500x300&text=[ad]");
+	 	if($('#imagenName').val() != 0){
+		 	$('#imgImagen').attr("src",URL_IMG + "app/coupon/max/" + $('#imagenName').val())
+	 	}
+	 	if(e.target.files[0] != undefined){
+			 addImage(e); 
+	 	}
+	});
 
      function addImage(e){
       var file = e.target.files[0],
@@ -43,6 +44,7 @@ $("#imgImagen").click(function() {changeImage()});
 		  if($('#imagenName').val() != 0){
 			  $('#imgImagen').attr("src",URL_IMG + "app/coupon/max/" + $('#imagenName').val())
 		  } else {
+			  $('#labelImage').addClass('error');
 			  $('#alertImage').empty();
 			  $('#alertImage').append("Selecione una imagen");
 			  $('#alertImage').show();
@@ -77,7 +79,7 @@ function autocomplete(elemento){
     switch(elemento){
 		case 'partner':            
 			palabra = $("#txtPartner").val();
-			url = "../admin/partners/getallSearch";
+			url = "../admin/partners/getPartner";
 			datalist = "partnerList";
 			break;
         case 'city':
@@ -97,7 +99,6 @@ function finderAutocomplete( palabra, url, datalist){
 			dato:palabra
 		},
 		success: function(data){
-			console.log(data);
 			datosObtenidos = '';
 			switch(datalist){
 				case 'partnerList':
@@ -156,6 +157,9 @@ function finderAutocomplete( palabra, url, datalist){
 		var result;
 		result = validations();
 		if(result == true){
+			$('.loading').show();
+			$('.loading').html('<img src="../assets/img/web/loading.gif" height="40px" width="40px" />');
+			$('.bntSave').attr('disabled',true);
 			uploadImage(0);
 		} 
 	}
@@ -168,6 +172,9 @@ function finderAutocomplete( palabra, url, datalist){
 		if(result == true){
 			id = $('#btnSaveCoupon').val();
 			var nameImage = $('#imagenName').val();
+			$('.loading').show();
+			$('.loading').html('<img src="../assets/img/web/loading.gif" height="40px" width="40px" />');
+			$('.bntSave').attr('disabled',true);
 			if(document.getElementById('fileImagen').value == ""){
 				ajaxSaveCoupon(nameImage,id);
 			} else {
@@ -260,20 +267,24 @@ function finderAutocomplete( palabra, url, datalist){
 					endDate:$('#dateEndDate').val(),
 					idCatalog:jsonIdCatalog	
             	},
-            	success: function(){
+            	success: function(data){
 					ajaxMostrarTabla(column,order,"../admin/cupones/getallSearch",(numPag-1),"coupon");
 					$('#FormEvent').hide();
 					$('#viewEvent').show();
 					$('#alertMessage').empty();
-					if(id == 0){
-						$('#alertMessage').append("Se ha agregado un nuevo Cupon");
-					} else {
-						$('#alertMessage').append("Se ha editado los datos de coupon");
-					}
+					$('#alertMessage').html(data);
 					$('#divMenssage').show(1000).delay(1500);
 					$('#divMenssage').toggle(1000);
+					$('.loading').hide();
+					$('.bntSave').attr('disabled',false);
             	},
 				error: function(){
+					ajaxMostrarTabla(column,order,"../admin/cupones/getallSearch",(numPag-1),"coupon");
+					$('#FormEvent').hide();
+					$('#viewEvent').show();
+					$('#alertMessage').empty();
+					$('.loading').hide();
+					$('.bntSave').attr('disabled',false);
 					alert("error al insertar datos");
 				}
         	});
@@ -449,6 +460,7 @@ function finderAutocomplete( palabra, url, datalist){
 			$('#alertImage').empty();
 			$('#alertImage').append("Campo vacio. Selecione una imagen");
 			$('#alertImage').show();
+			$('#labelImage').addClass('error');
 			result = false;
 		}
 		
@@ -539,6 +551,7 @@ function finderAutocomplete( palabra, url, datalist){
 		$('#labelEndDate').removeClass('error');
 		$('#labelEntretenimiento').removeClass('error');
 		$('#labelProductos').removeClass('error');
+		$('#labelImage').removeClass('error');
 	}
 	
 	function cleanFields(){
