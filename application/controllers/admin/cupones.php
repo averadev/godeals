@@ -92,7 +92,9 @@ class Cupones extends CI_Controller {
 				'timer' => $_POST['timer'],
 				'image' => $_POST['image'],
 				'description' => $_POST['description'],
-				'clauses' => $_POST['detail'],
+				'validity' => $_POST['validity'],
+				'clauses' => $_POST['clauses'],
+				'detail' => $_POST['detail'],
 				'iniDate' => $_POST['iniDate'],
 				'endDate' => $_POST['endDate'],
 				'status' => 1);
@@ -108,7 +110,9 @@ class Cupones extends CI_Controller {
 				'timer' => $_POST['timer'],
 				'image' => $_POST['image'],
 				'description' => $_POST['description'],
-				'clauses' => $_POST['detail'],
+				'validity' => $_POST['validity'],
+				'clauses' => $_POST['clauses'],
+				'detail' => $_POST['detail'],
 				'iniDate' => $_POST['iniDate'],
 				'endDate' => $_POST['endDate']);
 				

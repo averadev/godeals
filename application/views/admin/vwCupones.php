@@ -1,8 +1,6 @@
-
 <?php
 $this->load->view('admin/vwHeader');
 ?>
-
 
 <div class="row">
     <div class="page-header header">
@@ -167,13 +165,23 @@ $this->load->view('admin/vwHeader');
                                 </small>
                             </div>
                         </div>
+                         <div class="row">
+                            <div class="small-12 medium-10 large-10 columns">
+                                <label id="labelValidity"><strong>*Validez</strong>
+                                    <input type="text" id="txtValidity" class="radius" />
+                                </label>
+                                <small id="alertValidity" class="error" style="display:none">
+                                    Campo vacion. Por favor escriba la validacion.
+                                </small>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="small-12 medium-10 large-10 columns">
-                                <label id="labelDetail"><strong>*Clausulas</strong>
-                                    <textarea id="txtDetail" class="radius" rows="10"></textarea>
+                                <label id="labelClauses"><strong>*Clausulas</strong>
+                                    <textarea id="txtClauses" class="radius" rows="10"></textarea>
                                 </label>
-                                <small id="alertDetail" class="error" style="display:none">
-                                    Campo vacion. Por favor escriba detail.
+                                <small id="alertClauses" class="error" style="display:none">
+                                    Campo vacion. Por favor escriba las clausulas.
                                 </small>
                             </div>
                         </div>
@@ -244,6 +252,16 @@ $this->load->view('admin/vwHeader');
                         </div>
                         <br/><br/>
                         <div class="row">
+                            <div class="small-12 medium-10 large-10 columns">
+                                <label id="labelDetail"><strong>*Detail</strong>
+                                    <textarea id="txtDetail" class="radius" rows="10"></textarea>
+                                </label>
+                                <small id="alertDetail" class="error" style="display:none">
+                                    Campo vacion. Por favor escriba detail.
+                                </small>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="small-12 medium-10 large-10 columns" id="imagen">
                                 <table id="tableEntretenimiento">
                                     <tr>
@@ -261,6 +279,7 @@ $this->load->view('admin/vwHeader');
                                 <small id="alertImage" class="error" style="display:none"></small>
                             </div>
                         </div>
+                        
                         <div class="row">
                             <div class="small-12 medium-10 large-10 columns">
                                 <label id="labelIniDate"><strong>*Fecha Inicio</strong>

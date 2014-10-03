@@ -37,6 +37,9 @@ class Partners extends CI_Controller {
         return $array;
     }
 	
+	/**
+	*	regresa 10 partner 
+	*/
     public function paginadorArray(){
         if($this->input->is_ajax_request()){
             $data = $this->partner_db->getAllSearch($_POST['dato'],$_POST['column'],$_POST['order']);
@@ -45,8 +48,10 @@ class Partners extends CI_Controller {
         }
     }
     
-    public function getAllSearch(){
-       
+	/**
+	* regresa todos los partner 
+	*/
+    public function getAllSearch(){   
         if($this->input->is_ajax_request()){
             $data = $this->partner_db->getAllSearch($_POST['dato'],$_POST['column'],$_POST['order']);
             echo json_encode($data);
@@ -54,13 +59,15 @@ class Partners extends CI_Controller {
     }
     
     public function sortSliceArray($array, $count){
-	//slice
         if (count($array) > $count){
             $array = array_slice($array, 0, $count);
         }
         return $array;
     }
     
+	/**
+	* obtiene partner por id
+	*/
     public function getId(){
         if($this->input->is_ajax_request()){
             $data = $this->partner_db->getId($_POST['id']);
@@ -68,13 +75,29 @@ class Partners extends CI_Controller {
         }    
     }
 	
+	/**
+	*	regresa los partner por nombre
+	*/
 	public function getPartner(){
         if($this->input->is_ajax_request()){
             $data = $this->partner_db->getNameSearch($_POST['dato']);
             echo json_encode($data);
         }
     }
-    
+	
+	/**
+	*	valida que el amail no exista en la base de datos
+	*/
+	public function getEmail(){
+		if($this->input->is_ajax_request()){
+            $data = $this->partner_db->getEmail($_POST['email']);
+            echo json_encode($data);
+        }
+	}
+	
+	/**
+	* inserta o actualiza los datos del partner
+	*/
     public function savePartner(){
          if($this->input->is_ajax_request()){
              if($_POST['id']==0){
@@ -117,6 +140,9 @@ class Partners extends CI_Controller {
         }
     }
     
+	/**
+	* actualiza el status a 0
+	*/
     public function deletePartner(){
         if($this->input->is_ajax_request()){
             $data = $this->partner_db->deletePartner($_POST['id']);

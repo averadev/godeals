@@ -67,13 +67,23 @@ Class partner_db extends CI_MODEL
         $this->db->update('partner', $data);
 	}
         
+	/*
+	*	actualiza el status a 0
+	*/
     public function deletePartner($id){
         $data = array(
 			'status' => 0
 		);
 		$this->db->where('id', $id);
 		$this->db->update('partner', $data);
-        }
+    }
+	
+	public function getEmail($dato){
+		$this->db->select('partner.mail');
+        $this->db->from('partner');
+		$this->db->where('partner.mail = ', $dato);
+		return  $this->db->get()->result();
+	}
 }
 //end model
 

@@ -236,9 +236,9 @@ function finderAutocomplete( palabra, url, datalist){
 	//registra o modifica los datos de cupones
 	function ajaxSaveCoupon(nameImage,id){
 		
-		valorPartner = $('#txtPartner').val();
+		valorPartner = $('#txtPartner').val().trim();
 		var idPartner = $('datalist option[value="' + valorPartner + '"]').attr('id')
-		valorCity = $('#txtCity').val();
+		valorCity = $('#txtCity').val().trim();
 		var idCity = $('datalist option[value="' + valorCity + '"]').attr('id')
 		var idCatalog = new Array();
 		$('input[name=catalog]:checked').each(function() {
@@ -261,8 +261,10 @@ function finderAutocomplete( palabra, url, datalist){
 					cityId:idCity,
 					timer:timer,
 					image:nameImage,
-					description:$('#txtDescription').val(),
-					detail:$('#txtDetail').val(),
+					description:$('#txtDescription').val().trim(),
+					clauses:$('#txtClauses').val().trim(),
+					validity:$('#txtValidity').val().trim(),
+					detail:$('#txtDetail').val().trim(),
 					iniDate:$('#dateIniDate').val(),
 					endDate:$('#dateEndDate').val(),
 					idCatalog:jsonIdCatalog	
@@ -305,10 +307,12 @@ function finderAutocomplete( palabra, url, datalist){
 				$('#partnerList').append("<option id='" + data[0].partnerId + "' value='" +  data[0].partnerName + "' />" );
 				$('#txtCity').val(data[0].cityName);
 				$('#cityList').append("<option id='" + data[0].cityId + "' value='" +  data[0].cityName + "' />" );
-				$('#txtDetail').val(data[0].clauses);
+				$('#txtValidity').val(data[0].validity);
+				$('#txtClauses').val(data[0].clauses);
 				$('#imgImagen').attr("src",URL_IMG + "app/coupon/max/" + data[0].image)
 				$('#imagenName').val(data[0].image);
-				$('#imgImagen').attr("hidden",data[0].image)
+				$('#imgImagen').attr("hidden",data[0].image);
+				$('#txtDetail').val(data[0].detail);
 				$('#dateIniDate').val(data[0].iniDate);
 				$('#dateEndDate').val(data[0].endDate);
 				originalDate = $('#dateIniDate').val();
@@ -464,6 +468,14 @@ function finderAutocomplete( palabra, url, datalist){
 			result = false;
 		}
 		
+		// valida que el campo detail este lleno
+		if($('#txtDetail').val().trim().length == 0){
+			$('#alertDetail').show();
+			$('#labelDetail').addClass('error');
+			$('#txtDetail').focus();
+			result = false;
+		}
+		
 		//valida que la fecha final sea mayor o igual a la de inicio
 		if($('#dateEndDate').val() < $('#dateIniDate').val()){
 			$('#alertEndDate').empty();
@@ -475,7 +487,7 @@ function finderAutocomplete( palabra, url, datalist){
 		}
 		
 		//valida que se haya selecionado una fecha final
-		if($('#dateEndDate').val().length == 0){
+		if($('#dateEndDate').val().trim().length == 0){
 			$('#alertEndDate').empty();
 			$('#alertEndDate').append("Campo vacio. Ingrese una fecha");
 			$('#alertEndDate').show();
@@ -485,7 +497,7 @@ function finderAutocomplete( palabra, url, datalist){
 		}
 		
 		//valida que la fecha de inicio no esta vacia
-		if($('#dateIniDate').val().length == 0){
+		if($('#dateIniDate').val().trim().length == 0){
 			$('#alertIniDate').empty();
 			$('#alertIniDate').append("Campo vacio. Ingrese una fecha");
 			$('#alertIniDate').show();
@@ -494,15 +506,23 @@ function finderAutocomplete( palabra, url, datalist){
 			result = false;
 		}
 		
-		//valida que el campo detail no este vacio
-		if($('#txtDetail').val().length == 0){
-			$('#alertDetail').show();
-			$('#labelDetail').addClass('error');
-			$('#txtDetail').focus();
+		//valida que el campo clauselas no este vacio
+		if($('#txtValidity').val().trim().length == 0){
+			$('#alertValidity').show();
+			$('#labelValidity').addClass('error');
+			$('#txtValidity').focus();
 			result = false;
 		}
 		
-		valorCity = $('#txtCity').val();
+		//valida que el campo Validez no este vacio
+		if($('#txtClauses').val().trim().length == 0){
+			$('#alertClauses').show();
+			$('#labelClauses').addClass('error');
+			$('#txtClauses').focus();
+			result = false;
+		}
+		
+		valorCity = $('#txtCity').val().trim();
 		idCity = $('datalist option[value="' + valorCity + '"]').attr('id');
 		//valida que la ciudad selecionada no este vacia y que exista
 		if(idCity == undefined){
@@ -512,7 +532,7 @@ function finderAutocomplete( palabra, url, datalist){
 			result = false;
 		}
 		
-		valorPartner = $('#txtPartner').val();
+		valorPartner = $('#txtPartner').val().trim();
 		idPartner = $('datalist option[value="' + valorPartner + '"]').attr('id');
 		//valida que el partner selecionado no este vacio y que exista
 		if(idPartner == undefined){
@@ -523,7 +543,7 @@ function finderAutocomplete( palabra, url, datalist){
 		}
 		
 		//valida que la description no este vacia
-		if($('#txtDescription').val().length == 0){
+		if($('#txtDescription').val().trim().length == 0){
 			$('#alertDescription').show();
 			$('#labelDescription').addClass('error');
 			$('#txtDescription').focus();
@@ -537,6 +557,8 @@ function finderAutocomplete( palabra, url, datalist){
 		$('#alertDescription').hide()
 		$('#alertPartner').hide();
 		$('#alertCity').hide();
+		$('#alertValidity').hide();
+		$('#alertClauses').hide();
 		$('#alertDetail').hide();
 		$('#alertIniDate').hide();
 		$('#alertEndDate').hide();
@@ -546,6 +568,8 @@ function finderAutocomplete( palabra, url, datalist){
 		$('#labelDescription').removeClass('error');
 		$('#labelPartner').removeClass('error');
 		$('#labelCity').removeClass('error');
+		$('#labelValidity').removeClass('error');
+		$('#labelClauses').removeClass('error');
 		$('#labelDetail').removeClass('error');
 		$('#labelIniDate').removeClass('error');
 		$('#labelEndDate').removeClass('error');
@@ -558,6 +582,8 @@ function finderAutocomplete( palabra, url, datalist){
 		$('#txtDescription').val("");
 		$('#txtPartner').val("");
 		$('#txtCity').val("");
+		$('#txtValidity').val("");
+		$('#txtClauses').val("");
 		$('#txtDetail').val("");
 		$('#dateIniDate').val("");
 		$('#dateEndDate').val("");

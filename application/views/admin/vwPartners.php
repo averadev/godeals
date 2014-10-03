@@ -77,7 +77,10 @@ $this->load->view('admin/vwHeader');
                                     </tr>
                                 
                                 <?php endforeach;
-				$totalPaginador = intval($total/10);
+									$totalPaginador = intval($total/10);
+									if($total%10 == 0){
+                                		$totalPaginador = $totalPaginador - 1;		
+                					}
 				?>
                                 </tbody>
                             </table>
@@ -164,7 +167,7 @@ $this->load->view('admin/vwHeader');
                             <div class="row">
                                 <div class="small-12 medium-11 large-10 columns">
                                     <label id="lblPartnerPhone" class="field"><strong>Telefono</strong>
-                                        <input type="text" id="txtPartnerPhone" class="radius" />
+                                        <input type="tel" id="txtPartnerPhone" class="radius" />
                                     </label>
                                     <small id="alertPartnerPhone" class="error" style="display: none">
                                         Campo vacio. Por favor escriba el telefono del socio
@@ -175,10 +178,9 @@ $this->load->view('admin/vwHeader');
                              <div class="row">
                                 <div class="small-12 medium-11 large-10 columns">
                                     <label id="lblPartnerMail" class="field"><strong>Correo</strong>
-                                        <input type="text" id="txtPartnerMail" class="radius" />
+                                        <input type="email" id="txtPartnerMail" class="radius" placeholder="ejemplo@email.com" />
                                     </label>
                                     <small id="alertPartnerMail" class="error" style="display: none">
-                                        Campo vacio. Por favor escriba el correo del socio
                                     </small>
                                 </div>
                             </div>
@@ -278,6 +280,8 @@ $this->load->view('admin/vwFooter');
 <script type="text/javascript" src="<?php echo base_url() . FOUND; ?>js/foundation/foundation.accordion.js"></script>
 <script type="text/javascript" src="<?php echo base_url().JS; ?>admin/partners.js"></script>
 <script type="text/javascript" src="<?php echo base_url().JS; ?>admin/paginadorYBuscador.js"></script>
+<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false"></script>
+
 
 
 
