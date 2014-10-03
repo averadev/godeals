@@ -468,14 +468,6 @@ function finderAutocomplete( palabra, url, datalist){
 			result = false;
 		}
 		
-		// valida que el campo detail este lleno
-		if($('#txtDetail').val().trim().length == 0){
-			$('#alertDetail').show();
-			$('#labelDetail').addClass('error');
-			$('#txtDetail').focus();
-			result = false;
-		}
-		
 		//valida que la fecha final sea mayor o igual a la de inicio
 		if($('#dateEndDate').val() < $('#dateIniDate').val()){
 			$('#alertEndDate').empty();
@@ -506,19 +498,27 @@ function finderAutocomplete( palabra, url, datalist){
 			result = false;
 		}
 		
-		//valida que el campo clauselas no este vacio
-		if($('#txtValidity').val().trim().length == 0){
-			$('#alertValidity').show();
-			$('#labelValidity').addClass('error');
-			$('#txtValidity').focus();
-			result = false;
-		}
-		
 		//valida que el campo Validez no este vacio
 		if($('#txtClauses').val().trim().length == 0){
 			$('#alertClauses').show();
 			$('#labelClauses').addClass('error');
 			$('#txtClauses').focus();
+			result = false;
+		}
+		
+		// valida que el campo detail este lleno
+		if($('#txtDetail').val().trim().length == 0){
+			$('#alertDetail').show();
+			$('#labelDetail').addClass('error');
+			$('#txtDetail').focus();
+			result = false;
+		}
+		
+		//valida que el campo clauselas no este vacio
+		if($('#txtValidity').val().trim().length == 0){
+			$('#alertValidity').show();
+			$('#labelValidity').addClass('error');
+			$('#txtValidity').focus();
 			result = false;
 		}
 		

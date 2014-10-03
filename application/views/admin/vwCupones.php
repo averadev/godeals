@@ -135,7 +135,7 @@ $this->load->view('admin/vwHeader');
                     <div class="small-12 medium-6 large-6 columns">
                         <div class="row">
                             <div class="small-12 medium-10 large-10 columns">
-                                <label id="labelDescription"><strong>*Description</strong>
+                                <label id="labelDescription"><strong>*Descripcion</strong>
                                     <input type="text" id="txtDescription" class="radius"/>
                                 </label>
                                 <small id="alertDescription" class="error" style="display:none">
@@ -145,18 +145,18 @@ $this->load->view('admin/vwHeader');
                         </div>
                         <div class="row">
                             <div class="small-12 medium-10 large-10 columns">
-                                <label id="labelPartner"><strong>*Partner</strong>
+                                <label id="labelPartner"><strong>*Socios</strong>
                                     <input type="text" id="txtPartner" list="partnerList" autocomplete="on" class="radius"> 
                                             <datalist id="partnerList"> </datalist>
                                 </label>
                                 <small id="alertPartner" class="error" style="display:none">
-                                    Partner incorrecto. Por favor escriba un partner existente
+                                    Partner incorrecto. Por favor escriba un socio existente
                                 </small>
                             </div>
                         </div>
                         <div class="row">
                             <div class="small-12 medium-10 large-10 columns">
-                                <label id="labelCity"><strong>*City</strong>
+                                <label id="labelCity"><strong>*Ciudad</strong>
                                     <input type="text" id="txtCity" list="cityList" autocomplete="off" class="radius" />
                                             <datalist id="cityList"> </datalist>
                                 </label>
@@ -167,7 +167,7 @@ $this->load->view('admin/vwHeader');
                         </div>
                          <div class="row">
                             <div class="small-12 medium-10 large-10 columns">
-                                <label id="labelValidity"><strong>*Validez</strong>
+                                <label id="labelValidity"><strong>*Valides</strong>
                                     <input type="text" id="txtValidity" class="radius" />
                                 </label>
                                 <small id="alertValidity" class="error" style="display:none">
@@ -177,11 +177,11 @@ $this->load->view('admin/vwHeader');
                         </div>
                         <div class="row">
                             <div class="small-12 medium-10 large-10 columns">
-                                <label id="labelClauses"><strong>*Clausulas</strong>
-                                    <textarea id="txtClauses" class="radius" rows="10"></textarea>
+                                <label id="labelDetail"><strong>*Descripcion de la promocion</strong>
+                                    <textarea id="txtDetail" class="radius" rows="10"></textarea>
                                 </label>
-                                <small id="alertClauses" class="error" style="display:none">
-                                    Campo vacion. Por favor escriba las clausulas.
+                                <small id="alertDetail" class="error" style="display:none">
+                                    Campo vacion. Por favor escriba la decripcion.
                                 </small>
                             </div>
                         </div>
@@ -253,11 +253,11 @@ $this->load->view('admin/vwHeader');
                         <br/><br/>
                         <div class="row">
                             <div class="small-12 medium-10 large-10 columns">
-                                <label id="labelDetail"><strong>*Detail</strong>
-                                    <textarea id="txtDetail" class="radius" rows="10"></textarea>
+                                <label id="labelClauses"><strong>*Clausulas</strong>
+                                    <textarea id="txtClauses" class="radius" rows="10"></textarea>
                                 </label>
-                                <small id="alertDetail" class="error" style="display:none">
-                                    Campo vacion. Por favor escriba detail.
+                                <small id="alertClauses" class="error" style="display:none">
+                                    Campo vacion. Por favor escriba las clausulas.
                                 </small>
                             </div>
                         </div>
