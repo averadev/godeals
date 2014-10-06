@@ -147,7 +147,8 @@ class Cupones extends CI_Controller {
 	}
 	
 	public function subirImagen(){
-		
+        // Rutas para el guardado
+        $rutaApp="assets/img/app/coupon/app/";
 		$rutaMax="assets/img/app/coupon/max/";
 		$rutaMin="assets/img/app/coupon/min/";
   		foreach ($_FILES as $key) {
@@ -158,14 +159,17 @@ class Cupones extends CI_Controller {
 				$tipo = $key['type']; //obtenemos el tipo de imagen
 				
 				//definimos el ancho y alto que tendra la imagen
-				$max_ancho = 700;
+				$app_ancho = 440;
+				$app_alto = 330;
+                $max_ancho = 700;
 				$max_alto = 525;
 				$min_ancho = 320;
 				$min_alto = 240;
 				list($ancho,$alto)=getimagesize($temporal);
 				//Creamos una imagen en blanco con el ancho y alto final
-				$tmp=imagecreatetruecolor($max_ancho,$max_alto);
-				$tmp2=imagecreatetruecolor($min_ancho,$min_alto);	
+				$tmpApp=imagecreatetruecolor($app_ancho,$app_alto);
+                $tmpMax=imagecreatetruecolor($max_ancho,$max_alto);
+				$tmpMin=imagecreatetruecolor($min_ancho,$min_alto);	
 				
 				//detecta si la imagen es png
 				if($tipo == "image/png"){
@@ -180,27 +184,27 @@ class Cupones extends CI_Controller {
 					//move_uploaded_file($temporal, $ruta . "a.jpg"); //Movemos el archivo temporal a la ruta especificada
 					$imagen = imagecreatefromjpeg($temporal); 
 				}
-				
-					$fecha = new DateTime();
-					$nombreTimeStamp = $fecha->getTimestamp();
+				// Obtenemos timestamp para el nombre
+                $fecha = new DateTime();
+                $nombreTimeStamp = $fecha->getTimestamp();
 				
 				//toma la ruta de la imagen a crear
-					$patch_imagenMax=$rutaMax . "coupon_" . $nombreTimeStamp .".jpg";
-					$patch_imagenMin=$rutaMin . "coupon_" . $nombreTimeStamp . ".jpg";
+                $patch_imagenApp=$rutaApp . "coupon_" . $nombreTimeStamp .".jpg";
+                $patch_imagenMax=$rutaMax . "coupon_" . $nombreTimeStamp . ".jpg";
+                $patch_imagenMin=$rutaMin . "coupon_" . $nombreTimeStamp . ".jpg";
 				
 				//Copiamos la imagen sobre la imagen que acabamos de crear en blanco
-					imagecopyresampled($tmp,$imagen,0,0,0,0,$max_ancho, $max_alto,$ancho,$alto);
-					imagejpeg($tmp,$patch_imagenMax,100);
-					
-					imagecopyresampled($tmp2,$imagen,0,0,0,0,$min_ancho, $min_alto,$ancho,$alto);
-					imagejpeg($tmp2,$patch_imagenMin,100);
-	
-					//Se destruye variable $img_original para liberar memoria
-					imagedestroy($imagen);
-      			
-				//echo json_encode($_FILES);
-				
-					echo "coupon_" . $nombreTimeStamp . ".jpg";
+                imagecopyresampled($tmpApp, $imagen,0,0,0,0, $app_ancho, $app_alto, $ancho, $alto);
+                imagejpeg($tmpApp, $patch_imagenApp,100);
+                
+                imagecopyresampled($tmpMax, $imagen,0,0,0,0, $max_ancho, $max_alto, $ancho, $alto);
+                imagejpeg($tmpMax, $patch_imagenMax,100);
+                
+                imagecopyresampled($tmpMin, $imagen,0,0,0,0, $min_ancho, $min_alto, $ancho, $alto);
+                imagejpeg($tmpMin, $patch_imagenMin,100);
+                
+                // Response
+				echo "coupon_" . $nombreTimeStamp . ".jpg";
 				
     		}else{
     		}
@@ -209,10 +213,10 @@ class Cupones extends CI_Controller {
 	
 	public function deleteImage(){
 		if($this->input->is_ajax_request()){
-			$rutaMax="assets/img/app/coupon/max/";
-			$rutaMin="assets/img/app/coupon/min/";
-			unlink($rutaMax . $_POST['deleteImage']);
-			unlink($rutaMin . $_POST['deleteImage']);
+			//$rutaMax="assets/img/app/coupon/max/";
+			//$rutaMin="assets/img/app/coupon/min/";
+			//unlink($rutaMax . $_POST['deleteImage']);
+			//unlink($rutaMin . $_POST['deleteImage']);
 		}
 	}
 	
