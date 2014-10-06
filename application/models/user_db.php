@@ -11,6 +11,7 @@ Class user_db extends CI_MODEL
      */
     public function insert($data){
         $this->db->insert('user', $data);
+        return $this->db->insert_id();
     }
     
     /**

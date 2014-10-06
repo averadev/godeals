@@ -77,8 +77,9 @@ Class api_db extends CI_MODEL
      * Obtiene todos los registros activos del catalogo
      */
     public function getCoupon($type){
-        $this->db->select ('coupon.id, coupon.image, coupon.description as title');
-        $this->db->select ('partner.name as partnerName, city.name as cityName, coupon.clauses, coupon.validity');
+        $this->db->select ('coupon.id, coupon.image, coupon.detail, coupon.description as title');
+        $this->db->select ('city.name as cityName, coupon.clauses, coupon.validity');
+        $this->db->select ('partner.name as partnerName, partner.latitude, partner.longitude');
         $this->db->from('coupon');
         $this->db->join('xref_coupon_catalog', 'xref_coupon_catalog.couponId = coupon.id');
         $this->db->join('catalog', 'catalog.id = xref_coupon_catalog.catalogId ');
@@ -97,8 +98,9 @@ Class api_db extends CI_MODEL
      * Obtiene todos los registros activos del catalogo
      */
     public function getCouponSubType($subtype){
-        $this->db->select ('coupon.id, coupon.image, coupon.description as title');
-        $this->db->select ('partner.name as partnerName, city.name as cityName, coupon.clauses, coupon.validity');
+        $this->db->select ('coupon.id, coupon.image, coupon.detail, coupon.description as title');
+        $this->db->select ('city.name as cityName, coupon.clauses, coupon.validity');
+        $this->db->select ('partner.name as partnerName, partner.latitude, partner.longitude');
         $this->db->from('coupon');
         $this->db->join('xref_coupon_catalog', 'xref_coupon_catalog.couponId = coupon.id');
         $this->db->join('catalog', 'catalog.id = xref_coupon_catalog.catalogId ');

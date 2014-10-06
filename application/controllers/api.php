@@ -56,18 +56,19 @@ class Api extends REST_Controller {
                 if (count($data) > 0){
                     $message = array('success' => false, 'message' => 'El email ya esta registrado.');
                 }else{
-                    $this->user_db->insert(array('email' => $this->get('email'), 'password' => $this->get('password')));
-                    $message = array('success' => true, 'message' => 'El usuario fue registrado exitosamente');
+                    $idApp = $this->user_db->insert(array('email' => $this->get('email'), 'password' => $this->get('password')));
+                    $message = array('success' => true, 'idApp' => $idApp, 'message' => 'El usuario fue registrado exitosamente');
                 }
             }else{
                 // Usuario de FaceBook
                 $data = $this->user_db->verifyEmail($this->get('email'));
                 if (count($data) > 0){
                     $this->user_db->update(array('email' => $this->get('email'), 'name' => $this->get('name'), 'fbId' => $this->get('fbId')));
+                    $message = array('success' => true, 'idApp' => $data[0]->id, 'message' => 'El usuario fue registrado exitosamente');
                 }else{
-                    $this->user_db->insert(array('email' => $this->get('email'), 'name' => $this->get('name'), 'fbId' => $this->get('fbId')));
+                    $idApp = $this->user_db->insert(array('email' => $this->get('email'), 'name' => $this->get('name'), 'fbId' => $this->get('fbId')));
+                    $message = array('success' => true, 'idApp' => $idApp, 'message' => 'El usuario fue registrado exitosamente');
                 }
-                $message = array('success' => true, 'message' => 'El usuario fue registrado exitosamente');
             }
         }
         $this->response($message, 200);
@@ -87,6 +88,22 @@ class Api extends REST_Controller {
             }else{
                 $message = array('success' => false, 'message' => 'El usuario/password es incorrecto.');
             }
+        }
+        $this->response($message, 200);
+    }
+    
+    /**
+     * Obtener items
+     */
+    public function setFav_get() { 
+        // Verificamos parametros y acceso
+        $message = $this->verifyIsSet(array('email'));
+        // Verificamos credenciales
+        if ($message == null) { $message = $this->verifyAccess(); }
+        if ($message == null) {
+            // Obtener servicios
+            $items = $this->api_db->setFav();
+            $message = array('success' => true);
         }
         $this->response($message, 200);
     }
