@@ -1,8 +1,6 @@
-
 <?php
 $this->load->view('admin/vwHeader');
 ?>
-
 
 <div class="row">
     <div class="page-header header">
@@ -14,28 +12,30 @@ $this->load->view('admin/vwHeader');
         <!--- divicion "viewEvent" que muestra la lista de cupones --->
         <div id="viewEvent">
             <div class="row">
+            
                 <div class="large-12 columns">
                     <!--- divicion que contiene el buscador --->
                     <div id="buscar" class="row collapse">
-                        <div class="small-10 columns">
+                        <div class="small-8 medium-10 large-10 columns columns">
                             <input class="txtSearch" id="txtSearchCoupon" type="text" 
                             placeholder="Busqueda por descripcion, cliente, ubicacion" />
 
                         </div>
-                        <div class="small-2 columns">
+                        <div class="small-4 medium-2 large-2 columns">
                             <button class="btnSearch" id="txtSearchCoupon"><img src="../assets/img/web/iconSearch.png">Buscar</button>
                         </div>
                     </div>
                     <!--- fin de la divicion buscar --->
-                    <div class="large-11" id="divMenssage" style="display:none">
+                    <div class="small-12 large-11" id="divMenssage" style="display:none">
                         <div data-alert class="alert-box success" id="alertMessage">
                         </div>
                     </div>
-                    <div class="large-11" id="divMenssagewarning" style="display:none">
+                    <div class="small-12 large-11" id="divMenssagewarning" style="display:none">
                         <div data-alert class="alert-box warning" id="alertMessagewarning">
-                        estas seguro que desea eliminar el coupon
-                        <button class ="btnCancelC" id="btnCancelC">cancelar</button>
-                        <button class="btnAcceptC" id="btnAcceptC">aceptar</button>
+                        	¿desea eliminar el coupon?
+                        	<button class ="btnCancelC" id="btnCancelC">cancelar</button>
+                        	<button class="btnAcceptC" id="btnAcceptC">aceptar</button>
+                        
                         </div>
                     </div>
                     <!--- divicion "tabla" --->
@@ -61,7 +61,7 @@ $this->load->view('admin/vwHeader');
                                         <a class="arrowDown" id="iniDate" value="coupon">
                                         <img src="../assets/img/web/arrowGreen.png"></a>
                                     </th>
-                                    <th width="150px">Fecha Fin
+                                    <th width="150px">Fecha Fin&nbsp;&nbsp;&nbsp;
                                         <a class="arrowUp" id="endDate" value="coupon">
                                         <img src="../assets/img/web/arrowGreen2.png"></a>
                                         <a class="arrowDown" id="endDate" value="coupon">
@@ -132,10 +132,10 @@ $this->load->view('admin/vwHeader');
             <div id="FormEvent" style="display:none">
                 <div class="row">
                     <!-- primera columna -->
-                    <div class="large-6 columns">
+                    <div class="small-12 medium-6 large-6 columns">
                         <div class="row">
-                            <div class="medium-10 columns">
-                                <label id="labelDescription"><strong>*Description</strong>
+                            <div class="small-12 medium-10 large-10 columns">
+                                <label id="labelDescription"><strong>*Descripcion</strong>
                                     <input type="text" id="txtDescription" class="radius"/>
                                 </label>
                                 <small id="alertDescription" class="error" style="display:none">
@@ -144,19 +144,19 @@ $this->load->view('admin/vwHeader');
                             </div>
                         </div>
                         <div class="row">
-                            <div class="medium-10 columns">
-                                <label id="labelPartner"><strong>*Partner</strong>
+                            <div class="small-12 medium-10 large-10 columns">
+                                <label id="labelPartner"><strong>*Socios</strong>
                                     <input type="text" id="txtPartner" list="partnerList" autocomplete="on" class="radius"> 
                                             <datalist id="partnerList"> </datalist>
                                 </label>
                                 <small id="alertPartner" class="error" style="display:none">
-                                    Partner incorrecto. Por favor escriba un partner existente
+                                    Partner incorrecto. Por favor escriba un socio existente
                                 </small>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="medium-10 columns">
-                                <label id="labelCity"><strong>*City</strong>
+                            <div class="small-12 medium-10 large-10 columns">
+                                <label id="labelCity"><strong>*Ciudad</strong>
                                     <input type="text" id="txtCity" list="cityList" autocomplete="off" class="radius" />
                                             <datalist id="cityList"> </datalist>
                                 </label>
@@ -165,19 +165,29 @@ $this->load->view('admin/vwHeader');
                                 </small>
                             </div>
                         </div>
+                         <div class="row">
+                            <div class="small-12 medium-10 large-10 columns">
+                                <label id="labelValidity"><strong>*Valides</strong>
+                                    <input type="text" id="txtValidity" class="radius" />
+                                </label>
+                                <small id="alertValidity" class="error" style="display:none">
+                                    Campo vacion. Por favor escriba la validacion.
+                                </small>
+                            </div>
+                        </div>
                         <div class="row">
-                            <div class="medium-10 columns">
-                                <label id="labelDetail"><strong>*Clausulas</strong>
+                            <div class="small-12 medium-10 large-10 columns">
+                                <label id="labelDetail"><strong>*Descripcion de la promocion</strong>
                                     <textarea id="txtDetail" class="radius" rows="10"></textarea>
                                 </label>
                                 <small id="alertDetail" class="error" style="display:none">
-                                    Campo vacion. Por favor escriba detail.
+                                    Campo vacion. Por favor escriba la decripcion.
                                 </small>
                             </div>
                         </div>
 
                         <!-- columna catalogo entretenimiento -->             
-                        <div class="large-6 columns">
+                        <div class="small-6 medium-6 large-6 columns">
                             <div class="row">
                                 <label id="labelEntretenimiento"><strong>Entretenimiento</strong> </label>
                                 <div class="medium-12 columns">
@@ -197,7 +207,7 @@ $this->load->view('admin/vwHeader');
 
 
                         <!-- columna catalogo servicio -->
-                        <div class="large-6 columns">
+                        <div class="small-6 medium-6 large-6 columns">
                             <div class="row">
                                 <label id="labelProductos"><strong>Productos y Servicios</strong> </label>
                                 <div class="medium-12 columns">
@@ -216,7 +226,7 @@ $this->load->view('admin/vwHeader');
                         </div>  
 
                         <div class="row">
-                            <div class="large-12 columns">
+                            <div class="small-12 medium-10 large-10 columns">
                                 <small id="alertCatalogo" class="error" style="display:none">
                                     opciones vacias. Por favor seleciona el menos una opcion
                                 </small>
@@ -228,20 +238,31 @@ $this->load->view('admin/vwHeader');
 
 
                     <!-- segunda columna -->
-                    <div class="large-6 columns">
+                    <div class="small-12 medium-6 large-6 columns">
 
                         <div class="row">
-                            <div class="medium-10 columns" id="imagen">
+                            <div class="small-12 medium-10 large-10 columns" id="imagen">
+                        		<label id="labelImage"><strong>*Imagen</strong> </label>
                                 <a><img id="imgImagen" src="http://placehold.it/500x300&text=[ad]"/></a>
                                 <input type="hidden" id="imagenName" 
                                 value="http://placehold.it/500x300&text=[ad]" />
                                 <input style="display:none" type="file" id="fileImagen" style="color:#003" name="archivos[]" multiple />
-                                <small id="alertImage" class="error" style="display:none"></small>
+                                <small id="alertImage" class="error small-9 medium-11 large-10 columns" style="display:none"></small>
                             </div>
                         </div>
                         <br/><br/>
                         <div class="row">
-                            <div class="medium-10 columns" id="imagen">
+                            <div class="small-12 medium-10 large-10 columns">
+                                <label id="labelClauses"><strong>*Clausulas</strong>
+                                    <textarea id="txtClauses" class="radius" rows="10"></textarea>
+                                </label>
+                                <small id="alertClauses" class="error" style="display:none">
+                                    Campo vacion. Por favor escriba las clausulas.
+                                </small>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="small-12 medium-10 large-10 columns" id="imagen">
                                 <table id="tableEntretenimiento">
                                     <tr>
                                         <th>
@@ -258,8 +279,9 @@ $this->load->view('admin/vwHeader');
                                 <small id="alertImage" class="error" style="display:none"></small>
                             </div>
                         </div>
+                        
                         <div class="row">
-                            <div class="medium-10 columns">
+                            <div class="small-12 medium-10 large-10 columns">
                                 <label id="labelIniDate"><strong>*Fecha Inicio</strong>
                                     <input type="date" id="dateIniDate" class="radius" />
                                 </label>
@@ -267,19 +289,22 @@ $this->load->view('admin/vwHeader');
                             </div>
                         </div>
                         <div class="row">
-                            <div class="medium-10 columns">
+                            <div class="small-12 medium-10 large-10 columns">
                                 <label id="labelEndDate"><strong>*Fecha Fin</strong>
                                     <input type="date" id="dateEndDate" class="radius" />
                                 </label>
                                 <small id="alertEndDate" class="error" style="display:none"></small>
                             </div>
                         </div>
+                        <br />
                         <div class="row">
-                            <div class="medium-10 columns">
-                                <button id="btnCancel" class="button small alert radius ">Cancelar</button>
-                                <button id="btnSaveCoupon" class="button small success radius ">Guardar</button>
-                                <button id="btnRegisterCoupon" class="button small success radius ">Guardar</button>
+                            <div class="small-8 medium-9 large-6 columns">
+                                <button id="btnCancel" class="bntSave button small alert radius ">Cancelar</button>
+                                <button id="btnSaveCoupon" class="bntSave button small success radius ">Guardar</button>
+                                <button id="btnRegisterCoupon" class="bntSave button small success radius ">
+                                Guardar</button>
                             </div>
+                            <div class="loading small-2 medium-2 large-2 columns" id="load1"></div>
                         </div>
                         <div id="cargados"></div>
                     </div>

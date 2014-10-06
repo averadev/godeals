@@ -92,12 +92,15 @@ class Cupones extends CI_Controller {
 				'timer' => $_POST['timer'],
 				'image' => $_POST['image'],
 				'description' => $_POST['description'],
-				'clauses' => $_POST['detail'],
+				'validity' => $_POST['validity'],
+				'clauses' => $_POST['clauses'],
+				'detail' => $_POST['detail'],
 				'iniDate' => $_POST['iniDate'],
 				'endDate' => $_POST['endDate'],
 				'status' => 1);
 				
 				$data = $this->coupon_db->insertCoupon($insert,json_decode(stripslashes($_POST['idCatalog'])));
+				$data = "Se ha agregado un nuevo Cupon";
 			} else {
 				
 				$update = array(
@@ -107,7 +110,9 @@ class Cupones extends CI_Controller {
 				'timer' => $_POST['timer'],
 				'image' => $_POST['image'],
 				'description' => $_POST['description'],
-				'clauses' => $_POST['detail'],
+				'validity' => $_POST['validity'],
+				'clauses' => $_POST['clauses'],
+				'detail' => $_POST['detail'],
 				'iniDate' => $_POST['iniDate'],
 				'endDate' => $_POST['endDate']);
 				
@@ -122,6 +127,7 @@ class Cupones extends CI_Controller {
 				}
 				
 				$data = $this->coupon_db->updateCoupon($update,$delete,$catalog);
+				$data = "Se ha editado los datos del coupon";
 			}
             echo json_encode($data);
         }

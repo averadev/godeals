@@ -168,7 +168,7 @@ class Sporttv extends CI_Controller {
 					'status' => 0
 			);
 			$data = $this->sporttv_db->deleteSporttv($delete);
-			$data = "se ha eliminado el sporttvo";
+			$data = "se ha eliminado el sporttv";
 			echo json_encode($data);
 		}
 	}
@@ -283,7 +283,7 @@ class Sporttv extends CI_Controller {
 				$nombreTimeStamp = $fecha->getTimestamp();
 				
 				//toma la ruta de la imagen a crear
-				$patch_imagenMax=$rutaMax . "sport_" . $nombreTimeStamp . $i .".jpg";
+				$patch_imagenMax=$rutaMax . "barEvent_" . $nombreTimeStamp . $i .".jpg";
 				
 				//Copiamos la imagen sobre la imagen que acabamos de crear en blanco
 				imagecopyresampled($tmpMax,$imagen,0,0,0,0,$max_ancho, $max_alto,$ancho,$alto);
@@ -292,7 +292,7 @@ class Sporttv extends CI_Controller {
 				//Se destruye variable $img_original para liberar memoria
 				imagedestroy($imagen);
 				
-				echo "sport_" . $nombreTimeStamp . $i .".jpg*-*";
+				echo "barEvent_" . $nombreTimeStamp . $i .".jpg*-*";
 				
 				$i++;
 				

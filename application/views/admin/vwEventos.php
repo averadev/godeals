@@ -15,10 +15,10 @@ $this->load->view('admin/vwHeader');
                     <div class="large-12 columns">
                         <!--- division que contiene el buscador --->
                         <div id="buscar" class="row collapse">
-                            <div class="small-10 columns">
+                            <div class="small-8 medium-10 large-10 columns">
                                 <input class="txtSearch" id="txtSearchEvent" type="text" placeholder="Busqueda por nombre, lugar, ciudad" />
                             </div>
-                            <div class="small-2 columns">
+                            <div class="small-4 medium-2 large-2 columns">
                                 <button class="btnSearch" id="btnSearchEvent"><img src="../assets/img/web/iconSearch.png">Buscar</button>
                             </div>
                         </div>
@@ -29,9 +29,9 @@ $this->load->view('admin/vwHeader');
 						</div>
 						<div class="large-11" id="divMenssagewarning" style="display:none">
 							<div data-alert class="alert-box warning" id="alertMessagewarning">
-								¿Estas seguro que desea eliminar el evento?
-								<button class="btnCancelE">Cancelar</button>
-								<button class="btnAcceptE">Aceptar</button>
+								¿Desea eliminar el evento?
+								<button id="btnCancelC" class="btnCancelE">Cancelar</button>
+								<button id="btnCancelC" class="btnAcceptE">Aceptar</button>
 							</div>
 						</div>
 
@@ -118,9 +118,9 @@ $this->load->view('admin/vwHeader');
                     <div class="row">
                         
                         <!-- primera columna -->
-                    	<div class="large-6 columns">
+                    	<div class="small-12 medium-6 large-6 columns">
                             <div class="row">
-                                <div class="medium-10 columns">
+                                <div class="small-12 medium-11 large-10 columns">
                                     <label class="field" id="lblEventName">*Nombre
                                         <input type="text" id="txtEventName" class="radius"/>
                                     </label>
@@ -130,7 +130,7 @@ $this->load->view('admin/vwHeader');
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="medium-10 columns">
+                                <div class="small-12 medium-11 large-10 columns">
                                     <label id="lblEventPlace" class="field">*Lugar
                                         <input type="text" id="txtEventPlace" class="radius"/>
                                     </label>
@@ -140,7 +140,7 @@ $this->load->view('admin/vwHeader');
                                 </div>
                             </div>
                             <div class="row">
-                            	<div class="medium-10 columns">
+                            	<div class="small-12 medium-11 large-10 columns">
                                     <label id="lblEventCity" class="field" >*Ciudad
                                     	<input type="text" id="txtEventCity" list="cityList" autocomplete="on" class="radius" />
                                             <datalist id="cityList"> </datalist>
@@ -151,7 +151,7 @@ $this->load->view('admin/vwHeader');
                                 </div>
                             </div>
                             <div class="row">
-                            	<div class="medium-10 columns">
+                            	<div class="small-12 medium-11 large-10 columns">
                                     <label id="lblEventWord" class="field">*Palabra Clave
                                             <input type="text" id="txtEventWord" class="radius"></textarea>
                                     </label>
@@ -162,7 +162,7 @@ $this->load->view('admin/vwHeader');
                             </div>
                             
                            <div class="row">
-                                <div class="medium-10 columns" id="imagen">
+                                <div class="small-12 medium-11 large-10 columns" id="imagen">
                                     <label class="field">Destacado</label>
                                     </br>
                                     <input id="checkEventFav" type="checkbox" name="destacado"/>
@@ -173,20 +173,21 @@ $this->load->view('admin/vwHeader');
                         <!-- fin primera columna -->    
                         
                         <!-- segunda columna -->
-                    	<div class="large-6 columns">
+                    	<div class="small-12 medium-6 large-6 columns">
                             
                             <div class="row">
-                                <div class="medium-10 columns" id="imagen">
+                                <div class="small-12 medium-11 large-10 columns" id="imagen">
+                                	<label id="lblEventImage" class="field">*Imagen</label>
                                     <a><img id="imgImagen" src="http://placehold.it/500x300&text=[ad]"/></a>
                                     <input type="hidden" id="imagenName" value="0" />
                                     <input style="display:none" type="file" id="fileImagen" style="color:#003" name="archivos[]" multiple />
-                                    <small id="alertImage" class="error" style="display:none"></small>
+                                    <small id="alertImage" class="error small-9 medium-11 large-10 columns" style="display:none"></small>
                                 </div>
                             </div>
                             <br/><br/>
                             
                             <div class="row">
-                                <div class="medium-10 columns">
+                                <div class="small-12 medium-11 large-10 columns">
                                     <label id="lblEventDate" class="field">*Fecha
                                         <input type="date" id="dtEventDate" class="radius" />
                                     </label>
@@ -195,11 +196,14 @@ $this->load->view('admin/vwHeader');
                             </div>
                             
                              <div class="row">
-                                <div class="medium-10 columns">
-                                    <button id="btnCancel" class="button small alert radius ">Cancelar</button>
-      <!--id="btnagregarCupon" -->  <button id="btnSaveEvent" class="button small success radius ">Guardar</button><!--para guardar cambios de actualizacion -->
-      <!--id="btnRegistrarCupon"--> <button  id="btnRegisterEvent" class="button small success radius ">Guardar</button> <!--para regristrar un nuevo elemento -->
+                                <div class="small-8 medium-9 large-6 columns">
+                                    <button id="btnCancel" class="bntSave button small alert radius ">Cancelar</button>
+      <!--id="btnagregarCupon" -->  <button id="btnSaveEvent" class="bntSave button small success radius ">
+      Guardar</button><!--para guardar cambios de actualizacion -->
+      <!--id="btnRegistrarCupon"--> <button  id="btnRegisterEvent" class="bntSave button small success radius ">
+      Guardar</button> <!--para regristrar un nuevo elemento -->
                                 </div>
+                                <div class="loading small-2 medium-2 large-2 columns" id="load1"></div>
                             </div>
                             
                         </div>   

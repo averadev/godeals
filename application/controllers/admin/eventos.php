@@ -85,6 +85,7 @@ class Eventos extends CI_Controller {
 					'status' => 1
 				);
 				$data = $this->event_db->insertEvent($insert);
+				$data = "Se han agregado un nuevo evento";
 			} else {
 				$update = array(
 					'id' => $_POST['id'],
@@ -97,6 +98,7 @@ class Eventos extends CI_Controller {
 					'fav' => $_POST['fav']
 				);
 				$data = $this->event_db->updateEvent($update);
+				$data = "Se han editado los datos del evento";
 			}
             
             echo json_encode($data);

@@ -7,8 +7,8 @@ $('#btnAddPartner').click(function(){showAddForm();});
 $(document).on('click','.imageDelete',function(){ showDeleteForm(this);});
 
 //botones para el formulario de eliminar partners --barra dinamica que aparece cuando se pulsa el boton de eliminar
-$('#btnAcceptP').click(function() {deletePartner();});
-$('#btnCancelP').click(function() {cancelDeletePartner();});
+$('#btnAcceptC').click(function() {deletePartner();});
+$('#btnCancelC').click(function() {cancelDeletePartner();});
 
 
 $('#btnRegisterPartner').click(function() {addPartner();});
@@ -17,13 +17,107 @@ $("#btnCancel").click(function() {CancelarForm();});
 
 $("#imgImagen").click(function() {cambiarImagen();});
 
+//llama a los formulario para validar que el correo no exista
+$("#txtPartnerMail").keyup(function() {validateEmail();});
+$("#txtPartnerMail").mousedown(function() {validateEmail();});
+$("#txtPartnerMail").mouseleave(function() {validateEmail();});
+
+$(document).ready(function(){ 
+
+//validar que no se increse letras en el campo phone
+	$(document).on('keydown','#txtPartnerPhone',function() {
+		validarNumero();
+	});
+
+	function validarNumero(){
+   		if(event.shiftKey)
+   		{
+        	event.preventDefault();
+   		}
+ 
+   		if (event.keyCode == 46 || event.keyCode == 8)    {
+	   		
+   		}
+   		else {
+	   		if (event.keyCode < 95) {
+		   		if (event.keyCode < 48 && event.keyCode != 32 || event.keyCode > 57) {
+			   		event.preventDefault();
+				}
+			} 
+       		 else {
+				if (event.keyCode < 96 || event.keyCode > 105 && event.keyCode != 107  && event.keyCode != 109 && event.keyCode != 189 ) {
+					event.preventDefault();
+				}
+			}
+		}
+	}
+	
+	//validar que no se increse letras en el campo latitud y longitud
+	$(document).on('keydown','#txtPartnerLatitude, #alertPartnerLatitude',function() {
+		validarCoordenada();
+	});
+
+	function validarCoordenada(){
+   		if(event.shiftKey)
+   		{
+        	event.preventDefault();
+   		}
+ 
+   		if (event.keyCode == 46 || event.keyCode == 8)    {
+	   		
+   		}
+   		else {
+	   		if (event.keyCode < 95) {
+		   		if (event.keyCode < 48 || event.keyCode > 57) {
+			   		event.preventDefault();
+				}
+			} 
+       		 else {
+				if (event.keyCode < 96 || event.keyCode > 105 && event.keyCode != 109 && event.keyCode != 189 && event.keyCode != 110) {
+					event.preventDefault();
+				}
+			}
+		}
+	}
+	
+});
+
 /* ----------------------------------------*/
+
+$('body').on('keydown','#calificacionExamen',function() {
+	//validarNumero();
+	});
+
+	function validarNumero(){
+   if(event.shiftKey)
+   {
+        event.preventDefault();
+   }
+ 
+   if (event.keyCode == 46 || event.keyCode == 8)    {
+   }
+   else {
+        if (event.keyCode < 95) {
+          if (event.keyCode < 48 || event.keyCode > 57) {
+                event.preventDefault();
+          }
+        } 
+        else {
+              if (event.keyCode < 96 || event.keyCode > 105) {
+                  event.preventDefault();
+              }
+        }
+      }
+	}
+
+
 
 //visualizar imagen
 $(window).load(function(){
  $(function() {
   $('#fileImagen').change(function(e) {
 	  $('#alertImage').hide();
+	  $('#lblPartnerImage').removeClass('error');
 	  $('#imgImagen').attr("src","http://placehold.it/500x300&text=[ad]");
 	  if($('#imagenName').val() != 0){
 		 $('#imgImagen').attr("src",URL_IMG + "app/coupon/max/" + $('#imagenName').val())
@@ -44,6 +138,7 @@ $(window).load(function(){
 			  $('#alertImage').empty();
 			  $('#alertImage').append("Selecione una imagen");
 			  $('#alertImage').show();
+			  $('#lblPartnerImage').addClass('error');
 		  }		  
        return;
 	  }
@@ -87,7 +182,7 @@ function showEditForm(partner){
 //muestra el formulario para eliminar eventos
 function showDeleteForm(id){
     id = $(id).attr('value');
-    $('#btnAcceptP').val(id);
+    $('#btnAcceptC').val(id);
     $('#divMenssagewarning').hide(500);
     $('#divMenssage').hide();
     $('#divMenssagewarning').show(1000);
@@ -136,6 +231,9 @@ function addPartner(){
     result = validations();
 
     if(result){
+		$('.loading').show();
+		$('.loading').html('<img src="../assets/img/web/loading.gif" height="40px" width="40px" />');
+		$('.bntSave').attr('disabled',true);
         uploadImage(0);	
     }	
 }
@@ -146,7 +244,9 @@ function editPartner(){
     result = validations();
     var id = $('#btnSavePartner').val();
     if(result){
-        
+        $('.loading').show();
+		$('.loading').html('<img src="../assets/img/web/loading.gif" height="40px" width="40px" />');
+		$('.bntSave').attr('disabled',true);
         if(document.getElementById('fileImagen').value == ""){
             var nameImage = $('#imagenName').val();
             console.log('a' +  id);
@@ -159,7 +259,7 @@ function editPartner(){
 
 //elimina el evento selecionado de la base de datos
 function deletePartner(){
-    id = $('#btnAcceptP').val();
+    id = $('#btnAcceptC').val();
 
     numPag = $('ul .current').val();
     
@@ -280,17 +380,19 @@ function ajaxSavePartner(nameImage,id){
             ajaxMostrarTabla(column,order,"../admin/partners/getAllSearch",(numPag-1),"partner");
             $('#FormularioPartners').hide();
             $('#vistaPartners').show();
-            $('#alertMessage').empty();
-            if(id==0){
-                $('#alertMessage').append("Se han agregado un nuevo partner");
-            } else {
-                $('#alertMessage').append("Se han editado los datos del partner");	
-            }
+            $('#alertMessage').html(data);
             $('#divMenssage').show(1000).delay(1500);
             $('#divMenssage').hide(1000);
+			$('.loading').hide();
+			$('.bntSave').attr('disabled',false);
         },
-        error: function(){
-            alert("error al insertar datos");   
+        error: function(data){
+			ajaxMostrarTabla(column,order,"../admin/partners/getAllSearch",(numPag-1),"partner");
+            $('#FormularioPartners').hide();
+            $('#vistaPartners').show();
+			$('.loading').hide();
+			$('.bntSave').attr('disabled',false);
+            alert("error al insertar datos");  
         }
     });
 }
@@ -301,38 +403,73 @@ function validations(){
     var result = true;
 
     ocultarAlertas();
-		
-    //valida que se haya selecionado una imagen
+	
+	if($('#txtPartnerLongitude').val().trim().length == 0){
+        $('#alertPartnerLongitude').show();
+        $('#lblPartnerLongitude').addClass('error');
+        $('#txtPartnerLongitude').focus();
+        result = false;
+    }
+	
+	if($('#txtPartnerLatitude').val().trim().length == 0){
+        $('#alertPartnerLatitude').show();
+        $('#lblPartnerLatitude').addClass('error');
+        $('#txtPartnerLatitude').focus();
+        result = false;
+    }
+	
+	//valida que se haya selecionado una imagen
     if($('#imagenName').val() == 0 && $('#fileImagen').val().length == 0){
         $('#alertImage').empty();
         $('#alertImage').append("Campo vacio. Selecione una imagen");
         $('#alertImage').show();
+		$('#lblPartnerImage').addClass('error');
+        result = false;
+	}
+	
+	if( $('#alertPartnerMail').text() == "correo existente. Porfavor Selecione otro"){
+			$('#alertPartnerMail').html("correo existente. Porfavor Selecione otro");
+			$('#alertPartnerMail').show();
+			$('#lblPartnerMail').addClass('error');
+        	$('#txtPartnerMail').focus();
+        	result = false;
+	}
+	
+	var emailExpr = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;
+	
+	if($('#txtPartnerMail').val().trim().length > 0){
+		var email = $('#txtPartnerMail').val().trim();
+		if( !emailExpr.test(email) ){
+			$('#alertPartnerMail').html("Email incorrecto. Porfavor escriba un email correcto" + 
+			"<br /> ejem: ejemplo@email.com");
+			$('#alertPartnerMail').show();
+        	$('#lblPartnerMail').addClass('error');
+        	$('#txtPartnerMail').focus();
+        	result = false;
+		}
+	}
+		
+    if($('#txtPartnerAddress').val().trim().length == 0){
+        $('#alertPartnerAddress').show();
+        $('#lblPartnerAddress').addClass('error');
+        $('#txtPartnerAddress').focus();
         result = false;
     }
-    
-    if($('#txtPartnerName').val().trim().length == 0){
-        $('#alertPartnerName').show();
-        $('#lblPartnerName').addClass('error');
-        $('#txtPartnerName').focus();
-        result = false;
-    }
-
-    //obtener el valor del idMapCat
-    
+	
+	//obtener el valor del idMapCat
     var idCatMap = $("#selMapCat option:selected").attr("value");
     //valida que la catMap selecionada no este vacia y que exista
-    
     if(idCatMap == undefined){
         $('#alertPartnerMapCat').show();
         $('#lblPartnerMapCat').addClass('error');
         $('#txtPartnerMapCat').focus();
         result = false;
     }
-		
-    if($('#txtPartnerAddress').val().trim().length == 0){
-        $('#alertPartnerAddress').show();
-        $('#lblPartnerAddress').addClass('error');
-        $('#txtPartnerAddress').focus();
+	
+	if($('#txtPartnerName').val().trim().length == 0){
+        $('#alertPartnerName').show();
+        $('#lblPartnerName').addClass('error');
+        $('#txtPartnerName').focus();
         result = false;
     }
     
@@ -341,13 +478,6 @@ function validations(){
         $('#alertPartnerPhone').show();
         $('#lblPartnerPhone').addClass('error');
         $('#txtPartnerPhone').focus();
-        result = false;
-    }
-    
-    if($('#txtPartnerMail').val().trim().length == 0){
-        $('#alertPartnerMail').show();
-        $('#lblPartnerMail').addClass('error');
-        $('#txtPartnerMail').focus();
         result = false;
     }
     
@@ -364,20 +494,6 @@ function validations(){
         $('#txtPartnerFacebook').focus();
         result = false;
     }*/
-    
-    if($('#txtPartnerLatitude').val().trim().length == 0){
-        $('#alertPartnerLatitude').show();
-        $('#lblPartnerLatitude').addClass('error');
-        $('#txtPartnerLatitude').focus();
-        result = false;
-    }
-    
-    if($('#txtPartnerLongitude').val().trim().length == 0){
-        $('#alertPartnerLongitude').show();
-        $('#lblPartnerLongitude').addClass('error');
-        $('#txtPartnerLongitude').focus();
-        result = false;
-    }
     
     return result;
 }
@@ -416,5 +532,29 @@ function ocultarAlertas(){
     $('#lblPartnerFacebook').removeClass('error');
     $('#lblPartnerLatitude').removeClass('error');
     $('#lblPartnerLongitude').removeClass('error');
+	$('#lblPartnerImage').removeClass('error');
 }
+
+	function validateEmail(){
+		$('#alertPartnerMail').hide();
+		$('#lblPartnerMail').removeClass('error');
+		$('#alertPartnerMail').empty();
+		if($('#txtPartnerMail').val().trim().length > 0){
+			$.ajax({
+    			type: "POST",
+    			url: "../admin/partners/getEmail",
+    			dataType:'json',
+        		data: { 
+            		email:$('#txtPartnerMail').val().trim()
+        		},
+        		success: function(data){
+            		if(data.length > 0){
+						$('#alertPartnerMail').html("correo existente. Porfavor Selecione otro");
+						$('#alertPartnerMail').show();
+						$('#lblPartnerMail').addClass('error');
+					} 
+        		}
+    		});	
+		}
+	}
 	
