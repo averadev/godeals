@@ -33,6 +33,8 @@
                 <li class="divider"></li>
                 <li <?php echo  $pg =='sporttv' ? 'class="active"' : '' ?>><a href="<?php echo base_url(); ?>admin/sporttv">Sport TV</a></li>
                 <li class="divider"></li>
+                <li <?php echo  $pg =='publicidad' ? 'class="active"' : '' ?>><a href="<?php echo base_url(); ?>admin/publicity">Publicidad</a></li>
+                <li class="divider"></li>
             </ul>
             <ul class="right">
                 <li class="divider"></li>

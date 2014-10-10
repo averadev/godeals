@@ -40,6 +40,10 @@ $('.txtSearch').keyup(function(e){
 						url = "../admin/sporttv/paginadorArray";
 						$('ul #btnPaginadorSporttv').removeClass('current');
 					break;
+					case "publicity":
+						url = "../admin/publicity/paginadorArray";
+						$('ul #btnPaginadorPublicity').removeClass('current');
+					break;
 
                 }
                     
@@ -146,11 +150,48 @@ $('.txtSearch').keyup(function(e){
 								"<td><a id='imageDelete' value='" + data[i].id +"'><img class='imgDelete' "+
 								"src='../assets/img/web/deleteRed.png'/></a></td>" +
 								"</tr>");
-                        	}
+					}
+					break;
+					
+					case "publicity":
+					
+                       $('#tablePublicity tbody').empty();
+					   		for(var i = 0;i<total;i++){
+								
+							switch(data[i].category){
+								case '1':
+									category = "Banner";
+									break;
+								case '2':
+									category = "Cintillo";
+									break;
+								case '3':
+									category = "Lateral";
+									break;
+								case '4':
+									category = "Movil";
+									break;
+							}
+								
+                            num = parseInt(cantidad) + parseInt((i+1));
+                            $('#tablePublicity tbody').append("<tr>" +
+								"<td>"+ (num) +"</td>"+
+								"<td><a id='showPublicity'>"+data[i].namePartner+
+								"<input type='hidden' id='idPublicity' value='" + data[i].id + "' ></a></td>"+
+								"<td>"+category+"</td>"+
+								"<td>"+data[i].iniDate+"</td>"+
+								"<td>"+data[i].endDate+"</td>"+
+								"<td><a id='imageDelete' value='" + data[i].id +"'><img class='imgDelete' "+
+								"src='../assets/img/web/deleteRed.png'/></a></td>" +
+								"</tr>");
+                        }
+						break;
                 }            	
             }
         });	
     }
+	
+	var category;
 	
 	//funcion que muestra los resultados ordenados por fecha
 	function OrdenarPorFechas(typeOrder,typeTable){
@@ -170,6 +211,9 @@ $('.txtSearch').keyup(function(e){
 			break;
 			case "sporttv":
 			url = "../admin/sporttv/getallSearch";
+            break;
+			case "publicity":
+			url = "../admin/publicity/getallSearch";
             break;
 		}
 		
@@ -208,6 +252,8 @@ $('.txtSearch').keyup(function(e){
 					$('#tablePartners tbody').empty();
 				} else if(tipoTabla == "sporttv"){
 					$('#tableSporttv tbody').empty();
+				} else if(tipoTabla == "publicity"){
+					$('#tablePublicity tbody').empty();
 				}
                                 
 				$('.pagination').empty();
@@ -278,6 +324,34 @@ $('.txtSearch').keyup(function(e){
 								"</tr>");
 							btnPaginador = "btnPaginadorSporttv";
 							break;
+							case "publicity":
+							var category;
+							switch(data[num].category){
+								case '1':
+									category = "Banner";
+									break;
+								case '2':
+									category = "Cintillo";
+									break;
+								case '3':
+									category = "Lateral";
+									break;
+								case '4':
+									category = "Movil";
+									break;
+							}
+							$('#tablePublicity tbody').append("<tr>" +
+								"<td>"+ (num+1) +"</td>"+
+								"<td><a id='showPublicity'>"+data[num].namePartner+"<input type='hidden'" +
+								"id='idPublicity' value='" + data[num].id + "' ></a></td>"+
+								"<td>"+category+"</td>"+
+								"<td>"+data[num].iniDate+"</td>"+
+								"<td>"+data[num].endDate+"</td>"+
+								"<td><a id='imageDelete' value='" + data[num].id +"'><img class='imgDelete' "+
+								"src='../assets/img/web/deleteRed.png'/></a></td>" +
+								"</tr>");
+							btnPaginador = "btnPaginadorPublicity";
+							break;
 					}
                 }
 							
@@ -327,6 +401,25 @@ $('.txtSearch').keyup(function(e){
 					case "sporttv":
                         palabra = $('#txtSearchSporttv').val();
 						url = "../admin/sporttv/getallSearch";
+                    break;
+					case "publicity":
+                        palabra = $('#txtSearchPublicity').val();
+						palabra2 = palabra.toLowerCase();
+						switch(palabra2){
+							case "banner":
+								palabra = 1;
+							break;
+							case "cintillo":
+								palabra = 2;
+							break;
+							case "lateral":
+								palabra = 3;
+							break;
+							case "movil":
+								palabra = 4;
+							break;
+						}
+						url = "../admin/publicity/getallSearch";
                     break;
                 }
 		
