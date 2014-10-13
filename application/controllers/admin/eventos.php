@@ -116,7 +116,7 @@ class Eventos extends CI_Controller {
         }
 	}
 	
-	public function subirImagen(){
+	public function uploadImage(){
         // Rutas para el guardado
         $rutaApp="assets/img/app/event/app/";
 		$rutaMax="assets/img/app/event/max/";
@@ -174,7 +174,7 @@ class Eventos extends CI_Controller {
                 imagejpeg($tmpMin, $patch_imagenMin,100);
                 
                 // Response
-				echo "coupon_" . $nombreTimeStamp . ".jpg";
+				echo "event_" . $nombreTimeStamp . ".jpg";
 				
     		}else{
     		}

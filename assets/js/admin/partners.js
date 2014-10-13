@@ -162,6 +162,7 @@ function cambiarImagen(){
 
 function showAddForm(){
 	limpiarCampos();
+	ocultarAlertas();
 	$('#btnSavePartner').hide();
 	$('#btnRegisterPartner').show();
 	$('#vistaPartners').hide();
@@ -170,6 +171,7 @@ function showAddForm(){
 
 function showEditForm(partner){
     limpiarCampos();
+	ocultarAlertas();
     id = $(partner).find('input').val();//obtiene la id del partner
     $('#btnSavePartner').val(id); 
     showPartner(id);
@@ -221,6 +223,7 @@ function showPartner(id){
 //regresa a la tabla de 
 function CancelarForm(){
     limpiarCampos();
+	ocultarAlertas();
     $('#FormularioPartners').hide();	
     $('#vistaPartners').show();
 }
@@ -522,6 +525,7 @@ function ocultarAlertas(){
     $('#alertPartnerFacebook').hide();
     $('#alertPartnerLatitude').hide();
     $('#alertPartnerLongitude').hide();
+	$('#alertImage').hide();
 
     $('#lblPartnerName').removeClass('error');
     $('#lblPartnerMapCat').removeClass('error');
@@ -532,6 +536,7 @@ function ocultarAlertas(){
     $('#lblPartnerFacebook').removeClass('error');
     $('#lblPartnerLatitude').removeClass('error');
     $('#lblPartnerLongitude').removeClass('error');
+	$('#lblPartnerImage').removeClass('error');
 	$('#lblPartnerImage').removeClass('error');
 }
 
