@@ -29,11 +29,25 @@ class Api extends REST_Controller {
     }
 
     /**
+     * Test connection
+     */
+    public function test_get() { 
+        $this->response(array('success' => true), 200);
+    }
+
+    /**
+     * Regresamos publicidad
+     */
+    public function publicidad_get() { 
+        redirect('/assets/img/app/publicidad.png', 'location');
+    }
+
+    /**
      * Obtenemos el registro de un socio
      */
     public function getCoupons_get() { 
         // Verificamos parametros y acceso
-        $message = $this->verifyIsSet(array('email'));
+        $message = $this->verifyIsSet(array('idApp'));
         if ($message == null) { $message = $this->verifyAccess(); }
         if ($message == null) {
             // Obtener cupones
@@ -48,7 +62,7 @@ class Api extends REST_Controller {
      */
     public function createUser_get() { 
         // Verificamos parametros y acceso
-        $message = $this->verifyIsSet(array('email'));
+        $message = null;
         if ($message == null) {
             // Obtener cupones
             if ($this->get('fbId') == ''){
@@ -79,7 +93,7 @@ class Api extends REST_Controller {
      */
     public function validateUser_get() { 
         // Verificamos parametros y acceso
-        $message = $this->verifyIsSet(array('email'));
+        $message = $this->verifyIsSet(array('idApp'));
         if ($message == null) {
             // Obtener cupones
             $data = $this->user_db->verifyEmailPass($this->get('email'), $this->get('password'));
@@ -95,15 +109,134 @@ class Api extends REST_Controller {
     /**
      * Obtener items
      */
-    public function setFav_get() { 
+    public function getDirectory_get() { 
         // Verificamos parametros y acceso
-        $message = $this->verifyIsSet(array('email'));
+        $message = $this->verifyIsSet(array('idApp'));
         // Verificamos credenciales
         if ($message == null) { $message = $this->verifyAccess(); }
         if ($message == null) {
-            // Obtener servicios
-            $items = $this->api_db->setFav();
-            $message = array('success' => true);
+            // Obtenemos datos
+            $items = $this->api_db->getDirectory();
+            $message = array('success' => true, 'items' => $items);
+        }
+        $this->response($message, 200);
+    }
+    
+    /**
+     * Obtener items
+     */
+    public function getSubmenus_get() { 
+        // Verificamos parametros y acceso
+        $message = $this->verifyIsSet(array('idApp'));
+        // Verificamos credenciales
+        if ($message == null) { $message = $this->verifyAccess(); }
+        if ($message == null) {
+            // Obtenemos datos
+            $directory = $this->api_db->getDirectoryType();
+            foreach ($directory as $item): $item->type = 'Rest'; endforeach;
+            array_unshift($directory, array('id' => 0, 'name' => "Todo", 'type' => "Rest"));
+            
+            $couponType1 = $this->api_db->getCouponType(1);
+            foreach ($couponType1 as $item): $item->type = 'Coupon'; endforeach;
+            array_unshift($couponType1, array('id' => 0, 'name' => "Todo", 'type' => "Coupon"));
+            
+            $couponType2 = $this->api_db->getCouponType(2);
+            foreach ($couponType2 as $item): $item->type = 'Coupon'; endforeach;
+            array_unshift($couponType2, array('id' => 0, 'name' => "Todo", 'type' => "Coupon"));
+            
+            
+            $message = array('success' => true, 
+                             'directoryType' => $directory, 
+                             'couponType1' => $couponType1, 
+                             'couponType2' => $couponType2);
+        }
+        $this->response($message, 200);
+    }
+    
+    /**
+     * Obtener items
+     */
+    public function getFav_get() { 
+        // Verificamos parametros y acceso
+        $message = $this->verifyIsSet(array('idApp'));
+        // Verificamos credenciales
+        if ($message == null) { $message = $this->verifyAccess(); }
+        if ($message == null) {
+            // Obtenemos datos
+            $idApp = $this->get('idApp');
+            $events = $this->api_db->getEvent($idApp, true);
+            $coupons = $this->api_db->getCoupon($idApp, true, 1);
+            $place = $this->api_db->getPlace($idApp, true);
+            $sporttv = $this->api_db->getSporttv($idApp, true);
+            
+            // Arreglos
+            $publicidad = array('publicidad.png');
+            $minMonths = array('', 'ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SEP','OCT','NOV','DIC');
+            $months = array('', 'Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre');
+            
+            // Set extra data
+            foreach ($events as $item):
+                // Add new vars
+                $item->fav = 1;
+                $item->type = 2;
+                $item->dateMin = date('d', strtotime($item->date)) . '/' . $minMonths[date('n', strtotime($item->date))];
+                $item->dateMax = date('d', strtotime($item->date)) . ' de ' . $months[date('n', strtotime($item->date))];
+                $item->path = 'event/app/';
+                $item->publicidad = $publicidad[array_rand($publicidad, 1)];
+            endforeach;
+            foreach ($coupons as $item):
+                $item->fav = 1;
+                $item->type = 3;
+                $item->path = 'coupon/app/';
+                $item->subtitle1 = $item->partnerName.' en '.$item->cityName;
+                $item->publicidad = $publicidad[array_rand($publicidad, 1)];
+            endforeach;
+            foreach ($place as $item):
+                $item->fav = 1;
+                $item->type = 5;
+                $item->path = 'visita/app/';
+                $item->title = ucwords(strtolower($item->title));
+                $item->subtitle1 = "Disfruta de " . $item->subtitle1;
+                $item->bars = $this->place_db->getBars($item->id);
+                $item->hotels = $this->place_db->getHotels($item->id);
+                $item->restaurants = $this->place_db->getRestaurants($item->id);
+                $item->publicidad = $publicidad[array_rand($publicidad, 1)];
+            endforeach;
+            foreach ($sporttv as $item):
+                $item->fav = 1;
+                $item->type = 6;
+                $item->path = 'sporttv/app/';
+                $item->subtitle2 = date('d', strtotime($item->date)) . ' de ' . $months[date('n', strtotime($item->date))] . ' - ' . $item->time;
+                $item->bars = $this->sporttv_db->getEventBar($item->id);
+                $item->publicidad = $publicidad[array_rand($publicidad, 1)];
+                unset($item->date);
+                unset($item->time);
+            endforeach;
+            
+            // Merge items
+            $items = array_merge($events, $coupons, $place, $sporttv);
+            $message = array('success' => true, 'items' => $items);
+        }
+        $this->response($message, 200);
+    }
+    
+    /**
+     * Obtener items
+     */
+    public function setFav_get() { 
+        // Verificamos parametros y acceso
+        $message = $this->verifyIsSet(array('idApp', 'couponId', 'typeId'));
+        // Verificamos credenciales
+        if ($message == null) { $message = $this->verifyAccess(); }
+        if ($message == null) {
+            $obj = array('userId' => $this->get('idApp'), 'couponId' => $this->get('couponId'), 'typeId' => $this->get('typeId'));
+            if ($this->get('status') == '1'){
+                $items = $this->api_db->insertFav($obj);
+                $message = array('success' => true, 'message' => 'Se agrego el fav.');
+            }else{
+                $items = $this->api_db->removeFav($obj);
+                $message = array('success' => true, 'message' => 'Se elimino el fav.');
+            }
         }
         $this->response($message, 200);
     }
@@ -113,7 +246,7 @@ class Api extends REST_Controller {
      */
     public function getServices_get() { 
         // Verificamos parametros y acceso
-        $message = $this->verifyIsSet(array('email'));
+        $message = $this->verifyIsSet(array('idApp'));
         // Verificamos credenciales
         if ($message == null) { $message = $this->verifyAccess(); }
         if ($message == null) {
@@ -129,20 +262,24 @@ class Api extends REST_Controller {
      */
     public function getItems_get() { 
         // Verificamos parametros y acceso
+        $message = $this->verifyIsSet(array('idApp', 'type'));
+        // Arreglos
+        $publicidad = array('publicidad.png');
         $minMonths = array('', 'ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SEP','OCT','NOV','DIC');
         $months = array('', 'Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre');
-        $message = $this->verifyIsSet(array('email', 'type'));
         // Verificamos credenciales
         if ($message == null) { $message = $this->verifyAccess(); }
         if ($message == null) {
+            // Id usuario
+            $idApp = $this->get('idApp');
             // Obtener todos
             if ($this->get('type') == 1){
                 // Get alls
-                $eventFav = $this->api_db->getEventFav();
-                $events = $this->api_db->getEventNoFav();
-                $coupons = $this->api_db->getCoupon(1);
-                $place = $this->api_db->getPlace();
-                $sporttv = $this->api_db->getSporttv();
+                $eventFav = $this->api_db->getEventFav($idApp);
+                $events = $this->api_db->getEventNoFav($idApp);
+                $coupons = $this->api_db->getCoupon($idApp, false, 1);
+                $place = $this->api_db->getPlace($idApp, false);
+                $sporttv = $this->api_db->getSporttv($idApp, false);
                 
                 // Set extra data
                 foreach ($eventFav as $item):
@@ -152,6 +289,7 @@ class Api extends REST_Controller {
                     $item->dateMin = date('d', strtotime($item->date)) . '/' . $minMonths[date('n', strtotime($item->date))];
                     $item->dateMax = date('d', strtotime($item->date)) . ' de ' . $months[date('n', strtotime($item->date))];
                     $item->path = 'event/app/';
+                    $item->publicidad = $publicidad[array_rand($publicidad, 1)];
                 endforeach;
                 foreach ($events as $item):
                     // Add new vars
@@ -160,12 +298,14 @@ class Api extends REST_Controller {
                     $item->dateMin = date('d', strtotime($item->date)) . '/' . $minMonths[date('n', strtotime($item->date))];
                     $item->dateMax = date('d', strtotime($item->date)) . ' de ' . $months[date('n', strtotime($item->date))];
                     $item->path = 'event/app/';
+                    $item->publicidad = $publicidad[array_rand($publicidad, 1)];
                 endforeach;
                 foreach ($coupons as $item):
                     $item->fav = 0;
                     $item->type = 3;
                     $item->path = 'coupon/app/';
                     $item->subtitle1 = $item->partnerName.' en '.$item->cityName;
+                    $item->publicidad = $publicidad[array_rand($publicidad, 1)];
                 endforeach;
                 foreach ($place as $item):
                     $item->fav = 1;
@@ -176,6 +316,7 @@ class Api extends REST_Controller {
                     $item->bars = $this->place_db->getBars($item->id);
                     $item->hotels = $this->place_db->getHotels($item->id);
                     $item->restaurants = $this->place_db->getRestaurants($item->id);
+                    $item->publicidad = $publicidad[array_rand($publicidad, 1)];
                 endforeach;
                 foreach ($sporttv as $item):
                     $item->fav = 1;
@@ -183,6 +324,7 @@ class Api extends REST_Controller {
                     $item->path = 'sporttv/app/';
                     $item->subtitle2 = date('d', strtotime($item->date)) . ' de ' . $months[date('n', strtotime($item->date))] . ' - ' . $item->time;
                     $item->bars = $this->sporttv_db->getEventBar($item->id);
+                    $item->publicidad = $publicidad[array_rand($publicidad, 1)];
                     unset($item->date);
                     unset($item->time);
                 endforeach;
@@ -215,8 +357,8 @@ class Api extends REST_Controller {
             // Obtener Adondeir
             elseif ($this->get('type') == 2){
                 // Get alls
-                $items = $this->api_db->getEvent();
-                $fav = $this->api_db->getEventFav();
+                $items = $this->api_db->getEvent($idApp, false);
+                $fav = $this->api_db->getEventFav($idApp);
                 // Set time line    
                 foreach ($items as $item):
                     $item->fav = 0;
@@ -232,6 +374,7 @@ class Api extends REST_Controller {
                     $item->dateMin = date('d', strtotime($item->date)) . '/' . $minMonths[date('n', strtotime($item->date))];
                     $item->dateMax = date('d', strtotime($item->date)) . ' de ' . $months[date('n', strtotime($item->date))];
                     $item->path = 'event/app/';
+                    $item->publicidad = $publicidad[array_rand($publicidad, 1)];
                 endforeach;
                 $message = array('success' => true, 'items' => $data);
             } 
@@ -239,13 +382,12 @@ class Api extends REST_Controller {
             elseif ($this->get('type') == 3 or $this->get('type') == 4){
                 // Get alls
                 $type = ($this->get('type') == 3)?1:2;
-                $submenu = $this->api_db->getSubmenu($type);
                 // Obtenemos por tipo y subtipo
                 $items;
                 if ($this->get('subtype') !=  ''){
-                    $items = $this->api_db->getCouponSubType($this->get('subtype'));
+                    $items = $this->api_db->getCouponSubType($idApp, $this->get('subtype'));
                 }else{
-                    $items = $this->api_db->getCoupon($type);
+                    $items = $this->api_db->getCoupon($idApp, false, $type);
                 } 
                 
                 shuffle($items);
@@ -256,13 +398,14 @@ class Api extends REST_Controller {
                     $item->type = ($this->get('type') == 3)?3:4;
                     $item->path = 'coupon/app/';
                     $item->subtitle1 = $item->partnerName.' en '.$item->cityName;
+                    $item->publicidad = $publicidad[array_rand($publicidad, 1)];
                 endforeach;
-                $message = array('success' => true, 'submenu' => $submenu, 'items' => $items);
+                $message = array('success' => true, 'items' => $items);
             }
             // Obtener Adondeir
             elseif ($this->get('type') == 5){
                 // Get alls
-                $items = $this->api_db->getPlace();
+                $items = $this->api_db->getPlace($idApp, false);
                 shuffle($items);
                 foreach ($items as $item):
                     $item->fav = 1;
@@ -273,19 +416,21 @@ class Api extends REST_Controller {
                     $item->bars = $this->place_db->getBars($item->id);
                     $item->hotels = $this->place_db->getHotels($item->id);
                     $item->restaurants = $this->place_db->getRestaurants($item->id);
+                    $item->publicidad = $publicidad[array_rand($publicidad, 1)];
                 endforeach;
                 $message = array('success' => true, 'items' => $items);
             }
             // Obtener Sport TV
             elseif ($this->get('type') == 6){
                 // Get alls
-                $items = $this->api_db->getSporttv();
+                $items = $this->api_db->getSporttv($idApp, false);
                 foreach ($items as $item):
                     $item->fav = 1;
                     $item->type = 6;
                     $item->path = 'sporttv/app/';
                     $item->subtitle2 = date('d', strtotime($item->date)) . ' de ' . $months[date('n', strtotime($item->date))] . ' - ' . $item->time;
                     $item->bars = $this->sporttv_db->getEventBar($item->id);
+                    $item->publicidad = $publicidad[array_rand($publicidad, 1)];
                     unset($item->date);
                     unset($item->time);
                 endforeach;
@@ -302,10 +447,10 @@ class Api extends REST_Controller {
      * Verificamos las credenciales de accesso
      */
 	private function verifyAccess(){
-		$socio = $this->user_db->get(array('email' => $this->get('email')));
+		/*$socio = $this->user_db->get(array('email' => $this->get('email')));
 		if (count($socio) == 0){
 			return array('success' => false, 'message' => 'El usuario es incorrecto');
-		}
+		}*/
 		return null;
 	}
 
