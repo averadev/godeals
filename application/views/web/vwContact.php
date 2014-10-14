@@ -37,13 +37,14 @@
                 </div>
                 <div class="medium-1 columns">&nbsp;</div>
                 <div class="medium-5 columns">
-                    <p class="txtDesc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure 
-                        dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat 
-                        non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <p class="txtDesc">¿Tienes dudas o comentarios acerca de nuestros servicios? ¿Deseas anunciarte y formar parte de la creciente comunidad Go Deals?
+                                        Tan solo llena nuestro formulario y a la brevedad nos pondremos en contacto contigo.<br/><br/>
+
+                                        Por otro lado, si lo prefieres, puedes contact&aacute;rnos a trav&eacute;s de nuestras redes sociales o dir&eacute;ctamente v&iacute;a telef&oacute;nica a:
+                    </p>
                     <p class="txtDesc">
-                        Tel: 45456465156<br/>
-                        Fax: 46545645454
+                        Tel: (998) 884 1357<br/>
+                        
                         <a class="social" ><img src="<?php echo base_url().IMG; ?>web/btnContactFB.png" /></a>
                         <a class="social"><img src="<?php echo base_url().IMG; ?>web/btnContactTW.png" /></a>
                     </p>
