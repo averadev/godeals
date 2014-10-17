@@ -10,11 +10,13 @@ Class event_db extends CI_MODEL
      * Obtiene el registro de un evento
      */
     public function get($id){
-        $this->db->select ('event.id, event.name, event.word, event.place,'
-                . 'event.idCity, event.date, event.image, event.fav');
+        $this->db->select ('event.id, event.name, event.eventTypeId, event.word, event.info, event.place,'
+                . 'event.idCity, event.date, event.image, event.latitude, event.longitude, event.tags, event.fav');
         $this->db->select('city.name as cityName');
+		$this->db->select('categorie.name as typeName');
         $this->db->from('event');
         $this->db->join('city', 'event.idCity = city.id ');
+		$this->db->join('categorie', 'event.eventTypeId = categorie.id ');
         $this->db->where('event.id = ', $id);
         $this->db->where('event.status = 1');
         return  $this->db->get()->result();

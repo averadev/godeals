@@ -298,12 +298,17 @@ $("#imgImagen").click(function() {changeImage()});
             	data: { 
 					id:id,
 					name:$('#txtEventName').val(),
+					type:idType,
 					word:$('#txtEventWord').val(),
+					info:$('#txtEventInfo').val(),
 					place:$('#txtEventPlace').val(),
 					idCity:idCity,
 					date:$('#dtEventDate').val(),
 					image:nameImage,
-					fav:fav
+					fav:fav,
+					latitude:$('#txtEventLatitude').val(),
+					longitude:$('#txtEventLongitude').val(),
+					tags:$('#txtEventTags').val()
             	},
             	success: function(data){
 					ajaxMostrarTabla(column,order,"../admin/eventos/getallSearch",(numPag-1),"event");
@@ -344,12 +349,18 @@ $("#imgImagen").click(function() {changeImage()});
 					$('#cityList').append("<option id='" + data[0].idCity + "' value='" +  data[0].cityName + "' />");
 					$('#typeList').append("<option id='" + data[0].idType + "' value='" +  data[0].typeName + "' />");
 					$('#txtEventWord').val(data[0].word);
-					$('#imgImagen').attr("src",URL_IMG + "app/event/max/" + data[0].image);
-					$('#imagenName').val(data[0].image);
-					$('#dtEventDate').val(data[0].date);
+					$('#txtEventInfo').val(data[0].info);
+					var dateTime = data[0].date;
+					var replaced = dateTime.replace(" ",'T');
+					$('#dtEventDate').val(replaced);
+					$('#txtEventTags').val(data[0].tags);
+					$('#txtEventLatitude').val(data[0].latitude);
+					$('#txtEventLongitude').val(data[0].longitude);
 					if(data[0].fav == 1){
 						$('#checkEventFav').prop('checked', true);
 					}
+					$('#imgImagen').attr("src",URL_IMG + "app/event/max/" + data[0].image);
+					$('#imagenName').val(data[0].image);
             	}
         	});
 	}
@@ -390,11 +401,32 @@ $("#imgImagen").click(function() {changeImage()});
 			result = false;
 		}
 		
+		if( $('#txtEventLatitude').val().trim().length == 0){
+			$('#alertLatitude').show();
+			$('#lblEventLatitude').addClass('error');
+			$('#txtEventLatitude').focus();
+			result = false;
+		}
+		
+		if( $('#txtEventLongitude').val().trim().length == 0){
+			$('#alertLongitude').show();
+			$('#lblEventLongitude').addClass('error');
+			$('#txtEventLongitude').focus();
+			result = false;
+		}
+		
 		if($('#imagenName').val() == 0 && $('#fileImagen').val().length == 0){
 			$('#alertImage').empty();
 			$('#alertImage').append("Campo vacio. Selecione una imagen");
 			$('#alertImage').show();
 			$('#lblEventImage').addClass('error');
+			result = false;
+		}
+		
+		if($('#dtEventEndDate').val().trim().length > 0 && $('#dtEventEndDate').val().trim() <= $('#dtEventDate').val().trim()){
+			$('#alertEndDate').show();
+			$('#lblEventEndDate').addClass('error');
+			$('#dtEventEndDate').focus();
 			result = false;
 		}
 		
@@ -430,6 +462,13 @@ $("#imgImagen").click(function() {changeImage()});
 			result = false;
 		}
 		
+		if($('#txtEventInfo').val().trim().length == 0){
+			$('#alertInfo').show();
+			$('#lblEventInfo').addClass('error');
+			$('#txtEventInfo').focus();
+			result = false;
+		}
+		
 		if($('#txtEventName').val().trim().length == 0){
 			$('#alertName').show();
 			$('#lblEventName').addClass('error');
@@ -442,20 +481,29 @@ $("#imgImagen").click(function() {changeImage()});
 	
 	//oculta las alertas de error
 	function hideAlert(){
-		$('#alertName').hide()
+		$('#alertName').hide();
+		$('#alertInfo').hide();
 		$('#alertPlace').hide();
 		$('#alertCity').hide();
 		$('#alertType').hide();
 		$('#alertWord').hide();
 		$('#alertImage').hide();
 		$('#alertEventDate').hide();
+		$('#alertLatitude').hide();
+		$('#alertLongitude').hide()
+		$('#alertEndDate').hide()
 		
 		$('#lblEventName').removeClass('error');
+		$('#lblEventInfo').removeClass('error');
 		$('#lblEventPlace').removeClass('error');
 		$('#lblEventCity').removeClass('error');
+		$('#lblEventType').removeClass('error');
 		$('#lblEventWord').removeClass('error');
 		$('#lblEventDate').removeClass('error');
 		$('#lblEventImage').removeClass('error');
+		$('#lblEventLatitude').removeClass('error');
+		$('#lblEventLongitude').removeClass('error');
+		$('#lblEventEndDate').removeClass('error');
 	}
 	
 	//limpia los campos del formulario

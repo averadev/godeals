@@ -50,7 +50,7 @@ $this->load->view('admin/vwHeader');
 										<th width="250px">Nombre</th>
 										<th width="210px">Lugar</th>
 										<th width="200px">Ciudad</th>
-										<th width="120px">Fecha
+										<th width="120px">Fecha&nbsp;&nbsp;&nbsp;&nbsp;
                                         <a class="arrowUp" id="date" value="event">
                                         <img src="../assets/img/web/arrowGreen2.png"></a>
                                         <a class="arrowDown" id="date" value="event">
@@ -122,11 +122,12 @@ $this->load->view('admin/vwHeader');
                             
                            <div class="row">
                                <div class="medium-4 columns">
+                               		<br />
                                     <label class="field"><input id="checkEventFav" type="checkbox" name="destacado"/> Destacado</label>
                                </div>
                                <div class="medium-6 columns">
-                                    <label id="lblEventDate" class="field">*Fecha
-                                        <input type="date" id="dtEventDate" class="radius" />
+                                    <label id="lblEventDate" class="field">*Fecha Inicio
+                                        <input type="datetime-local" id="dtEventDate" class="radius" />
                                     </label>
                                     <small id="alertEventDate" class="error" style="display:none"></small>     
                                </div>
@@ -150,8 +151,8 @@ $this->load->view('admin/vwHeader');
                             
                             <div class="row">
                                 <div class="small-12 medium-11 large-10 columns">
-                                    <label class="field" id="lblInfo">*Descripcion
-                                        <textarea type="text" id="txtInfo" class="radius" rows="5"></textarea>
+                                    <label class="field" id="lblEventInfo">*Descripcion
+                                        <textarea type="text" id="txtEventInfo" class="radius" rows="5"></textarea>
                                     </label>
                                     <small id="alertInfo" class="error" style="display:none">
                                     	Campo vacio. Por favor escriba la descripcion del evento
@@ -202,14 +203,23 @@ $this->load->view('admin/vwHeader');
                             </div>
                         
                             <div class="row">
-                            	<div class="small-12 medium-11 large-10 columns">
-                                    <label id="lblEventTags" class="field">*Palabras Clave
+                            	<div class="medium-5 columns">
+                                    <label id="lblEventTags" class="field">Palabras Clave
                                         <input type="text" id="txtEventTags" class="radius"></textarea>
                                     </label>
                                     <small id="alertTags" class="error" style="display:none">
                                     	Campo vacio. Por favor escriba al menos una palabra clave
                                     </small>
                                 </div>
+                                <div class="medium-5 columns">
+                                    <label id="lblEventEndDate" class="field">fecha final
+                                        <input type="datetime-local" id="dtEventEndDate" class="radius"></textarea>
+                                    </label>
+                                    <small id="alertEndDate" class="error" style="display:none">
+                                    	Fecha Incorrect. Por favor seleciona una fecha mayor a la fecha inicial.
+                                    </small>
+                                </div>
+                                <div class="medium-2 columns">&nbsp;</div>
                             </div>
                             
                         </div>
@@ -228,6 +238,26 @@ $this->load->view('admin/vwHeader');
                                 </div>
                             </div>
                             <br/><br/>
+                            
+                            <div class="row">
+                                <div class="medium-5 columns">
+                                    <label id="lblEventLatitude" class="field">*Latitud
+                                        <input type="text" id="txtEventLatitude" class="radius"/>
+                                    </label>
+                                    <small id="alertLatitude" class="error" style="display:none">
+                                    	Campo Vacio. Escriba la latitud del evento
+                                    </small>
+                                </div>
+                                <div class="medium-5 columns">
+                                    <label id="lblEventLongitude" class="field" >*Longitud
+                                    	<input type="text" id="txtEventLongitude" class="radius" />
+                                    </label>
+                                    <small id="alertLongitude" class="error" style="display:none">
+                                    	Campo vacio. Escriba la longitud del evento
+                                    </small>
+                                </div>
+                                <div class="medium-2 columns">&nbsp;</div>
+                            </div>
                             
                              <div class="row">
                                 <div class="small-8 medium-9 large-6 columns">

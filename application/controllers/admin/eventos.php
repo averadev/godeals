@@ -75,27 +75,36 @@ class Eventos extends CI_Controller {
 		if($this->input->is_ajax_request()){
 			if($_POST['id'] == 0){
 				$insert = array(
-   					'name' => $_POST['name'],
-   					'word' => $_POST['word'],
-   					'place' => $_POST['place'],
-					'idCity' => $_POST['idCity'],
-					'date' => $_POST['date'],
-					'image' => $_POST['image'],
-					'fav' => $_POST['fav'],
-					'status' => 1
+   					'name'	 		=> $_POST['name'],
+					'eventTypeId' 	=> $_POST['type'],
+   					'word' 			=> $_POST['word'],
+					'info' 			=> $_POST['info'],
+   					'place' 		=> $_POST['place'],
+					'idCity' 		=> $_POST['idCity'],
+					'date' 			=> $_POST['date'],
+					'image' 		=> $_POST['image'],
+					'fav' 			=> $_POST['fav'],
+					'latitude' 		=> $_POST['latitude'],
+					'longitude' 	=> $_POST['longitude'],
+					'tags' 			=> $_POST['tags'],
+					'status' 		=> 1
 				);
 				$data = $this->event_db->insertEvent($insert);
 				$data = "Se han agregado un nuevo evento";
 			} else {
 				$update = array(
-					'id' => $_POST['id'],
-   					'name' => $_POST['name'],
-   					'word' => $_POST['word'] ,
-   					'place' => $_POST['place'],
-					'idCity' => $_POST['idCity'],
-					'date' => $_POST['date'],
-					'image' => $_POST['image'],
-					'fav' => $_POST['fav']
+					'id' 			=> $_POST['id'],
+   					'eventTypeId' 	=> $_POST['type'],
+   					'word' 			=> $_POST['word'],
+					'info' 			=> $_POST['info'],
+   					'place' 		=> $_POST['place'],
+					'idCity' 		=> $_POST['idCity'],
+					'date' 			=> $_POST['date'],
+					'image' 		=> $_POST['image'],
+					'fav' 			=> $_POST['fav'],
+					'latitude' 		=> $_POST['latitude'],
+					'longitude' 	=> $_POST['longitude'],
+					'tags' 			=> $_POST['tags']
 				);
 				$data = $this->event_db->updateEvent($update);
 				$data = "Se han editado los datos del evento";
