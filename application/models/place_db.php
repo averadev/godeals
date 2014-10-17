@@ -118,9 +118,67 @@ Class place_db extends CI_MODEL
         $this->db->where('type', $type);
         return  $this->db->get()->result();
     }
+	
+	/*
+	* alfredo chi
+	*/
     
-    
-
-
+	/*
+	* obtiene todos los lugares activos
+	*/
+	public function getAllActive(){
+        $this->db->select('place.id, place.name, place.title, place.txtMin, place.txtMax, place.weatherKey,');
+		$this->db->select('city.name as nameCity');
+        $this->db->from('place');
+		$this->db->join('city', 'place.cityId = city.id');
+        $this->db->where('place.status = 1');
+        return  $this->db->get()->result();
+    }
+	
+	/*
+	** obtiene todos los datos de un lugar por id
+	*/
+	public function getId($id){
+        $this->db->select('place.id, place.name, place.title, place.txtMin, place.txtMax, place.weatherKey,');
+		$this->db->select('place.cityId, place.longitude, place.latitude, place.image, city.name as nameCity');
+        $this->db->from('place');
+		$this->db->join('city', 'place.cityId = city.id');
+		$this->db->where('place.id', $id);
+        $this->db->where('place.status = 1');
+        return  $this->db->get()->result();
+    }
+	
+	
+	/*
+	* obtiene todos los registros de la palabra dada
+	*/
+	public function getallSearch($dato,$column,$order){
+		$this->db->select('place.id, place.name, place.title, place.txtMin, place.txtMax, place.weatherKey,');
+		$this->db->select('city.name as nameCity');
+        $this->db->from('place');
+		$this->db->join('city', 'place.cityId = city.id');
+        $this->db->where('place.status = 1');
+		$this->db->where('(place.name LIKE \'%'.$dato.'%\' OR city.name LIKE \'%'.$dato.'%\' 
+		OR place.weatherKey LIKE \'%' . $dato . '%\')', NULL); 
+		$this->db->order_by($column , $order);
+        return  $this->db->get()->result();
+	}
+	
+	/*
+	* inserta datos en la tabla place
+	*/
+	
+	public function insertPlace($data){
+		$this->db->insert('place', $data);
+	}
+	
+	/*
+	** actualiza los datos del lugar
+	*/
+	
+	public function updatePlace($data){
+		$this->db->where('id', $data['id']);
+		$this->db->update('place', $data);
+	}
 }
 //end model
