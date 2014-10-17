@@ -33,10 +33,20 @@ Class event_db extends CI_MODEL
     }
  
     /**
+     * Obtiene el registro del catalogo
+     */
+    public function getAllCategories($name){
+        $this->db->select ('id, name');
+        $this->db->from('categorie');
+        $this->db->like('name', $name);
+        return  $this->db->get()->result();
+    }
+ 
+    /**
      * Obtiene todos los registros activos del catalogo
      */
     public function getFav(){
-        $this->db->select('event.id, event.word, event.name, event.place, city.name as city, event.date, event.imgMin, event.imgMed, event.imgMax');
+        $this->db->select('event.id, event.word, event.name, event.place, city.name as city, event.date, event.image');
         $this->db->from('event');
         $this->db->join('city', 'event.idCity = city.id ');
         $this->db->where('event.fav = 1');
@@ -50,7 +60,7 @@ Class event_db extends CI_MODEL
      * Obtiene todos los registros activos del catalogo
      */
     public function getAvailable(){
-        $this->db->select('event.id, event.name, event.place, city.name as city, event.imgMin, event.imgMax, event.date, event.fav');
+        $this->db->select('event.id, event.name, event.place, city.name as city, event.image, event.date, event.fav');
         $this->db->from('event');
         $this->db->join('city', 'event.idCity = city.id ');
         $this->db->where('event.status = 1');
@@ -65,7 +75,7 @@ Class event_db extends CI_MODEL
 	*optiene todos los eventos activos
 	*/
 	public function getAllEvents(){
-		$this->db->select('event.id, event.name, event.place, city.name as city, event.imgMin, event.imgMax, event.date, event.fav');
+		$this->db->select('event.id, event.name, event.place, city.name as city, event.image, event.date, event.fav');
         $this->db->from('event');
         $this->db->join('city', 'event.idCity = city.id ');
         $this->db->where('event.status = 1');

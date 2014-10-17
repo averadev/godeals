@@ -17,6 +17,7 @@ class Adondeir extends CI_Controller {
         $this->load->helper('url');
         $this->load->database('default');
         $this->load->model('place_db');
+        $this->load->model('publicity_db');
     }
 
     /**
@@ -25,6 +26,7 @@ class Adondeir extends CI_Controller {
     public function index(){
         // Get data from database
         $data['sel'] = 0;
+        $data['medioBanner'] = $this->sortSliceArray($this->publicity_db->getPublicidad(2), 2);
         $data['destinos'] = $this->place_db->getAll();
         foreach ( $data['destinos'] as $item):
             $item->banner = $this->place_db->getBanners($item->id);
@@ -44,6 +46,7 @@ class Adondeir extends CI_Controller {
     public function c($id){
         // Get data from database
         $data['sel'] = $id;
+        $data['medioBanner'] = $this->sortSliceArray($this->publicity_db->getPublicidad(2), 2);
         $data['destinos'] = $this->place_db->getByType($id);
         foreach ( $data['destinos'] as $item):
             $item->banner = $this->place_db->getBanners($item->id);
@@ -64,9 +67,21 @@ class Adondeir extends CI_Controller {
         // Get data from database
         $data['destino'] = $this->place_db->get($id)[0];
         $data['photos'] = $this->place_db->getPhotos($id);
+        $data['medioBanner'] = $this->sortSliceArray($this->publicity_db->getPublicidad(2), 2);
         
         // Get View
         $this->load->view('web/vwDestino', $data);
+    }
+    
+    /**
+     * Obtiene un array sorting and sliced
+     */
+    public function sortSliceArray($array, $count){
+        shuffle($array);
+        if (count($array) > $count){
+            $array = array_slice($array, 0, $count);
+        }
+        return $array;
     }
     
 

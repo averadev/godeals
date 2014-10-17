@@ -17,6 +17,7 @@ class Eventos extends CI_Controller {
         $this->load->helper('url');
         $this->load->database('default');
         $this->load->model('event_db');
+        $this->load->model('publicity_db');
     }
     
     /**
@@ -36,10 +37,12 @@ class Eventos extends CI_Controller {
         // Get data from database
         $data['fav'] = $this->event_db->getFav();
         $data['available'] = $this->event_db->getAvailable();
+        $data['medioBanner'] = $this->sortSliceArray($this->publicity_db->getPublicidad(2), 2);
         // Meses
         $data['month'] = array('', 'ENERO','FEBRERO','MARZO','ABRIL','MAYO','JUNIO','JULIO','AGOSTO','SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE');
         $data['natMonth'] = array('', 'Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre');
         $data['minMonth'] = array('', 'ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SEP','OCT','NOV','DIC');
+        
         // Get Months
         $curMonth = -1;
         $lastMonth = -1;
@@ -54,6 +57,17 @@ class Eventos extends CI_Controller {
         $data['months'] = $months;
         // Get View
         $this->load->view('web/vwEventos', $data);
+    }
+    
+    /**
+     * Obtiene un array sorting and sliced
+     */
+    public function sortSliceArray($array, $count){
+        shuffle($array);
+        if (count($array) > $count){
+            $array = array_slice($array, 0, $count);
+        }
+        return $array;
     }
     
 

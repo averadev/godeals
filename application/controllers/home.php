@@ -16,7 +16,7 @@ class Home extends CI_Controller {
         parent::__construct();
         $this->load->database('default');
         $this->load->model('user_db');
-        $this->load->model('banner_db');
+        $this->load->model('publicity_db');
         $this->load->model('coupon_db');
         $this->load->model('event_db');
     }
@@ -27,7 +27,7 @@ class Home extends CI_Controller {
     public function index(){
         // Get data from database
         $data['natMonth'] = array('', 'Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre');
-        $data['banner'] = $this->sortSliceArray($this->banner_db->getAvailable(), 5);
+        $data['banner'] = $this->sortSliceArray($this->publicity_db->getBanners(), 5);
         $data['cupones'] = $this->sortSliceArray($this->coupon_db->getHomeCoupons(), 8);
         $data['timers'] = $this->sortSliceArray($this->coupon_db->getHomeTimers(), 4);
         $data['events'] = $this->sortSliceArray($this->event_db->getFav(), 3);

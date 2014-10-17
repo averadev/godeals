@@ -43,8 +43,9 @@
         
         <!-- Publicidad -->
         <div class="row publicidad">
-            <div class="medium-6 columns"><img class="publish" src="http://placehold.it/500x300&text=[ad]"/></div>
-            <div class="medium-6 columns"><img class="publish" src="http://placehold.it/500x300&text=[ad]"/></div>
+            <?php foreach ($medioBanner as $item):?>
+                <div class="medium-6 columns"><img class="publish" src="<?php echo base_url().IMG; ?>app/publicity/mediobanner/<?php echo $item->image;?>"/></div>
+            <?php endforeach;?>
         </div>
         
         <?php $this->load->view('web/vwMainMenu'); ?>
@@ -103,11 +104,13 @@
                 if ($resto > 0){
                     $pages = ($pages - ($resto / 8) + 1);
                 }
+                $noLateral = 0;
+                $noCintillo = 0;
                 for ($z = 1; $z <= $pages; $z++) { ?>
                     <div class="row">
                         <div class="medium-3 columns">
                             <?php if ($z < $pages) { ?>
-                                <img class="publish" src="http://placehold.it/300x840&text=[ad]"/>
+                                <img class="publish" src="<?php echo base_url().IMG; ?>app/publicity/lateral/<?php echo $lateral[$noLateral]->image;?>"/>
                             <?php } else { ?>
                                 &nbsp;
                             <?php } ?>
@@ -143,13 +146,16 @@
                         <div class="row">
                             <div class="medium-3 columns">&nbsp;</div>
                             <div class="medium-9 columns">
-                                <img class="cintillo" src="http://placehold.it/650x100&text=[ad]" />
+                                <img class="cintillo" src="<?php echo base_url().IMG; ?>app/publicity/cintillo/<?php echo $cintillo[$noCintillo]->image;?>" />
                             </div>
 
                         </div>
                     <?php } ?>
-                <?php 
-
+                <?php
+                    $noLateral++;
+                    if ($noLateral == count($lateral)){ $noLateral = 0; }
+                    $noCintillo++;
+                    if ($noCintillo == count($cintillo)){ $noCintillo = 0; }
                 }    
             } ?>
         </div>

@@ -2,6 +2,7 @@
 
 //funcio que se llama cada vez que se teclea en el 'imput' city
 $("#txtEventCity").keyup(function() { autocomplete(); });
+$("#txtEventType").keyup(function() { autocompleteType(); });
 
 //botones que muestran los diferentes formularios
 $('#btnAddEvent').click(function(){showFormAdd()});
@@ -91,6 +92,27 @@ $("#imgImagen").click(function() {changeImage()});
 				$('#cityList').empty();
 				for(var i = 0;i<data.length;i++){
 					$('#cityList').append(
+						"<option id='" + data[i].id + "' value='" +  data[i].name + "' />"
+					);
+				}
+			}
+		});	
+	}
+
+    // muestra las ciudades existentes en la base de datos
+	function autocompleteType(){
+		palabra = $('#txtEventType').val();
+		$.ajax({
+			type: "POST",
+			url: "../admin/catalogos/getEventType",
+			dataType:'json',
+			data: {
+				dato:palabra
+			},
+			success: function(data){
+				$('#typeList').empty();
+				for(var i = 0;i<data.length;i++){
+					$('#typeList').append(
 						"<option id='" + data[i].id + "' value='" +  data[i].name + "' />"
 					);
 				}
@@ -260,7 +282,10 @@ $("#imgImagen").click(function() {changeImage()});
 		
 		//regresa la id de la ciudad
 		valueCity = $('#txtEventCity').val();
-		idCity = $('datalist option[value="' + valueCity + '"]').attr('id');
+		idCity = $('#cityList option[value="' + valueCity + '"]').attr('id');
+        //regresa la id de la categoria
+		valueType = $('#txtEventType').val();
+		idType = $('#typeList option[value="' + valueType + '"]').attr('id');
 		var fav = 0;
 		$('input[name=destacado]:checked').each(function() {
 			fav = 1;
@@ -315,7 +340,9 @@ $("#imgImagen").click(function() {changeImage()});
 					$('#txtEventName').val(data[0].name);
 					$('#txtEventPlace').val(data[0].place);
 					$('#txtEventCity').val(data[0].cityName);
+                    $('#txtEventType').val(data[0].typeName);
 					$('#cityList').append("<option id='" + data[0].idCity + "' value='" +  data[0].cityName + "' />");
+					$('#typeList').append("<option id='" + data[0].idType + "' value='" +  data[0].typeName + "' />");
 					$('#txtEventWord').val(data[0].word);
 					$('#imgImagen').attr("src",URL_IMG + "app/event/max/" + data[0].image);
 					$('#imagenName').val(data[0].image);
@@ -379,11 +406,20 @@ $("#imgImagen").click(function() {changeImage()});
 		}
 		
 		valueCity = $('#txtEventCity').val();
-		idCity = $('datalist option[value="' + valueCity + '"]').attr('id');
-		if(idCity == undefined){
+		idCity = $('#cityList option[value="' + valueCity + '"]').attr('id');
+        if(idCity == undefined){
 			$('#alertCity').show();
 			$('#lblEventCity').addClass('error');
 			$('#txtEventCity').focus();
+			result = false;
+		}
+        
+        valueType = $('#txtEventType').val();
+		idType = $('#typeList option[value="' + valueType + '"]').attr('id');
+		if(idType == undefined){
+			$('#alertType').show();
+			$('#lblEventType').addClass('error');
+			$('#txtEventType').focus();
 			result = false;
 		}
 		
@@ -409,6 +445,7 @@ $("#imgImagen").click(function() {changeImage()});
 		$('#alertName').hide()
 		$('#alertPlace').hide();
 		$('#alertCity').hide();
+		$('#alertType').hide();
 		$('#alertWord').hide();
 		$('#alertImage').hide();
 		$('#alertEventDate').hide();
@@ -426,6 +463,7 @@ $("#imgImagen").click(function() {changeImage()});
 		$('#txtEventName').val("");
 		$('#txtEventPlace').val("");
 		$('#txtEventCity').val("");
+		$('#txtEventType').val("");
 		$('#txtEventWord').val("");
 		$('#imgImagen').attr("src","http://placehold.it/500x300&text=[ad]")
 		document.getElementById('fileImagen').value ='';
@@ -433,6 +471,7 @@ $("#imgImagen").click(function() {changeImage()});
 		$('#dtEventDate').val("");
 		$('#checkEventFav').prop('checked', false);
 		$('#cityList').empty();
+		$('#typeList').empty();
 		$('#divMenssage').hide();
 		$('#divMenssagewarning').hide();	
 	}

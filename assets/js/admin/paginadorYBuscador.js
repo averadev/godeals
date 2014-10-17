@@ -163,12 +163,15 @@ $('.txtSearch').keyup(function(e){
 									category = "Banner";
 									break;
 								case '2':
-									category = "Cintillo";
+									category = "Medio Banner";
 									break;
 								case '3':
 									category = "Lateral";
 									break;
 								case '4':
+									category = "Cintillo";
+									break;
+								case '5':
 									category = "Movil";
 									break;
 							}
@@ -331,12 +334,15 @@ $('.txtSearch').keyup(function(e){
 									category = "Banner";
 									break;
 								case '2':
-									category = "Cintillo";
+									category = "Medio Banner";
 									break;
 								case '3':
 									category = "Lateral";
 									break;
 								case '4':
+									category = "Cintillo";
+									break;
+								case '5':
 									category = "Movil";
 									break;
 							}
@@ -409,14 +415,17 @@ $('.txtSearch').keyup(function(e){
 							case "banner":
 								palabra = 1;
 							break;
-							case "cintillo":
+							case "medio banner":
 								palabra = 2;
 							break;
 							case "lateral":
 								palabra = 3;
 							break;
-							case "movil":
+							case "cintillo":
 								palabra = 4;
+							break;
+							case "movil":
+								palabra = 5;
 							break;
 						}
 						url = "../admin/publicity/getallSearch";

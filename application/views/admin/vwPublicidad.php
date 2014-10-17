@@ -88,6 +88,9 @@ $this->load->view('admin/vwHeader');
 														$category = "Lateral";
 														break;
 													case 4:
+														$category = "Cintillo";
+														break;
+													case 5:
 														$category = "Movil";
 														break;
 												}
@@ -172,10 +175,11 @@ $this->load->view('admin/vwHeader');
                             		<label class="field" id="lblPublicityCategory">*Categoria
                                     	<select id="sltPublicityCategory">
                                         	<option value="0">Selecione una categoria</option>
-                                        	<option value="1">Banner</option>
-                                            <option value="2">Cintillo</option>
-                                            <option value="3">Lateral</option>
-                                            <option value="4">Movil</option>
+                                        	<option value="1">Banner [ 1000 x 350 ]</option>
+                                            <option value="2">Medio Banner [ 450 x 270 ]</option>
+                                            <option value="3">Publicidad Lateral [ 220 x 620 ]</option>
+                                            <option value="4">Publicidad Cintillo [ 650 x 100 ]</option>
+                                            <option value="5">Publicidad Movil [ 444 x 80 ]</option>
                                         </select>
                                		</label>
                                 	<small id="alertCategory" class="error" style="display:none">
@@ -207,7 +211,7 @@ $this->load->view('admin/vwHeader');
                         	<div class="row">
                                 <div class="small-12 medium-11 large-10 columns" id="imagen">
                                 	<label id="lblPublicityImage" class="field">*Imagen</label>
-                                    <a><img id="imgImagen" src="http://placehold.it/500x300&text=[ad]"/></a>
+                                    <a><img id="imgImagen" src="http://placehold.it/320x240&text=[ad]"/></a>
                                     <input type="hidden" id="imagenName" value="0" />
                                     <input style="display:none" type="file" id="fileImagen" style="color:#003" name="archivos[]" multiple />
                                     <small id="alertImage" class="error small-9 medium-11 large-10 columns" style="display:none"></small>

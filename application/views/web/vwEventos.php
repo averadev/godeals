@@ -43,8 +43,9 @@
         
         <!-- Publicidad -->
         <div class="row publicidad">
-            <div class="medium-6 columns"><img class="publish" src="http://placehold.it/500x300&text=[ad]"/></div>
-            <div class="medium-6 columns"><img class="publish" src="http://placehold.it/500x300&text=[ad]"/></div>
+            <?php foreach ($medioBanner as $item):?>
+                <div class="medium-6 columns"><img class="publish" src="<?php echo base_url().IMG; ?>app/publicity/mediobanner/<?php echo $item->image;?>"/></div>
+            <?php endforeach;?>
         </div>
         
         <?php $this->load->view('web/vwMainMenu'); ?>
@@ -73,7 +74,7 @@
                     <div class="row" data-equalizer>
                         <div class="medium-12 columns" data-equalizer-watch>
                             <div class="evento proxEvento boxShadow">
-                                <div class="evntImg" style="background-image: url('<?php echo base_url().IMG; ?>app/event/min/<?php echo $item->imgMin;?>');">
+                                <div class="evntImg" style="background-image: url('<?php echo base_url().IMG; ?>app/event/min/<?php echo $item->image;?>');">
                                     <div class="evtContent content2">
                                         <p class="evtTitle1"><?php echo $item->name;?></p>
                                         <p class="evtTitle3 textDate">
@@ -81,7 +82,7 @@
                                             <?php echo $natMonth[date('n', strtotime($item->date))]; ?>
                                         </p>
                                         <p class="evtTitle2"><?php echo $item->place;?>, <?php echo $item->city;?>.</p>
-                                        <img class="viewEvent" attr-id="<?php echo $item->id;?>" attr="<?php echo base_url().IMG; ?>app/event/max/<?php echo $item->imgMax;?>" src="<?php echo base_url().IMG; ?>web/viewEvent.png">
+                                        <img class="viewEvent" attr-id="<?php echo $item->id;?>" attr="<?php echo base_url().IMG; ?>app/event/max/<?php echo $item->image;?>" src="<?php echo base_url().IMG; ?>web/viewEvent.png">
                                     </div>
                                 </div>
                             </div>
@@ -115,11 +116,11 @@
                         </div>
                         <div class="medium-11 columns" data-equalizer-watch>
                             <div class="evento boxShadowLite <?php if ($item->fav == 1) {echo "proxEvento";} ?>">
-                                <div class="evntImg2" style="background-image: url('<?php echo base_url().IMG; ?>app/event/min/<?php echo $item->imgMin;?>');">
+                                <div class="evntImg2" style="background-image: url('<?php echo base_url().IMG; ?>app/event/min/<?php echo $item->image;?>');">
                                     <div class="evtContent subEvent">
                                         <p class="evtTitleMin1"><?php echo $item->name;?></p>
                                         <p class="evtTitleMin3"><?php echo $item->place;?>, <?php echo $item->city;?></p>
-                                        <img class="viewEventMin" attr="<?php echo base_url().IMG; ?>app/event/max/<?php echo $item->imgMax;?>" src="<?php echo base_url().IMG; ?>web/viewEvent.png">
+                                        <img class="viewEventMin" attr="<?php echo base_url().IMG; ?>app/event/max/<?php echo $item->image;?>" src="<?php echo base_url().IMG; ?>web/viewEvent.png">
                                     </div>
                                     <?php if ($item->fav == 1) { ?>
                                         <img class="eventSolapa" src="<?php echo base_url().IMG; ?>web/eventSolapa1.png">

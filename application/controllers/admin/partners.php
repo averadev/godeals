@@ -166,8 +166,8 @@ class Partners extends CI_Controller {
                 $tipo = $key['type']; //obtenemos el tipo de imagen
 
                 //definimos el ancho y alto que tendra la imagen
-                $max_ancho = 700;
-                $max_alto = 525;
+                $max_ancho = 200;
+                $max_alto = 200;
 
                 list($ancho,$alto)=getimagesize($temporal);
                 //Creamos una imagen en blanco con el ancho y alto final

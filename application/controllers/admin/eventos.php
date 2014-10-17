@@ -120,6 +120,7 @@ class Eventos extends CI_Controller {
         // Rutas para el guardado
         $rutaApp="assets/img/app/event/app/";
 		$rutaMax="assets/img/app/event/max/";
+		$rutaMed="assets/img/app/event/med/";
 		$rutaMin="assets/img/app/event/min/";
   		foreach ($_FILES as $key) {
     		if($key['error'] == UPLOAD_ERR_OK ){//Verificamos si se subio correctamente
@@ -133,12 +134,15 @@ class Eventos extends CI_Controller {
 				$app_alto = 330;
                 $max_ancho = 700;
 				$max_alto = 525;
+                $med_ancho = 250;
+				$med_alto = 437;
 				$min_ancho = 320;
 				$min_alto = 240;
 				list($ancho,$alto)=getimagesize($temporal);
 				//Creamos una imagen en blanco con el ancho y alto final
 				$tmpApp=imagecreatetruecolor($app_ancho,$app_alto);
                 $tmpMax=imagecreatetruecolor($max_ancho,$max_alto);
+                $tmpMed=imagecreatetruecolor($med_ancho,$med_alto);
 				$tmpMin=imagecreatetruecolor($min_ancho,$min_alto);	
 				
 				//detecta si la imagen es png
@@ -161,6 +165,7 @@ class Eventos extends CI_Controller {
 				//toma la ruta de la imagen a crear
                 $patch_imagenApp=$rutaApp . "event_" . $nombreTimeStamp .".jpg";
                 $patch_imagenMax=$rutaMax . "event_" . $nombreTimeStamp . ".jpg";
+                $patch_imagenMed=$rutaMed . "event_" . $nombreTimeStamp . ".jpg";
                 $patch_imagenMin=$rutaMin . "event_" . $nombreTimeStamp . ".jpg";
 				
 				//Copiamos la imagen sobre la imagen que acabamos de crear en blanco
@@ -169,6 +174,15 @@ class Eventos extends CI_Controller {
                 
                 imagecopyresampled($tmpMax, $imagen,0,0,0,0, $max_ancho, $max_alto, $ancho, $alto);
                 imagejpeg($tmpMax, $patch_imagenMax,100);
+                
+                $xPosc = ($ancho - $med_ancho) / 2;
+                $yPosc = ($alto - $med_alto) / 2;
+                if ($xPosc > 0 && $yPosc > 0){
+                    imagecopyresampled($tmpMed, $imagen,0,0,$xPosc,$yPosc, $med_ancho, $med_alto, $med_ancho, $med_alto);
+                }else{
+                    imagecopyresampled($tmpMed, $imagen,0,0,0,0, $med_ancho, $med_alto, $med_ancho, $med_alto);
+                }
+                imagejpeg($tmpMed, $patch_imagenMed,100);
                 
                 imagecopyresampled($tmpMin, $imagen,0,0,0,0, $min_ancho, $min_alto, $ancho, $alto);
                 imagejpeg($tmpMin, $patch_imagenMin,100);

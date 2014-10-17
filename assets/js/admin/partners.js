@@ -118,7 +118,7 @@ $(window).load(function(){
   $('#fileImagen').change(function(e) {
 	  $('#alertImage').hide();
 	  $('#lblPartnerImage').removeClass('error');
-	  $('#imgImagen').attr("src","http://placehold.it/500x300&text=[ad]");
+	  $('#imgImagen').attr("src","http://placehold.it/200x200&text=[200x200]");
 	  if($('#imagenName').val() != 0){
 		 $('#imgImagen').attr("src",URL_IMG + "app/coupon/max/" + $('#imagenName').val())
 	  }
@@ -130,7 +130,7 @@ $(window).load(function(){
       imageType = /image.*/;
     
       if (!file.type.match(imageType)){
-		  $('#imgImagen').attr("src","http://placehold.it/500x300&text=[ad]");
+		  $('#imgImagen').attr("src","http://placehold.it/200x200&text=[200x200]");
 		  document.getElementById('fileImagen').value ='';
 		  if($('#imagenName').val() != 0){
 			  $('#imgImagen').attr("src",URL_IMG + "app/coupon/max/" + $('#imagenName').val())
@@ -509,7 +509,7 @@ function limpiarCampos(){
     $('#txtPartnerMail').val("");
     $('#txtPartnerTwitter').val("");
     $('#txtPartnerFacebook').val("");
-    $('#imgImagen').attr("src","http://placehold.it/500x300&text=[ad]");
+    $('#imgImagen').attr("src","http://placehold.it/200x200&text=[200x200]");
     document.getElementById('fileImagen').value ='';
     $('#txtPartnerLatitude').val("");
     $('#txtPartnerLongitude').val("");

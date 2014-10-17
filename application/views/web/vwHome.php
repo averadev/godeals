@@ -56,7 +56,7 @@
                         
                      <?php foreach ($banner as $item):?>
                         <li>
-                            <img class="banner" src="<?php echo base_url().IMG; ?>app/banner/<?php echo $item->image;?>" />
+                            <img class="banner" src="<?php echo base_url().IMG; ?>app/publicity/banner/<?php echo $item->image;?>" />
                             <div class="gradientBanner"></div>
                             <div class="logoBanner">
                                 <div class="row">
@@ -257,7 +257,7 @@
                         <?php foreach ($events as $item):?>
                             <a data-path-hover="M 0,0 0,38 90,58 180.5,38 180,0 z">
                                 <figure>
-                                    <img src="<?php echo base_url().IMG; ?>app/event/med/<?php echo $item->imgMed;?>" />
+                                    <img src="<?php echo base_url().IMG; ?>app/event/med/<?php echo $item->image;?>" />
                                     <svg viewBox="0 0 180 320" preserveAspectRatio="none"><path d="M 0 0 L 0 182 L 90 126.5 L 180 182 L 180 0 L 0 0 z "/></svg>
                                     <figcaption>
                                         <h2><?php echo $item->word;?></h2>
