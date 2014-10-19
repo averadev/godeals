@@ -68,12 +68,12 @@ $(document).ready(function(){
    		}
    		else {
 	   		if (event.keyCode < 95) {
-		   		if (event.keyCode < 48 || event.keyCode > 57) {
+		   		if (event.keyCode < 48 && event.keyCode != 9 || event.keyCode > 57) {
 			   		event.preventDefault();
 				}
 			} 
        		 else {
-				if (event.keyCode < 96 || event.keyCode > 105 && event.keyCode != 109 && event.keyCode != 189 && event.keyCode != 110) {
+				if (event.keyCode < 96 || event.keyCode > 105 && event.keyCode != 109 && event.keyCode != 189 && event.keyCode != 110 && event.keyCode != 190) {
 					event.preventDefault();
 				}
 			}

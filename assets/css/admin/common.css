@@ -85,6 +85,11 @@ table tr td{
 	height:250px;
 }
 
+.imgImagen{
+	width:320px;
+	height:250px;	
+}
+
 .btnAceptarE,#btnCancelarE,.btnCancelE,.btnAcceptE,#btnCancelC,#btnAcceptC{//botones de eliminacion
 	background-color:#000000;
 	background:#000;

@@ -20,8 +20,13 @@ $('.btnCancelE').click(function() {eventCancelDelete()});
 
 //llama a la funcion cada vez que se quiere cambiar la imagen
 $("#imgImagen").click(function() {changeImage()});
+$("#imgImagen2").click(function() {changeImage2()});
 
 //visualizar imagen
+
+	$(document).on('keydown','#txtEventLatitude, #txtEventLongitude',function() {
+		validarCoordenada();
+	});
 
 	$(window).load(function(){
  		$(function() {
@@ -68,12 +73,62 @@ $("#imgImagen").click(function() {changeImage()});
       var result=e.target.result;
       $('#imgImagen').attr("src",result);
      }
+	 
+	 
+	 //detecta cada vez que hay un cambio en el formulario de imagen2
+ 			$('#fileImagen2').change(function(e) {
+			$('#lblEventImage2').removeClass('error');
+	  		$('#alertImage2').hide();
+			$('#imgImagen2').attr("src","http://placehold.it/500x300&text=[ad]");
+	  		if($('#imagenName2').val() != 0){
+		 		$('#imgImagen2').attr("src",URL_IMG + "app/event/fullweb/" + $('#imagenName').val())
+	  		}
+			if(e.target.files[0] != undefined){
+				addImage2(e); 
+			}
+     	});
+
+	//muestra la nueva imagen
+     function addImage2(e){
+		 
+      	var file = e.target.files[0],
+      	imageType = /image.*/;
+	
+      	if (!file.type.match(imageType)){
+		  	$('#imgImagen2').attr("src","http://placehold.it/500x300&text=[ad]");
+		 	 document.getElementById('fileImagen2').value ='';
+		  	if($('#imagenName').val() != 0){
+			  	$('#imgImagen2').attr("src",URL_IMG + "app/event/max/" + $('#imagenName').val())
+		  	} else {
+				$('#lblEventImage2').addClass('error');
+			  	$('#alertImage2').empty();
+			  	$('#alertImage2').append("Selecione una imagen");
+			  	$('#alertImage2').show();
+		  	}
+       	return;
+	  	}
+  		//carga la imagen
+      var reader = new FileReader();
+      reader.onload = fileOnload2;
+      reader.readAsDataURL(file);
+     }
+	 
+  	//muestra el resultado
+     function fileOnload2(e) {
+      var result=e.target.result;
+      $('#imgImagen2').attr("src",result);
+     }
+	 
     });
   });
   
  	//abre el explorador de archivos cuando le das click a la imagen de cupones
 	function changeImage(){
 		$('#fileImagen').click();
+	}
+	
+	function changeImage2(){
+		$('#fileImagen2').click();
 	}
 
 // fin visualizar imagen
@@ -169,8 +224,8 @@ $("#imgImagen").click(function() {changeImage()});
 			$('.loading').show();
 			$('.loading').html('<img src="../assets/img/web/loading.gif" height="40px" width="40px" />');
 			$('.bntSave').attr('disabled',true);
-			upImage(0);	
-		}	
+			upImage(0,"");	
+		}
 	}
 	
 	//llama a la funcion de eliminar imagen y editar evento
@@ -182,13 +237,16 @@ $("#imgImagen").click(function() {changeImage()});
 			$('.loading').show();
 			$('.loading').html('<img src="../assets/img/web/loading.gif" height="40px" width="40px" />');
 			$('.bntSave').attr('disabled',true);
-			if(document.getElementById('fileImagen').value == ""){
+			if(document.getElementById('fileImagen').value == "" && document.getElementById('fileImagen2').value == ""){
 				var nameImage = $('#imagenName').val();
 				ajaxSaveEvent(nameImage,id);
+			} else if(document.getElementById('fileImagen').value == "" && document.getElementById('fileImagen2').value != ""){
+				deleteImage(id,1);
+			} else if(document.getElementById('fileImagen').value != "" && document.getElementById('fileImagen2').value == ""){
+				deleteImage(id,2);
 			} else {
-				deleteImage(id);
+				deleteImage(id,3);
 			}
-				
 		}
 	}
 	
@@ -229,23 +287,31 @@ $("#imgImagen").click(function() {changeImage()});
 	}
 	
 	//elimina la imagen del directorio assets/img/app/event
-	function deleteImage(id){
+	function deleteImage(id,type){
 		nameImage = $('#imagenName').val();
 		$.ajax({
             type: "POST",
             url: "../admin/eventos/deleteImage",
             dataType:'json',
             data: { 
-				deleteImage:nameImage
+				deleteImage:nameImage,
+				type:type
 			},
             error: function(){
-				upImage(id);
+				
+				if(document.getElementById('fileImagen').value == "" && document.getElementById('fileImagen2').value != ""){
+					upImage2(id,nameImage);
+				} else if(document.getElementById('fileImagen').value != "" && document.getElementById('fileImagen2').value == ""){
+					upImage(id,nameImage);
+				} else {
+					upImage(id,"");
+				}
 			}
 		});
 	}
 	
 	//sube la nueva imagen al directorio assets/img/app/event
-	function upImage(id){
+	function upImage(id,nameImage){
 		var archivos = document.getElementById("fileImagen");//Damos el valor del input tipo file
  		var archivo = archivos.files;
 		
@@ -259,6 +325,7 @@ $("#imgImagen").click(function() {changeImage()});
 	
 		//cargamos los atributos de la imagen
 		data.append('archivo',archivo[0]);
+		data.append('image',nameImage);
 		
 		//abrimos la conexion para subir una imagen
 		Req.open("POST", "../admin/eventos/uploadImage", true);
@@ -268,6 +335,44 @@ $("#imgImagen").click(function() {changeImage()});
 			if (Req.status == 200) {
  	 			//Recibimos la respuesta de php
 				nameImage = Req.responseText;
+				
+				if(document.getElementById('fileImagen2').value != ""){
+					upImage2(id,nameImage);
+				} else {
+					 ajaxSaveEvent(nameImage,id);	
+				}
+				
+			} else { 
+  				//console.log(Req.status); //Vemos que paso.
+			} 		
+		};
+		//Enviamos la petición 
+ 		Req.send(data);			
+	}
+	
+	function upImage2(id,nameImage){
+		var archivos = document.getElementById("fileImagen2");//Damos el valor del input tipo file
+ 		var archivo = archivos.files;
+		
+		if(window.XMLHttpRequest) {
+ 			var Req = new XMLHttpRequest();
+ 		}else if(window.ActiveXObject) { 
+ 			var Req = new ActiveXObject("Microsoft.XMLHTTP");
+ 		}
+		
+		var data = new FormData();
+	
+		//cargamos los atributos de la imagen
+		data.append('archivo',archivo[0]);
+		data.append('nameImage',nameImage);
+		
+		//abrimos la conexion para subir una imagen
+		Req.open("POST", "../admin/eventos/uploadImage2", true);
+		//verificamos si se executo correctamente el metodo
+		Req.onload = function(Event) {
+			//Validamos que el status http sea ok 
+			if (Req.status == 200) {
+ 	 			//Recibimos la respuesta de php
 				ajaxSaveEvent(nameImage,id);
 			} else { 
   				//console.log(Req.status); //Vemos que paso.
@@ -347,7 +452,7 @@ $("#imgImagen").click(function() {changeImage()});
 					$('#txtEventCity').val(data[0].cityName);
                     $('#txtEventType').val(data[0].typeName);
 					$('#cityList').append("<option id='" + data[0].idCity + "' value='" +  data[0].cityName + "' />");
-					$('#typeList').append("<option id='" + data[0].idType + "' value='" +  data[0].typeName + "' />");
+					$('#typeList').append("<option id='" + data[0].eventTypeId + "' value='" +  data[0].typeName + "' />");
 					$('#txtEventWord').val(data[0].word);
 					$('#txtEventInfo').val(data[0].info);
 					var dateTime = data[0].date;
@@ -361,6 +466,7 @@ $("#imgImagen").click(function() {changeImage()});
 					}
 					$('#imgImagen').attr("src",URL_IMG + "app/event/max/" + data[0].image);
 					$('#imagenName').val(data[0].image);
+					$('#imgImagen2').attr("src",URL_IMG + "app/event/fullweb/" + data[0].image);
             	}
         	});
 	}
@@ -415,9 +521,15 @@ $("#imgImagen").click(function() {changeImage()});
 			result = false;
 		}
 		
+		if($('#imagenName').val() == 0 && $('#fileImagen2').val().length == 0){
+			$('#alertImage2').html("Campo vacio. Selecione una imagen");
+			$('#alertImage2').show();
+			$('#lblEventImage2').addClass('error');
+			result = false;
+		}
+		
 		if($('#imagenName').val() == 0 && $('#fileImagen').val().length == 0){
-			$('#alertImage').empty();
-			$('#alertImage').append("Campo vacio. Selecione una imagen");
+			$('#alertImage').html("Campo vacio. Selecione una imagen");
 			$('#alertImage').show();
 			$('#lblEventImage').addClass('error');
 			result = false;
@@ -488,6 +600,7 @@ $("#imgImagen").click(function() {changeImage()});
 		$('#alertType').hide();
 		$('#alertWord').hide();
 		$('#alertImage').hide();
+		$('#alertImage2').hide();
 		$('#alertEventDate').hide();
 		$('#alertLatitude').hide();
 		$('#alertLongitude').hide()
@@ -501,6 +614,7 @@ $("#imgImagen").click(function() {changeImage()});
 		$('#lblEventWord').removeClass('error');
 		$('#lblEventDate').removeClass('error');
 		$('#lblEventImage').removeClass('error');
+		$('#lblEventImage2').removeClass('error');
 		$('#lblEventLatitude').removeClass('error');
 		$('#lblEventLongitude').removeClass('error');
 		$('#lblEventEndDate').removeClass('error');
@@ -513,8 +627,11 @@ $("#imgImagen").click(function() {changeImage()});
 		$('#txtEventCity').val("");
 		$('#txtEventType').val("");
 		$('#txtEventWord').val("");
+		$('#txtEventInfo').val("");
 		$('#imgImagen').attr("src","http://placehold.it/500x300&text=[ad]")
 		document.getElementById('fileImagen').value ='';
+		$('#imgImagen2').attr("src","http://placehold.it/500x300&text=[ad]")
+		document.getElementById('fileImagen2').value ='';
 		$('#imagenName').val(0);
 		$('#dtEventDate').val("");
 		$('#checkEventFav').prop('checked', false);
@@ -522,4 +639,27 @@ $("#imgImagen").click(function() {changeImage()});
 		$('#typeList').empty();
 		$('#divMenssage').hide();
 		$('#divMenssagewarning').hide();	
+	}
+	
+	function validarCoordenada(){
+   		if(event.shiftKey)
+   		{
+        	event.preventDefault();
+   		}
+ 
+   		if (event.keyCode == 46 || event.keyCode == 8)    {
+	   		
+   		}
+   		else {
+	   		if (event.keyCode < 95) {
+		   		if (event.keyCode < 48 && event.keyCode != 9 || event.keyCode > 57) {
+			   		event.preventDefault();
+				}
+			} 
+       		 else {
+				if (event.keyCode < 96 || event.keyCode > 105 && event.keyCode != 109 && event.keyCode != 189 && event.keyCode != 110 && event.keyCode != 190) {
+					event.preventDefault();
+				}
+			}
+		}
 	}

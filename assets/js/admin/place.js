@@ -432,7 +432,7 @@ $("#imgImagen").click(function() {changeImage()});
 				}
 			} 
        		 else {
-				if (event.keyCode < 96 || event.keyCode > 105 && event.keyCode != 109 && event.keyCode != 189 && event.keyCode != 110) {
+				if (event.keyCode < 96 || event.keyCode > 105 && event.keyCode != 109 && event.keyCode != 189 && event.keyCode != 110 && event.keyCode != 190) {
 					event.preventDefault();
 				}
 			}

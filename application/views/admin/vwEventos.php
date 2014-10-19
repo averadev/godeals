@@ -222,23 +222,6 @@ $this->load->view('admin/vwHeader');
                                 <div class="medium-2 columns">&nbsp;</div>
                             </div>
                             
-                        </div>
-                        <!-- fin primera columna -->    
-                        
-                        <!-- segunda columna -->
-                    	<div class="small-12 medium-6 large-6 columns">
-                            
-                            <div class="row">
-                                <div class="small-12 medium-11 large-10 columns" id="imagen">
-                                	<label id="lblEventImage" class="field">*Imagen</label>
-                                    <a><img id="imgImagen" src="http://placehold.it/500x300&text=[ad]"/></a>
-                                    <input type="hidden" id="imagenName" value="0" />
-                                    <input style="display:none" type="file" id="fileImagen" style="color:#003" name="archivos[]" multiple />
-                                    <small id="alertImage" class="error small-9 medium-11 large-10 columns" style="display:none"></small>
-                                </div>
-                            </div>
-                            <br/><br/>
-                            
                             <div class="row">
                                 <div class="medium-5 columns">
                                     <label id="lblEventLatitude" class="field">*Latitud
@@ -258,6 +241,32 @@ $this->load->view('admin/vwHeader');
                                 </div>
                                 <div class="medium-2 columns">&nbsp;</div>
                             </div>
+                            
+                        </div>
+                        <!-- fin primera columna -->    
+                        
+                        <!-- segunda columna -->
+                    	<div class="small-12 medium-6 large-6 columns">
+                            
+                            <div class="row">
+                                <div class="small-12 medium-11 large-10 columns" id="imagen">
+                                	<label id="lblEventImage" class="field">*Imagen</label>
+                                    <a><img class="imgImagen" id="imgImagen" src="http://placehold.it/500x300&text=[ad]"/></a>
+                                    <input type="hidden" id="imagenName" value="0" />
+                                    <input style="display:none" type="file" id="fileImagen" style="color:#003" name="archivos[]" multiple />
+                                    <small id="alertImage" class="error small-9 medium-11 large-10 columns" style="display:none"></small>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="small-12 medium-11 large-10 columns" id="imagen">
+                                	<label id="lblEventImage2" class="field">*Imagen 2</label>
+                                    <a><img class="imgImagen" id="imgImagen2" src="http://placehold.it/500x300&text=[ad]"/></a>
+                                    <input style="display:none" type="file" id="fileImagen2" style="color:#003" name="archivos[]" multiple />
+                                    <small id="alertImage2" class="error small-9 medium-11 large-10 columns" style="display:none"></small>
+                                </div>
+                            </div>
+                            <br/><br/>
                             
                              <div class="row">
                                 <div class="small-8 medium-9 large-6 columns">
