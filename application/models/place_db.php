@@ -164,12 +164,33 @@ Class place_db extends CI_MODEL
         return  $this->db->get()->result();
 	}
 	
+	public function getXrefActive($id){
+		$this->db->select('xref_place_partner.partnerId, xref_place_partner.type, partner.name, partner.info');
+        $this->db->from('xref_place_partner');
+		$this->db->join('partner', 'partner.id = xref_place_partner.partnerId');
+		$this->db->where('xref_place_partner.placeId', $id);
+        return  $this->db->get()->result();	
+	}
+	
+	public function getallSearchXref($idPlace,$dato){
+		$this->db->select('xref_place_partner.partnerId, xref_place_partner.type, partner.name, partner.info');
+        $this->db->from('xref_place_partner');
+		$this->db->join('partner', 'partner.id = xref_place_partner.partnerId');
+		$this->db->where('xref_place_partner.placeId', $idPlace);
+		$this->db->where('(partner.name LIKE \'%'.$dato.'%\')', NULL);
+        return  $this->db->get()->result();
+	}
+	
 	/*
 	* inserta datos en la tabla place
 	*/
 	
 	public function insertPlace($data){
 		$this->db->insert('place', $data);
+	}
+	
+	public function insertXref($data){
+		$this->db->insert('xref_place_partner', $data);
 	}
 	
 	/*

@@ -227,6 +227,17 @@ $this->load->view('admin/vwHeader');
                             <br/><br/>
                             
                             <div class="row">
+                            	<div class="small-12 medium-11 large-10 columns">
+                                    <label id="lblPartnerInfo" class="field"><strong>*Informacion</strong>
+                                    	<textarea id="txtPartnerInfo" class="radius"></textarea>
+                                    </label>
+                                    <small id="alertPartnerInfo" class="error" style="display:none">
+                                    	Campo vacio. Por favor escriba la informacion del cliente
+                                    </small>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
                                 <div class="small-12 medium-11 large-10 columns">
                                     <label id="lblPartnerLatitude" class="field"><strong>Latitud</strong>
                                         <input type="text" id="txtPartnerLatitude" class="radius"/>
@@ -247,7 +258,7 @@ $this->load->view('admin/vwHeader');
                                     </small>
                                 </div>
                             </div>
-                            <br/><br/><br/>
+                            <br/>
                             
                             
                             <div class="row">
