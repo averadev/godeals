@@ -226,9 +226,11 @@ class Eventos extends CI_Controller {
 				$fullWeb_ancho = 700;
 				$fullApp_ancho = 440;
 				list($ancho,$alto)=getimagesize($temporal);
+				$fullWeb_alto = ($fullWeb_ancho / $ancho) * $alto;
+				$fullApp_alto = ($fullApp_ancho / $ancho) * $alto;
 				//Creamos una imagen en blanco con el ancho y alto final
-				$tmpWeb=imagecreatetruecolor($fullWeb_ancho,$alto);
-                $tmpApp=imagecreatetruecolor($fullApp_ancho,$alto);
+				$tmpWeb=imagecreatetruecolor($fullWeb_ancho,$fullWeb_alto);
+                $tmpApp=imagecreatetruecolor($fullApp_ancho,$fullApp_alto);
 				
 				//detecta si la imagen es png
 				if($tipo == "image/png"){
@@ -250,10 +252,10 @@ class Eventos extends CI_Controller {
                 $patch_imagenApp=$rutaFullApp . $_POST['nameImage'];
 				
 				//Copiamos la imagen sobre la imagen que acabamos de crear en blanco
-                imagecopyresampled($tmpWeb, $imagen,0,0,0,0, $fullWeb_ancho, $alto, $ancho, $alto);
+                imagecopyresampled($tmpWeb, $imagen,0,0,0,0, $fullWeb_ancho, $fullWeb_alto, $ancho, $alto);
                 imagejpeg($tmpWeb, $patch_imagenWeb,100);
                 
-                imagecopyresampled($tmpApp, $imagen,0,0,0,0, $fullApp_ancho, $alto, $ancho, $alto);
+                imagecopyresampled($tmpApp, $imagen,0,0,0,0, $fullApp_ancho, $fullApp_alto, $ancho, $alto);
                 imagejpeg($tmpApp, $patch_imagenApp,100);
 				
 				echo $alto;
