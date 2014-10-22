@@ -11,7 +11,7 @@ Class partner_db extends CI_MODEL
      * Obtiene el registro de un partner
      */
     public function getId($id){
-        $this->db->select ('partner.id, partner.name, partner.logo, partner.idCatMap, partner.address, partner.phone, partner.mail, partner.twitter, partner.facebook, partner.latitude, partner.longitude');
+        $this->db->select ('partner.id, partner.name, partner.logo, partner.idCatMap, partner.address, partner.phone, partner.mail, partner.twitter, partner.facebook, partner.latitude, partner.longitude, partner.info');
         $this->db->select('map_category.name as categoryName');
         $this->db->from('partner');
         $this->db->join('map_category', 'partner.idCatMap = map_category.id');

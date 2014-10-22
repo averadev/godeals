@@ -17,6 +17,8 @@ $('#btnCancel').click(function() {eventCancel()});
 $('.btnAcceptE').click(function() {eventDelete()});
 $('.btnCancelE').click(function() {eventCancelDelete()});
 
+$('#assignTrade').click(function() {assignTrade()});
+
 //llama a la funcion cada vez que se quiere cambiar la imagen
 $("#imgImagen").click(function() {changeImage()});
 
@@ -302,6 +304,11 @@ $("#imgImagen").click(function() {changeImage()});
 				$('#imagenName').val(data[0].image);
             }
         });
+	}
+	
+	function assignTrade(){
+		//window.location.replace("http://www.pineapplesoft.net?id=1");	
+		window.location.href = "../admin/asignarComercio?id=1";	 
 	}
 	
 	function validations(){

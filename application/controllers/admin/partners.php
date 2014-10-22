@@ -112,6 +112,7 @@ class Partners extends CI_Controller {
                     'facebook'  => $_POST['facebook'],
                     'latitude'  => $_POST['latitude'],
                     'longitude' => $_POST['longitude'],
+					'info' 		=> $_POST['info'],
                     'status'    => 1
                     )
                 ); 
@@ -131,6 +132,7 @@ class Partners extends CI_Controller {
                     'facebook'  => $_POST['facebook'],
                     'latitude'  => $_POST['latitude'],
                     'longitude' => $_POST['longitude'],
+					'info'		=> $_POST['info'],
                     'status'    => 1
                     )
                 );
