@@ -46,6 +46,7 @@ $this->load->view('admin/vwHeader');
                         <!--- divicion que muestra la tabla de publicidad ---> 
                         <div id="tabla" >
                          <input type="hidden" id="idPlace" value="<?php echo $idPlace ?>"  />
+                         <input type="hidden" id="valuePartner" value="0"/>
                         	<table id="tableAsigComer">
                             	<thead>
                                 	<tr>
@@ -69,10 +70,10 @@ $this->load->view('admin/vwHeader');
                                 	<?php
                                     	$con = 0;
 										foreach($comercio as $item):
-											$con++;
 									?>
                                             <?php 
 											if($item->type == 1){
+												$con++;
 											?>
                                     		<tr>
                                             	<td><?php echo $con; ?></td>
@@ -102,7 +103,8 @@ $this->load->view('admin/vwHeader');
 										 <?php
 										 foreach($comercio as $item):
 										 	if($item->type == 2){
-									?> 
+												$con++;
+									?> 	
                                     		<tr>
                                             	<td><?php echo $con; ?></td>
                                                 <td>
@@ -132,7 +134,8 @@ $this->load->view('admin/vwHeader');
 										 <?php
 										 foreach($comercio as $item):
 										 	if($item->type == 3){
-									?> 
+												$con++;
+									?> 		
                                     		<tr>
                                             	<td><?php echo $con; ?></td>
                                                 <td>
@@ -224,6 +227,13 @@ $this->load->view('admin/vwHeader');
                                 	</small>
                             	</div>
                         	</div>
+                             <div class="row">
+                                <div class="small-8 medium-9 large-6 columns">
+      								<button  id="btnNewPartner" class="bntSave button small success radius ">
+      								Agregar Partner</button>
+                                </div>
+                                <div class="loading small-2 medium-2 large-2 columns" id="load1"></div>
+							</div>
 
                     	</div> <!--- fin primera columna --->
                         

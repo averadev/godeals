@@ -17,7 +17,7 @@ $('#btnCancel').click(function() {eventCancel()});
 $('.btnAcceptE').click(function() {eventDelete()});
 $('.btnCancelE').click(function() {eventCancelDelete()});
 
-$('#assignTrade').click(function() {assignTrade()});
+$('#btnAssignTrade').click(function() {assignTrade()});
 
 //llama a la funcion cada vez que se quiere cambiar la imagen
 $("#imgImagen").click(function() {changeImage()});
@@ -110,6 +110,7 @@ $("#imgImagen").click(function() {changeImage()});
 		hideAlert();
 		$('#btnSavePlace').hide();
 		$('#btnRegisterPlace').show();
+		$('#btnAssignTrade').hide();
 		$('#viewPlace').hide();
 		$('#FormPlace').show();	
 	}
@@ -118,10 +119,11 @@ $("#imgImagen").click(function() {changeImage()});
 		cleanFields();
 		hideAlert();
 		id = $(id).find('input').val();
-		$('#btnSavePlace').val(id); 
+		$('#btnSavePlace').val(id);
 		showsEvent(id);
 		$('#btnRegisterPlace').hide();
 		$('#btnSavePlace').show();
+		$('#btnAssignTrade').show();
 		$('#viewPlace').hide();
 		$('#FormPlace').show();
 	}
@@ -308,7 +310,7 @@ $("#imgImagen").click(function() {changeImage()});
 	
 	function assignTrade(){
 		//window.location.replace("http://www.pineapplesoft.net?id=1");	
-		window.location.href = "../admin/asignarComercio?id=1";	 
+		window.location.href = "../admin/asignarComercio?id=" + $('#btnSavePlace').val();	 
 	}
 	
 	function validations(){
