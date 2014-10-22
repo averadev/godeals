@@ -166,7 +166,7 @@ class Api extends REST_Controller {
             // Obtenemos datos
             $idApp = $this->get('idApp');
             $events = $this->api_db->getEvent($idApp, true);
-            $coupons = $this->api_db->getCoupon($idApp, true, 1);
+            $coupons = $this->api_db->getCoupon($idApp, true, 0);
             $place = $this->api_db->getPlace($idApp, true);
             $sporttv = $this->api_db->getSporttv($idApp, true);
             
@@ -208,10 +208,10 @@ class Api extends REST_Controller {
                 $item->type = 6;
                 $item->path = 'sporttv/app/';
                 $item->subtitle2 = date('d', strtotime($item->date)) . ' de ' . $months[date('n', strtotime($item->date))] . ' - ' . $item->time;
+                $item->fecha = date('d', strtotime($item->date)) . ' de ' . $months[date('n', strtotime($item->date))];
                 $item->bars = $this->sporttv_db->getEventBar($item->id);
                 $item->publicidad = $publicidad[array_rand($publicidad, 1)]->image;
                 unset($item->date);
-                unset($item->time);
             endforeach;
             
             // Merge items
@@ -278,7 +278,7 @@ class Api extends REST_Controller {
                 // Get alls
                 $eventFav = $this->api_db->getEventFav($idApp);
                 $events = $this->api_db->getEventNoFav($idApp);
-                $coupons = $this->api_db->getCoupon($idApp, false, 1);
+                $coupons = $this->api_db->getCoupon($idApp, false, 0);
                 $place = $this->api_db->getPlace($idApp, false);
                 $sporttv = $this->api_db->getSporttv($idApp, false);
                 
@@ -324,10 +324,10 @@ class Api extends REST_Controller {
                     $item->type = 6;
                     $item->path = 'sporttv/app/';
                     $item->subtitle2 = date('d', strtotime($item->date)) . ' de ' . $months[date('n', strtotime($item->date))] . ' - ' . $item->time;
+                    $item->fecha = date('d', strtotime($item->date)) . ' de ' . $months[date('n', strtotime($item->date))];
                     $item->bars = $this->sporttv_db->getEventBar($item->id);
                     $item->publicidad = $publicidad[array_rand($publicidad, 1)]->image;
                     unset($item->date);
-                    unset($item->time);
                 endforeach;
                 
                 // Merge big size 
@@ -382,7 +382,7 @@ class Api extends REST_Controller {
             // Obtener Adondeir
             elseif ($this->get('type') == 3 or $this->get('type') == 4){
                 // Get alls
-                $type = ($this->get('type') == 3)?1:2;
+                $type = ($this->get('type') == 3)?2:1;
                 // Obtenemos por tipo y subtipo
                 $items;
                 if ($this->get('subtype') !=  ''){
@@ -430,10 +430,10 @@ class Api extends REST_Controller {
                     $item->type = 6;
                     $item->path = 'sporttv/app/';
                     $item->subtitle2 = date('d', strtotime($item->date)) . ' de ' . $months[date('n', strtotime($item->date))] . ' - ' . $item->time;
+                    $item->fecha = date('d', strtotime($item->date)) . ' de ' . $months[date('n', strtotime($item->date))];
                     $item->bars = $this->sporttv_db->getEventBar($item->id);
                     $item->publicidad = $publicidad[array_rand($publicidad, 1)]->image;
                     unset($item->date);
-                    unset($item->time);
                 endforeach;
                 $message = array('success' => true, 'items' => $items);
             }

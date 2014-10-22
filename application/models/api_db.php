@@ -11,6 +11,7 @@ Class api_db extends CI_MODEL
      */
     public function getEventFav($idApp){
         $this->db->select("event.id, event.name as title, event.info, event.eventTypeId, event.place as subtitle1, city.name as subtitle2, event.image, event.date, event.fav");
+        $this->db->select ("date_format(event.date, '%l:%i%p') as time", false);
         $this->db->select(" (select count(*) from xref_user_coupon_fav where userId = ".$idApp." and  typeId = 2 and couponId = event.id) as isFav, event.latitude, event.longitude ");
         $this->db->from('event');
         $this->db->join('city', 'event.idCity = city.id ');
@@ -26,6 +27,7 @@ Class api_db extends CI_MODEL
      */
     public function getEvent($idApp, $isToFav){
         $this->db->select("event.id, event.name as title, event.info, event.eventTypeId, event.place as subtitle1, city.name as subtitle2, event.image, event.date, event.fav");
+        $this->db->select ("date_format(event.date, '%l:%i%p') as time", false);
         $this->db->select(" (select count(*) from xref_user_coupon_fav where userId = ".$idApp." and  typeId = 2 and couponId = event.id) as isFav, event.latitude, event.longitude ");
         $this->db->from('event');
         $this->db->join('city', 'event.idCity = city.id ');
@@ -44,6 +46,7 @@ Class api_db extends CI_MODEL
      */
     public function getEventNoFav($idApp){
         $this->db->select("event.id, event.name as title, event.info, event.eventTypeId, event.place as subtitle1, city.name as subtitle2, event.image, event.date, event.fav");
+        $this->db->select ("date_format(event.date, '%l:%i%p') as time", false);
         $this->db->select(" (select count(*) from xref_user_coupon_fav where userId = ".$idApp." and  typeId = 2 and couponId = event.id) as isFav, event.latitude, event.longitude ");
         $this->db->from('event');
         $this->db->join('city', 'event.idCity = city.id ');
@@ -109,7 +112,9 @@ Class api_db extends CI_MODEL
         }
         $this->db->where('coupon.status = 1');
         $this->db->where('catalog.status = 1');
-        $this->db->where('catalog.type', $type);
+        if ($type > 0){
+            $this->db->where('catalog.type', $type);
+        }
         $this->db->where('coupon.iniDate <= curdate()');
         $this->db->where('coupon.endDate >= curdate()');
         $this->db->group_by('coupon.id'); 

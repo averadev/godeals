@@ -13,10 +13,10 @@ Class event_db extends CI_MODEL
         $this->db->select ('event.id, event.name, event.eventTypeId, event.word, event.info, event.place,'
                 . 'event.idCity, event.date, event.image, event.latitude, event.longitude, event.tags, event.fav');
         $this->db->select('city.name as cityName');
-		$this->db->select('categorie.name as typeName');
+		$this->db->select('event_type.name as typeName');
         $this->db->from('event');
         $this->db->join('city', 'event.idCity = city.id ');
-		$this->db->join('categorie', 'event.eventTypeId = categorie.id ');
+		$this->db->join('event_type', 'event.eventTypeId = event_type.id ');
         $this->db->where('event.id = ', $id);
         $this->db->where('event.status = 1');
         return  $this->db->get()->result();
@@ -26,10 +26,10 @@ Class event_db extends CI_MODEL
      * Obtiene el registro del catalogo
      */
     public function getEventCategories($id){
-        $this->db->select ('categorie.name, xref_event_categorie.eventId, xref_event_categorie.categorieId, xref_event_categorie.contenido');
+        $this->db->select ('event_type.name, xref_event_categorie.eventId, xref_event_categorie.categorieId, xref_event_categorie.contenido');
         $this->db->from('xref_event_categorie');
         $this->db->join('event', 'xref_event_categorie.eventId = event.id ');
-        $this->db->join('categorie', 'xref_event_categorie.categorieId = categorie.id ');
+        $this->db->join('event_type', 'xref_event_categorie.categorieId = event_type.id ');
         $this->db->where('xref_event_categorie.eventId = ', $id);
         return  $this->db->get()->result();
     }
@@ -39,7 +39,7 @@ Class event_db extends CI_MODEL
      */
     public function getAllCategories($name){
         $this->db->select ('id, name');
-        $this->db->from('categorie');
+        $this->db->from('event_type');
         $this->db->like('name', $name);
         return  $this->db->get()->result();
     }
