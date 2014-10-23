@@ -54,10 +54,10 @@ class asignarComercio extends CI_Controller {
         $array = count($array);
         return $array;
     }
-    
-    public function getId(){
+	
+	public function getXrefByIds(){
         if($this->input->is_ajax_request()){
-            $data = $this->place_db->getId($_POST['id']);
+            $data = $this->place_db->getXrefByIds($_POST['placeId'],$_POST['partnerId']);
             echo json_encode($data);
         }
     }
@@ -89,34 +89,27 @@ class asignarComercio extends CI_Controller {
 				$data = "Se han agregado un comercio";
 			} else {
 				$update = array(
-					'id'			=> $_POST['id'],
-					'name' 			=> $_POST['name'],
-   					'cityId' 		=> $_POST['cityId'],
-   					'image' 		=> $_POST['image'],
-					'title' 		=> $_POST['title'],
-					'txtMin' 		=> $_POST['txtMin'],
-					'txtMax' 		=> $_POST['txtMan'],
-					'weatherKey' 	=> $_POST['weatherKey'],
-					'latitude' 		=> $_POST['latitude'],
-					'longitude' 	=> $_POST['longitude']
+					'placeId' 		=> $_POST['idPlace'],
+   					'partnerId' 	=> $_POST['idPartner'],
+   					'type' 			=> $_POST['type']
 				);
-				$data = $this->place_db->updatePlace($update);
-				$data = "Se han editado los datos del lugar";
+				$data = $this->place_db->updateXref($update,$_POST['idPartner2']);
+				$data = "Se han editado los datos del comercio";
 			}
             
             echo json_encode($data);
         }
 	}
 	
-	public function deletePlace(){
+	public function deleteXref(){
 		if($this->input->is_ajax_request()){
-				$delete = array(
-					'id' => $_POST['id'],
-   					'status' => 0
-				);
-				$data = $this->place_db->updatePlace($delete);
-				$data = "Se ha eliminado el lugar";
-            	echo json_encode($data);
+			$delete = array(
+				'placeId' 		=> $_POST['idPlace'],
+   				'partnerId' 	=> $_POST['idPartner']
+			);
+			$data = $this->place_db->deleteXref($delete);
+			$data = "Se ha eliminado el comercio";
+        	echo json_encode($data);
         }
 	}
 	

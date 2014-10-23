@@ -148,6 +148,18 @@ Class place_db extends CI_MODEL
         return  $this->db->get()->result();
     }
 	
+	/*
+	** obtiene todos los datos de un comercio por forenkeys
+	*/
+	public function getXrefByIds($placeId , $partnerId){
+        $this->db->select('xref_place_partner.partnerId, xref_place_partner.type, partner.name');
+        $this->db->from('xref_place_partner');
+		$this->db->join('partner', 'partner.id = xref_place_partner.partnerId');
+		$this->db->where('xref_place_partner.placeId', $placeId);
+		$this->db->where('xref_place_partner.partnerId', $partnerId);
+        return  $this->db->get()->result();	
+    }
+	
 	
 	/*
 	* obtiene todos los registros de la palabra dada
@@ -200,6 +212,22 @@ Class place_db extends CI_MODEL
 	public function updatePlace($data){
 		$this->db->where('id', $data['id']);
 		$this->db->update('place', $data);
+	}
+	
+	public function updateXref($data,$partnerId){
+		$this->db->where('placeId', $data['placeId']);
+		$this->db->where('partnerId', $partnerId);
+		$this->db->update('xref_place_partner', $data);
+	}
+	
+	/*
+	** elimina los datos de xref_place_partner
+	*/
+	
+	public function deleteXref($data){
+		$this->db->where('placeId', $data['placeId']);
+		$this->db->where('partnerId', $data['partnerId']);
+		$this->db->delete('xref_place_partner', $data);
 	}
 }
 //end model

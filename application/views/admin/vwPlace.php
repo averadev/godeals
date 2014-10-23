@@ -185,7 +185,7 @@ $this->load->view('admin/vwHeader');
 							</div>
                             <div class="row">
                                 <div class="small-8 medium-9 large-6 columns">
-      								<button  id="assignTrade" class="bntSave button small success radius ">
+      								<button  id="btnAssignTrade" class="bntSave button small success radius ">
       								Asignar Comercio</button>
                                 </div>
                                 <div class="loading small-2 medium-2 large-2 columns" id="load1"></div>

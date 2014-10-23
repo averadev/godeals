@@ -19,7 +19,7 @@ $('#btnCancel').click(function() {eventCancel()});
 $('.btnAcceptE').click(function() {eventDelete()});
 $('.btnCancelE').click(function() {eventCancelDelete()});
 
-$('#assignTrade').click(function() {assignTrade()});
+$('#btnNewPartner').click(function() {newPartner()});
 
 //paginador//
 
@@ -65,21 +65,21 @@ $(document).on('click','.btnPaginador',function(){ paginador(this); });
 		$('#FormAsigComer').show();	
 	}
 	
-	function ShowFormEdit(id){
+	function ShowFormEdit(partnerId){
 		cleanFields();
 		hideAlert();
-		id = $(id).find('input').val();
-		$('#btnSaveAsigComer').val(id); 
-		showsEvent(id);
+		partnerId = $(partnerId).find('input').val();
+		$('#btnSaveAsigComer').val(partnerId); 
+		showsEvent(partnerId);
 		$('#btnRegisterAsigComer').hide();
 		$('#btnSaveAsigComer').show();
 		$('#viewAsigComer').hide();
 		$('#FormAsigComer').show();
 	}
 	
-	function ShowFormDelete(id){
-		id = $(id).attr('value');
-		$('.btnAcceptE').val(id);
+	function ShowFormDelete(partnerId){
+		partnerId = $(partnerId).attr('value');
+		$('.btnAcceptE').val(partnerId);
 		$('#divMenssagewarning').hide(500);
 		$('#divMenssage').hide();
 		$('#divMenssagewarning').show(1000);
@@ -106,18 +106,12 @@ $(document).on('click','.btnPaginador',function(){ paginador(this); });
 	function eventEdit(){
 		var result;
 		result = validations();
-		id = $('#btnSavePlace').val();
+		partnerId = $('#btnSaveAsigComer').val();
 		if(result){
 			$('.loading').show();
 			$('.loading').html('<img src="../assets/img/web/loading.gif" height="40px" width="40px" />');
 			$('.bntSave').attr('disabled',true);
-			if(document.getElementById('fileImagen').value == ""){
-				var nameImage = $('#imagenName').val();
-				ajaxSaveEvent(id,nameImage);
-			} else {
-				uploadImage(id);
-			}
-				
+			ajaxSaveEvent(partnerId);
 		}
 	}
 	
@@ -128,26 +122,26 @@ $(document).on('click','.btnPaginador',function(){ paginador(this); });
 	
 	//elimina el evento selecionado de la base de datos
 	function eventDelete(){
-		id = $('.btnAcceptE').val();
+		partnerId = $('.btnAcceptE').val();
 		numPag = $('ul .current').val();
 		$.ajax({
             type: "POST",
-            url: "../admin/place/deletePlace",
+            url: "../admin/asignarComercio/deleteXref",
             dataType:'json',
             data: { 
-				id:id
+				idPlace:$('#idPlace').val(),
+				idPartner:partnerId,
 			},
             success: function(data){
 					var aux = 0;
-					$('#tablePlace tbody tr').each(function(index) {
+					$('#tableAsigComer tbody tr').each(function(index) {
                         aux++;
                     });
-					
 					//si es uno regarga la tabla con un indice menos
 					if(aux == 1){
 						numPag = numPag-1;
 					}
-					ajaxMostrarTabla(column,order,"../admin/place/getallSearch",(numPag-1),"place");
+					ajaxMostrarTabla("../admin/asignarComercio/getallSearch",(numPag-1));
 					$('#divMenssagewarning').hide(1000);
 					$('#alertMessage').html(data);
 					$('#divMenssage').show(1000).delay(1500);
@@ -158,7 +152,6 @@ $(document).on('click','.btnPaginador',function(){ paginador(this); });
 	
 	//agrega o modifica los datos del evento
 	function ajaxSaveEvent(typeQuery){
-		
 		//regresa la id de la ciudad
 		valuePartner = $('#txtAsigComerPartner').val();
 		idPartner = $('datalist option[value="' + valuePartner + '"]').attr('id');
@@ -171,6 +164,7 @@ $(document).on('click','.btnPaginador',function(){ paginador(this); });
 					typeQuery:typeQuery,
 					idPlace:$('#idPlace').val(),
 					idPartner:idPartner,
+					idPartner2:$('#btnSaveAsigComer').val(),
 					type:$('#slAsigComerType').val()
             	},
             	success: function(data){
@@ -194,33 +188,26 @@ $(document).on('click','.btnPaginador',function(){ paginador(this); });
         	});
 	}
 	
-	function showsEvent(id){
+	function showsEvent(partnerId){
 		$.ajax({
 			type: "POST",
-            url: "../admin/place/getID",
+            url: "../admin/asignarComercio/getXrefByIds",
             dataType:'json',
             data: { 
-				id:id
+				placeId:$('#idPlace').val(),
+				partnerId:partnerId
             },
             success: function(data){
-				$('#txtPlaceName').val(data[0].name);
-				$('#txtPlaceCity').val(data[0].nameCity);
-				$('#cityList').append("<option id='" + data[0].cityId + "' value='" +  data[0].nameCity + "' />");
-				$('#txtPlaceTitle').val(data[0].title);
-				$('#txtPlaceTxtMin').val(data[0].txtMin);
-				$('#txtPlaceTxtMax').val(data[0].txtMax);
-				$('#txtPlaceWeatherKey').val(data[0].weatherKey);
-				$('#txtPlaceLatitude').val(data[0].latitude);
-				$('#txtPlaceLongitude').val(data[0].longitude);
-				$('#imgImagen').attr("src",URL_IMG + "app/visita/" + data[0].image);
-				$('#imagenName').val(data[0].image);
+				$("#slAsigComerType option[value='"+ data[0].type +"']").attr("selected",true);
+				$('#txtAsigComerPartner').val(data[0].name);
+				$('#partnerList').append("<option id='" + data[0].partnerId + "' value='" +  data[0].name + "' />");
+				$('#valuePartner').val(data[0].name);
             }
         });
 	}
 	
-	function assignTrade(){
-		//window.location.replace("http://www.pineapplesoft.net?id=1");	
-		window.location.href = "../admin/asignarComercio?id=1";	 
+	function newPartner(){
+		window.location.href = "../admin/partners";	 
 	}
 	
 	function validations(){
@@ -231,6 +218,7 @@ $(document).on('click','.btnPaginador',function(){ paginador(this); });
 		valuePartner = $('#txtAsigComerPartner').val();
 		idPartner = $('datalist option[value="' + valuePartner + '"]').attr('id');
 		if(idPartner == undefined){
+			$('#alertPartner').html("Socio incorrecto. Porfavor seleccione un socio existente");
 			$('#alertPartner').show();
 			$('#lblAsigComerPartner').addClass('error');
 			$('#txtAsigComerPartner').focus();
@@ -243,6 +231,33 @@ $(document).on('click','.btnPaginador',function(){ paginador(this); });
 			$('#txtAsigComerType').focus();
 			result = false;
 		}
+		
+		$.ajax({
+			type: "POST",
+            url: "../admin/asignarComercio/getXrefByIds",
+            dataType:'json',
+            data: { 
+				placeId:$('#idPlace').val(),
+				partnerId:idPartner
+            },
+			async:false,
+            success: function(data){
+				if(data.length > 0 && $('#valuePartner').val() == 0){
+					$('#alertPartner').html("Socio utilizado. porfavor seleccione otro socio");
+					$('#alertPartner').show();
+					$('#lblAsigComerPartner').addClass('error');
+					$('#txtAsigComerPartner').focus();
+					result = false;
+				}
+				if(data.length > 0 && $('#valuePartner').val() != 0 && $('#valuePartner').val() != data[0].name){
+					$('#alertPartner').html("Socio utilizado. porfavor seleccione otro socio");
+					$('#alertPartner').show();
+					$('#lblAsigComerPartner').addClass('error');
+					$('#txtAsigComerPartner').focus();
+					result = false;
+				}
+            }
+        });
 		
 		return result;	
 	}
@@ -257,7 +272,9 @@ $(document).on('click','.btnPaginador',function(){ paginador(this); });
 	
 	function cleanFields(){
 		$('#txtAsigComerPartner').val("");
+		$('#partnerList').empty();
 		$("#slAsigComerType option[value='0']").attr("selected",true);
+		$('#valuePartner').val(0);
 	}
 	
 	/****** paginador ********/
@@ -300,6 +317,8 @@ $(document).on('click','.btnPaginador',function(){ paginador(this); });
 				
 				$('#tableAsigComer tbody').append("<tr><td colspan='4' style='text-align:center;'>Hospedaje</td></tr>");
 				
+				conNum = 0;
+				
 				for(var i = 0;i<10;i++){
 					num = cantidadEmpezar + i;
 					//rompe el ciclo si la cantidad de registros devueltos es menor a 10
@@ -308,8 +327,11 @@ $(document).on('click','.btnPaginador',function(){ paginador(this); });
 					}
 					
 						if(data[num].type == 1){
+							conNum++;
+							conNum2 = conNum + cantidadEmpezar;
+							
 						$('#tableAsigComer tbody').append("<tr>" + 
-							"<td>"+(num+1)+"</td>"+
+							"<td>"+(conNum2)+"</td>"+
 							"<td><a id='showAsigComer'>"+data[num].name+"<input type='hidden' " + 
 							"id='idAsigComer' value='" + data[num].partnerId + "' >" +
 							"</a></td>"+
@@ -321,7 +343,6 @@ $(document).on('click','.btnPaginador',function(){ paginador(this); });
                 }
 				
 				$('#tableAsigComer tbody').append("<tr><td colspan='4' style='text-align:center;'>Restaurante</td></tr>");
-				
 				for(var i = 0;i<10;i++){
 					num = cantidadEmpezar + i;
 					//rompe el ciclo si la cantidad de registros devueltos es menor a 10
@@ -330,8 +351,10 @@ $(document).on('click','.btnPaginador',function(){ paginador(this); });
 					}
 					
 						if(data[num].type == 2){
+							conNum++;
+							conNum2 = conNum + cantidadEmpezar;
 						$('#tableAsigComer tbody').append("<tr>" + 
-							"<td>"+(num+1)+"</td>"+
+							"<td>"+(conNum2)+"</td>"+
 							"<td><a id='showAsigComer'>"+data[num].name+"<input type='hidden' " + 
 							"id='idAsigComer' value='" + data[num].partnerId + "' >" +
 							"</a></td>"+
@@ -352,8 +375,10 @@ $(document).on('click','.btnPaginador',function(){ paginador(this); });
 					}
 					
 						if(data[num].type == 3){
+							conNum++;
+							conNum2 = conNum + cantidadEmpezar;
 						$('#tableAsigComer tbody').append("<tr>" + 
-							"<td>"+(num+1)+"</td>"+
+							"<td>"+(conNum2)+"</td>"+
 							"<td><a id='showAsigComer'>"+data[num].name+"<input type='hidden' " + 
 							"id='idAsigComer' value='" + data[num].partnerId + "' >" +
 							"</a></td>"+
@@ -435,12 +460,16 @@ $(document).on('click','.btnPaginador',function(){ paginador(this); });
 				
 				$('#tableAsigComer tbody').append("<tr><td colspan='4' style='text-align:center;'>Hospedaje</td></tr>");
 				
+				conNm = 0;
+				
 				for(var i = 0;i<total;i++){
                     num = parseInt(cantidad) + parseInt((i+1));
 					
 					if(data[num].type == 1){
+						conNum++;
+						conNum2 = conNum + cantidadEmpezar;
                     	$('#tableAsigComer tbody').append("<tr>" +
-						"<td>"+ (num) +"</td>"+
+						"<td>"+ (conNum2) +"</td>"+
 						"<td><a id='showAsigComer'>"+data[i].name+"<input type='hidden' id='idAsigComer' value='" + 
 						data[i].partnerId + "' ></a></td>"+
 						"<td>"+data[i].info+"</td>"+
@@ -456,8 +485,10 @@ $(document).on('click','.btnPaginador',function(){ paginador(this); });
                     num = parseInt(cantidad) + parseInt((i+1));
 					
 					if(data[num].type == 2){
+						conNum++;
+						conNum2 = conNum + cantidadEmpezar;
                     	$('#tableAsigComer tbody').append("<tr>" +
-						"<td>"+ (num) +"</td>"+
+						"<td>"+ (conNum2) +"</td>"+
 						"<td><a id='showAsigComer'>"+data[i].name+"<input type='hidden' id='idAsigComer' value='" + 
 						data[i].partnerId + "' ></a></td>"+
 						"<td>"+data[i].info+"</td>"+
@@ -473,8 +504,10 @@ $(document).on('click','.btnPaginador',function(){ paginador(this); });
                     num = parseInt(cantidad) + parseInt((i+1));
 					
 					if(data[num].type == 3){
+						conNum++;
+						conNum2 = conNum + cantidadEmpezar;
                     	$('#tableAsigComer tbody').append("<tr>" +
-						"<td>"+ (num) +"</td>"+
+						"<td>"+ (conNum2) +"</td>"+
 						"<td><a id='showAsigComer'>"+data[i].name+"<input type='hidden' id='idAsigComer' value='" + 
 						data[i].partnerId + "' ></a></td>"+
 						"<td>"+data[i].info+"</td>"+
