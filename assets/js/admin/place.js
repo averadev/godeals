@@ -1,5 +1,9 @@
 // JavaScript Document
 
+numImage = 0;
+valueImageGalleryArray = new Array();
+nameImageGalleryArray = new Array();
+
 //funcio que se llama cada vez que se teclea en el 'imput' city
 $("#txtPlaceCity").keyup(function() { autocomplete(); });
 
@@ -18,6 +22,7 @@ $('.btnAcceptE').click(function() {eventDelete()});
 $('.btnCancelE').click(function() {eventCancelDelete()});
 
 $('#btnAssignTrade').click(function() {assignTrade()});
+$('#btnGaleria').click(function() {ShowFormGallery()});
 
 //llama a la funcion cada vez que se quiere cambiar la imagen
 $("#imgImagen").click(function() {changeImage()});
@@ -26,6 +31,18 @@ $("#imgImagen").click(function() {changeImage()});
 	$(document).on('keydown','#txtPlaceLatitude, #txtPlaceLongitude',function() {
 		validarCoordenada();
 	});
+	
+	/****galery*****/
+	
+$('#btnSaveGallery').click(function() {eventAddGallery()});
+	
+$("#btnAddGallery").click(function() {addGallery()});
+
+$("#imgImageGallery").click(function() {changeImageGallery()});
+
+$(document).on('click','#imgDeleteBlack',function(){ deleteGallery(this); });
+	
+	/******/
 	
 	//visualizar imagen
 
@@ -447,3 +464,223 @@ $("#imgImagen").click(function() {changeImage()});
 			}
 		}
 	}
+	
+	/****** gallery *******/
+	
+	//visualizar imagen
+
+	$(window).load(function(){
+ 		$(function() {
+			//detecta cada vez que hay un cambio en el formulario de imagen
+ 			$('#fileImageGallery').change(function(e) {
+				
+			$('#lblImageGallery').removeClass('error');
+	  		$('#alertImageGallery').hide();
+			$('#imgImageGallery').attr("src","http://placehold.it/500x300&text=[ad]");
+			if(e.target.files[0] != undefined){
+				addImageGallery(e); 
+			}
+     	});
+
+	//muestra la nueva imagen
+     function addImageGallery(e){
+		 
+      	var file = e.target.files[0],
+      	imageType = /image.*/;
+	
+      	if (!file.type.match(imageType)){
+		  	$('#imgImageGallery').attr("src","http://placehold.it/500x300&text=[ad]");
+		 	 document.getElementById('fileImagenGallery').value ='';
+				$('#lblImageGallery').addClass('error');
+			  	$('#alertImageGallery').html("Selecione una imagen");
+			  	$('#alertImageGallery').show();
+       	return;
+	  	}
+  		//carga la imagen
+      var reader = new FileReader();
+      reader.onload = fileOnloadGallery;
+      reader.readAsDataURL(file);
+     }
+	 
+  	//muestra el resultado
+     function fileOnloadGallery(e) {
+      var result=e.target.result;
+      $('#imgImageGallery').attr("src",result);
+     }
+    });
+  });
+  
+ 	//abre el explorador de archivos cuando le das click a la imagen de cupones
+	function changeImageGallery(){
+		$('#fileImageGallery').click();
+	}
+
+// fin visualizar imagen
+	
+	function ShowFormGallery(){
+		showGallery();
+		$('#FormPlace').hide();
+		$('#galleryPlace').show();
+	}
+	
+	function addGallery(){
+		result = validateGallery();
+		if(result){
+			
+			var gallery = "gallery" + numImage;
+			$('#gridImages').append(
+				"<div id='imgPlacegallery' class='small-6 medium-6 large-6 columns "+ gallery + "'>"+
+            		"<a id='imgDeleteBlack' value='"+ gallery + "'><img src='../assets/img/web/deleteBlack.png' /></a>"+
+					"<img id='imgImageMiniGallery' src='" + $('#imgImageGallery').attr('src')+ "' />"+
+					"<input type='file' id='"+ gallery +"' class='fileGallery' name='gallery[]' multiple style='display:none' />" +
+					"<div id='imgPlacegallery' class='small-12 medium-12 large-12 columns' style='height:25px;'>" +
+                "</div>"
+			);
+			
+			nameImageGalleryArray.push(gallery);
+			var archivos = document.getElementById("fileImageGallery");
+			archivo = archivos.files;
+			document.getElementById(gallery).files = archivo;
+			valueImageGalleryArray.push(archivo);
+			numImage++;
+			$('#imgImageGallery').attr("src","http://placehold.it/500x300&text=[ad]");
+		}
+	}
+	
+	function deleteGallery(selector){
+		valueImage = $(selector).attr('value');
+		$('.' + valueImage).remove();
+	}
+	
+	function eventAddGallery(){
+			uploadGallery()
+	}
+	
+	function uploadGallery(){
+		
+		if(window.XMLHttpRequest) {
+ 			var Req = new XMLHttpRequest();
+ 		}else if(window.ActiveXObject) { 
+ 			var Req = new ActiveXObject("Microsoft.XMLHTTP");
+ 		}
+		
+		var data = new FormData();
+		
+		$('.fileGallery').each(function(index, element) {
+			var archivos = document.getElementById($(this).attr('id'));
+			var archivo = archivos.files;
+			console.log(archivo);
+			data.append($(this).attr('id'),archivo[0]);
+        });	
+		
+		//abrimos la conexion para subir una imagen
+		Req.open("POST", "../admin/place/uploadImageGallery", true);
+		//verificamos si se executo correctamente el metodo
+		Req.onload = function(Event) {
+			//Validamos que el status http sea ok 
+			if (Req.status == 200) {
+ 	 			//Recibimos la respuesta de php
+				nameImage = Req.responseText;
+				//ajaxSaveGallery(nameImage);
+			} else { 
+  				//console.log(Req.status); //Vemos que paso.
+			} 		
+		};
+		//Enviamos la petición 
+ 		Req.send(data);
+		
+	}
+	
+	function ajaxSaveGallery(nameImage){
+		
+		numPag = $('ul .current').val();
+		
+		nameImageGallery = nameImage.split('*_*');
+		nameImageGallery.pop();
+		nameImageGallery = JSON.stringify(nameImageGallery);
+		
+		$.ajax({
+            	type: "POST",
+            	url: "../admin/place/saveGallery",
+            	dataType:'json',
+            	data: { 
+					add:1,
+					save:0,
+					placeId:$('#btnSavePlace').val(),
+					image:nameImageGallery,
+            	},
+            	success: function(data){
+					ajaxMostrarTabla(column,order,"../admin/place/getallSearch",(numPag-1),"place");
+					$('#galleryPlace').hide();
+					$('#viewPlace').show();
+					$('#alertMessage').html(data);
+					$('#divMenssage').show(1000).delay(1500);
+					$('#divMenssage').hide(1000);
+					$('.loading').hide();
+					$('.bntSave').attr('disabled',false);
+            	},
+				error: function(){
+					ajaxMostrarTabla(column,order,"../admin/place/getallSearch",(numPag-1),"place");
+					$('#galleryPlace').hide();
+					$('#viewPlace').show()
+					$('.loading').hide();
+					$('.bntSave').attr('disabled',false);
+					alert("error al insertar galleria")
+				}
+        	});
+	}
+	
+	function showGallery(){
+		
+		numPag = $('ul .current').val();
+		
+		$.ajax({
+            	type: "POST",
+            	url: "../admin/place/getAllGalleryById",
+            	dataType:'json',
+            	data: {
+					placeId:$('#btnSavePlace').val()
+            	},
+            	success: function(data){
+					for(var i = 0;i<data.length;i++){
+						$('#gridImages').append(
+						"<div id='imgPlacegallery' class='small-6 medium-6 large-6 columns "+ i + "'>"+
+            			"<a id='imgDeleteBlack' value='"+ i + "'><img src='../assets/img/web/deleteBlack.png' /></a>"+
+						"<img id='imgImageMiniGallery' src='../assets/img/app/visita/galeria/" + data[i].image+ "' />"+
+						"<div id='imgPlacegallery' class='small-12 medium-12 large-12 columns' style='height:25px;'>" +
+                		"</div>"
+						);
+					}
+            	},
+				error: function(){
+					ajaxMostrarTabla(column,order,"../admin/place/getallSearch",(numPag-1),"place");
+					$('#galleryPlace').hide();
+					$('#viewPlace').show()
+					$('.loading').hide();
+					$('.bntSave').attr('disabled',false);
+					alert("error al mostrar la galleria")
+				}
+        	});	
+	}
+	
+	function validateGallery(){
+		result = true;
+		if($('#imgImageGallery').attr("src") == "http://placehold.it/500x300&text=[ad]"){
+			$('#alertImageGallery').html("Campo vacio. Selecione una imagen");
+			$('#alertImageGallery').show();
+			$('#lblImageGallery').addClass('error');
+			result = false;
+		}
+		return result;	
+	}
+	
+	function hideAlertGallery(){
+		$('#alertImageGallery').hide();
+		$('#lblImageGallery').removeClass('error');
+	}
+	
+	function cleanGallery(){
+		document.getElementById('fileImageGallery').value ='';
+		$('#imgImageGallery').attr("src","http://placehold.it/500x300&text=[ad]");
+	}
+	
