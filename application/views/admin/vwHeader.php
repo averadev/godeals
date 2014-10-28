@@ -35,6 +35,8 @@
                 <li class="divider"></li>
                 <li <?php echo  $pg =='publicidad' ? 'class="active"' : '' ?>><a href="<?php echo base_url(); ?>admin/publicity">Publicidad</a></li>
                 <li class="divider"></li>
+                <li <?php echo  $pg =='place' ? 'class="active"' : '' ?>><a href="<?php echo base_url(); ?>admin/place">Lugar</a></li>
+                <li class="divider"></li>
             </ul>
             <ul class="right">
                 <li class="divider"></li>

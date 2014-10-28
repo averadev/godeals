@@ -27,6 +27,12 @@ $("#imgImagen").click(function() {changeImage()});
 
 	$(window).load(function(){
  		$(function() {
+            
+            // Cambia tamaño de imagen
+            $( "#sltPublicityCategory" ).change(function() {
+                reSizeImg();
+            });
+
 			//detecta cada vez que hay un cambio en el formulario de imagen
  			$('#fileImagen').change(function(e) {
 				$('#lblPublicityImage').removeClass('error');
@@ -72,6 +78,29 @@ $("#imgImagen").click(function() {changeImage()});
      	}
     	});
   });
+
+    // Change size image
+    function reSizeImg(){
+        if ($( "#sltPublicityCategory" ).val() == "1"){
+            $("#imgImagen").css("width", "300px")
+            $("#imgImagen").css("height", "105px")
+        }else if ($( "#sltPublicityCategory" ).val() == "2"){
+            $("#imgImagen").css("width", "380px")
+            $("#imgImagen").css("height", "228px")
+        }else if ($( "#sltPublicityCategory" ).val() == "3"){
+            $("#imgImagen").css("width", "110px")
+            $("#imgImagen").css("height", "310px")
+        }else if ($( "#sltPublicityCategory" ).val() == "4"){
+            $("#imgImagen").css("width", "325px")
+            $("#imgImagen").css("height", "50px")
+        }else if ($( "#sltPublicityCategory" ).val() == "5"){
+            $("#imgImagen").css("width", "380px")
+            $("#imgImagen").css("height", "68px")
+        }else{
+            $("#imgImagen").css("width", "320px")
+            $("#imgImagen").css("height", "240px")
+        }
+    }
   
  	//abre el explorador de archivos cuando le das click a la imagen de cupones
 	function changeImage(){
@@ -292,16 +321,20 @@ $("#imgImagen").click(function() {changeImage()});
 							address = "app/publicity/banner/";
 							break;
 						case '2':
-							address = "app/publicity/cintillo/";
+							address = "app/publicity/mediobanner/";
 							break;
 						case '3':
 							address = "app/publicity/lateral/";
 							break;
 						case '4':
+							address = "app/publicity/cintillo/";
+							break;
+						case '5':
 							address = "app/publicity/movil/";
 							break;
 					}
 					$('#imgImagen').attr("src",URL_IMG + address + data[0].image);
+                    reSizeImg();
             	}
         	});
 	}

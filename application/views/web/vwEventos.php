@@ -8,34 +8,13 @@
         <link rel="stylesheet" href="<?php echo base_url().FOUND; ?>css/foundation.css" />
         <link rel="stylesheet" href="<?php echo base_url().SHAPE; ?>css/component.css" />
         <link rel="stylesheet" href="<?php echo base_url().CAPTION; ?>css/component.css" />
+        <link rel="stylesheet" href="<?php echo base_url().MODAL; ?>jquery-impromptu.css" />
 		<script type="text/javascript" src="<?php echo base_url().FOUND; ?>js/vendor/modernizr.js"></script>
         <link rel="stylesheet" href="<?php echo base_url().CSS; ?>web/home.css" />
         <link rel="stylesheet" href="<?php echo base_url().CSS; ?>web/eventos.css" />
     </head>
     <body>
         
-        <!-- Modal Cupones -->
-        <div id="eventModal" class="reveal-modal" data-reveal>
-            <div id="topbarEvent">
-                <img id="eventFb" src="<?php echo base_url().IMG; ?>web/eventFb.png">
-                <img id="eventTw" src="<?php echo base_url().IMG; ?>web/eventTw.png">
-                <img id="eventClose" src="<?php echo base_url().IMG; ?>web/eventClose.png">
-            </div>
-            <div class="large-10 small-8 columns nospc">
-                <center><img id="imgFull" src="<?php echo base_url().IMG; ?>app/event/max/00.png"></center>
-            </div>
-            <div class="large-2 small-4 columns nospc">
-                <ul class="menuModal">
-                    <li><a class="id1 selOptEvt" href="#home">Publicidad del Evento</a></li>
-                    <li><a class="id2" href="#news">¿Como llegar?</a></li>
-                    <li><a class="id3" href="#contact">Comprar Boletos</a></li>
-                    <li><a class="id4" href="#about">Inscripciones del evento</a></li>
-                    <li><a class="id5" href="#about">Promocion especial</a></li>
-                </ul>
-            </div>
-            
-        </div>
-                
         <?php $this->load->view('web/vwStickyMenu'); ?>
         
         
@@ -43,8 +22,9 @@
         
         <!-- Publicidad -->
         <div class="row publicidad">
-            <div class="medium-6 columns"><img class="publish" src="http://placehold.it/500x300&text=[ad]"/></div>
-            <div class="medium-6 columns"><img class="publish" src="http://placehold.it/500x300&text=[ad]"/></div>
+            <?php foreach ($medioBanner as $item):?>
+                <div class="medium-6 columns"><img class="publish" src="<?php echo base_url().IMG; ?>app/publicity/mediobanner/<?php echo $item->image;?>"/></div>
+            <?php endforeach;?>
         </div>
         
         <?php $this->load->view('web/vwMainMenu'); ?>
@@ -54,26 +34,13 @@
             <div class="eventos">
                 
                 
-                <!-- MESES -->
-                <div class="row">
-                    <div class="medium-11 columns">&nbspc;</div>
-                    <div class="medium-1 columns">
-                        <div id="menuMonth">
-                        <?php
-                        foreach ($months as $item):?>
-                            <a class="circleLink" href="#month<?php echo $item; ?>"><div class="circleBase"><?php echo $item; ?></div></a>
-                        <?php endforeach;?>
-                        </div>
-                    </div>
-                </div>
-                <!-- Termina MESES -->
             
                 <!-- DESTACADOS -->
                 <?php foreach ($fav as $item):?>
                     <div class="row" data-equalizer>
                         <div class="medium-12 columns" data-equalizer-watch>
                             <div class="evento proxEvento boxShadow">
-                                <div class="evntImg" style="background-image: url('<?php echo base_url().IMG; ?>app/event/min/<?php echo $item->imgMin;?>');">
+                                <div class="evntImg" style="background-image: url('<?php echo base_url().IMG; ?>app/event/min/<?php echo $item->image;?>');">
                                     <div class="evtContent content2">
                                         <p class="evtTitle1"><?php echo $item->name;?></p>
                                         <p class="evtTitle3 textDate">
@@ -81,7 +48,7 @@
                                             <?php echo $natMonth[date('n', strtotime($item->date))]; ?>
                                         </p>
                                         <p class="evtTitle2"><?php echo $item->place;?>, <?php echo $item->city;?>.</p>
-                                        <img class="viewEvent" attr-id="<?php echo $item->id;?>" attr="<?php echo base_url().IMG; ?>app/event/max/<?php echo $item->imgMax;?>" src="<?php echo base_url().IMG; ?>web/viewEvent.png">
+                                        <img class="viewEvent" attr-description="<?php echo $item->name;?>"  attr-id="<?php echo $item->id;?>" src="<?php echo base_url().IMG; ?>web/viewEvent.png">
                                     </div>
                                 </div>
                             </div>
@@ -115,11 +82,11 @@
                         </div>
                         <div class="medium-11 columns" data-equalizer-watch>
                             <div class="evento boxShadowLite <?php if ($item->fav == 1) {echo "proxEvento";} ?>">
-                                <div class="evntImg2" style="background-image: url('<?php echo base_url().IMG; ?>app/event/min/<?php echo $item->imgMin;?>');">
+                                <div class="evntImg2" style="background-image: url('<?php echo base_url().IMG; ?>app/event/min/<?php echo $item->image;?>');">
                                     <div class="evtContent subEvent">
                                         <p class="evtTitleMin1"><?php echo $item->name;?></p>
                                         <p class="evtTitleMin3"><?php echo $item->place;?>, <?php echo $item->city;?></p>
-                                        <img class="viewEventMin" attr="<?php echo base_url().IMG; ?>app/event/max/<?php echo $item->imgMax;?>" src="<?php echo base_url().IMG; ?>web/viewEvent.png">
+                                        <img class="viewEventMin" attr-description="<?php echo $item->name;?>"  attr-id="<?php echo $item->id;?>" src="<?php echo base_url().IMG; ?>web/viewEvent.png">
                                     </div>
                                     <?php if ($item->fav == 1) { ?>
                                         <img class="eventSolapa" src="<?php echo base_url().IMG; ?>web/eventSolapa1.png">
@@ -148,6 +115,7 @@
         <script type="text/javascript" src="<?php echo base_url().SHAPE; ?>js/snap.svg-min.js"></script>
         <script type="text/javascript" src="<?php echo base_url().SHAPE; ?>js/hovers.js"></script>
         <script type="text/javascript" src="<?php echo base_url().CAPTION; ?>js/toucheffects.js"></script>
+        <script type="text/javascript" src="<?php echo base_url().MODAL; ?>jquery-impromptu.js"></script>
         <script type="text/javascript" src="<?php echo base_url(); ?>assets/api/hachiko/hachiko.min.js"></script>
         <script type="text/javascript" src="<?php echo base_url().JS; ?>web/eventos.js"></script>
     </body>

@@ -122,20 +122,25 @@ class publicity extends CI_Controller {
 				$max_alto = 350;
 				break;
 			case 2:
-				$ruta="assets/img/app/publicity/cintillo/";
-				$max_ancho = 650;
-				$max_alto = 100;
+				$ruta="assets/img/app/publicity/mediobanner/";
+				$max_ancho = 450;
+				$max_alto = 270;
 				break;
 			case 3:
 				$ruta="assets/img/app/publicity/lateral/";
-				$max_ancho = 300;
-				$max_alto = 840;
+				$max_ancho = 220;
+				$max_alto = 620;
 				break;
 			case 4:
+				$ruta="assets/img/app/publicity/cintillo/";
+				$max_ancho = 650;
+				$max_alto = 100;
+                break;
+			case 5:
 				$ruta="assets/img/app/publicity/movil/";
 				$max_ancho = 444;
 				$max_alto = 80;
-			break;
+                break;
 		}
 		
   		foreach ($_FILES as $key) {
@@ -160,21 +165,19 @@ class publicity extends CI_Controller {
 					//move_uploaded_file($temporal, $ruta . "a.jpg"); //Movemos el archivo temporal a la ruta especificada
 					$imagen = imagecreatefromjpeg($temporal); 
 				}
-					$fecha = new DateTime();
-					$nombreTimeStamp = $fecha->getTimestamp();
-				
-				//toma la ruta de la imagen a crear
-					$patch_imagen=$ruta . "publicity_" . $nombreTimeStamp .".jpg";
-				
-				//Copiamos la imagen sobre la imagen que acabamos de crear en blanco
-					imagecopyresampled($tmp,$imagen,0,0,0,0,$max_ancho, $max_alto,$ancho,$alto);
-					imagejpeg($tmp,$patch_imagen,100);
-					//Se destruye variable $img_original para liberar memoria
-					imagedestroy($imagen);
-      			
-				//echo json_encode($_FILES);
-				
-					echo "publicity_" . $nombreTimeStamp . ".jpg";
+                $fecha = new DateTime();
+                $nombreTimeStamp = $fecha->getTimestamp();
+
+                //toma la ruta de la imagen a crear
+                $patch_imagen=$ruta . "publicity_" . $nombreTimeStamp .".jpg";
+
+                //Copiamos la imagen sobre la imagen que acabamos de crear en blanco
+                imagecopyresampled($tmp,$imagen,0,0,0,0,$max_ancho, $max_alto,$ancho,$alto);
+                imagejpeg($tmp,$patch_imagen,100);
+                //Se destruye variable $img_original para liberar memoria
+                imagedestroy($imagen);
+
+                echo "publicity_" . $nombreTimeStamp . ".jpg";
 				
     		}else{
 				

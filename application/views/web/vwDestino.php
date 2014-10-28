@@ -16,6 +16,13 @@
         
         <?php $this->load->view('web/vwHeader'); ?>
         
+        <!-- Publicidad -->
+        <div class="row publicidad">
+            <?php foreach ($medioBanner as $item):?>
+                <div class="medium-6 columns"><img class="publish" src="<?php echo base_url().IMG; ?>app/publicity/mediobanner/<?php echo $item->image;?>"/></div>
+            <?php endforeach;?>
+        </div>
+        
         <?php $this->load->view('web/vwMainMenu'); ?>
         
         
@@ -83,11 +90,6 @@
             </div>
         </div>
         
-        
-        <!-- Publicidad -->
-        <div class="row">
-            <img class="publish" src="http://placehold.it/1000x300&text=[ad]"/>
-        </div>
         
         <div class="row spaceBar"></div>
         <div class="row spaceBar"></div>

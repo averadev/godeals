@@ -44,6 +44,10 @@ $('.txtSearch').keyup(function(e){
 						url = "../admin/publicity/paginadorArray";
 						$('ul #btnPaginadorPublicity').removeClass('current');
 					break;
+					case "publicity":
+						url = "../admin/place/paginadorArray";
+						$('ul #btnPaginadorPlace').removeClass('current');
+					break;
 
                 }
                     
@@ -163,12 +167,15 @@ $('.txtSearch').keyup(function(e){
 									category = "Banner";
 									break;
 								case '2':
-									category = "Cintillo";
+									category = "Medio Banner";
 									break;
 								case '3':
 									category = "Lateral";
 									break;
 								case '4':
+									category = "Cintillo";
+									break;
+								case '5':
 									category = "Movil";
 									break;
 							}
@@ -186,6 +193,23 @@ $('.txtSearch').keyup(function(e){
 								"</tr>");
                         }
 						break;
+						
+						case "place":
+                       $('#tablePlace tbody').empty();
+					   		for(var i = 0;i<total;i++){
+                            num = parseInt(cantidad) + parseInt((i+1));
+                            $('#tablePlace tbody').append("<tr>" +
+								"<td>"+ (num) +"</td>"+
+								"<td><a id='showPlace'>"+data[i].name+"<input type='hidden' id='idPlace' value='" + 
+								data[i].id + "' ></a></td>"+
+								"<td>"+data[i].nameCity+"</td>"+
+								"<td>"+data[i].title+"</td>"+
+								"<td>"+data[i].weatherKey+"</td>"+
+								"<td><a id='imageDelete' value='" + data[i].id +"'><img class='imgDelete' "+
+								"src='../assets/img/web/deleteRed.png'/></a></td>" +
+								"</tr>");
+					}
+					break;
                 }            	
             }
         });	
@@ -254,6 +278,8 @@ $('.txtSearch').keyup(function(e){
 					$('#tableSporttv tbody').empty();
 				} else if(tipoTabla == "publicity"){
 					$('#tablePublicity tbody').empty();
+				} else if(tipoTabla == "place"){
+					$('#tablePlace tbody').empty();
 				}
                                 
 				$('.pagination').empty();
@@ -324,6 +350,7 @@ $('.txtSearch').keyup(function(e){
 								"</tr>");
 							btnPaginador = "btnPaginadorSporttv";
 							break;
+							
 							case "publicity":
 							var category;
 							switch(data[num].category){
@@ -331,12 +358,15 @@ $('.txtSearch').keyup(function(e){
 									category = "Banner";
 									break;
 								case '2':
-									category = "Cintillo";
+									category = "Medio Banner";
 									break;
 								case '3':
 									category = "Lateral";
 									break;
 								case '4':
+									category = "Cintillo";
+									break;
+								case '5':
 									category = "Movil";
 									break;
 							}
@@ -351,6 +381,21 @@ $('.txtSearch').keyup(function(e){
 								"src='../assets/img/web/deleteRed.png'/></a></td>" +
 								"</tr>");
 							btnPaginador = "btnPaginadorPublicity";
+							break;
+							
+							case "place":
+							$('#tablePlace tbody').append("<tr>" +
+								"<td>"+ (num+1) +"</td>"+
+								"<td><a id='showPlace'>"+data[num].name+"<input type='hidden'" +
+								"id='idPlace' value='" + 
+								data[num].id + "' ></a></td>"+
+								"<td>"+data[num].nameCity+"</td>"+
+								"<td>"+data[num].title+"</td>"+
+								"<td>"+data[num].weatherKey+"</td>"+
+								"<td><a id='imageDelete' value='" + data[num].id +"'><img class='imgDelete' "+
+								"src='../assets/img/web/deleteRed.png'/></a></td>" +
+								"</tr>");
+							btnPaginador = "btnPaginadorPlace";
 							break;
 					}
                 }
@@ -409,17 +454,25 @@ $('.txtSearch').keyup(function(e){
 							case "banner":
 								palabra = 1;
 							break;
-							case "cintillo":
+							case "medio banner":
 								palabra = 2;
 							break;
 							case "lateral":
 								palabra = 3;
 							break;
-							case "movil":
+							case "cintillo":
 								palabra = 4;
+							break;
+							case "movil":
+								palabra = 5;
 							break;
 						}
 						url = "../admin/publicity/getallSearch";
+                    break;
+					
+					case "place":
+                        palabra = $('#txtSearchPlace').val();
+						url = "../admin/place/getallSearch";
                     break;
                 }
 		

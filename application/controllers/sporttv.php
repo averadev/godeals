@@ -17,6 +17,7 @@ class Sporttv extends CI_Controller {
         $this->load->helper('url');
         $this->load->database('default');
         $this->load->model('sporttv_db');
+        $this->load->model('publicity_db');
     }
 
     /**
@@ -36,9 +37,21 @@ class Sporttv extends CI_Controller {
        
         // Meses
         $data['minMonth'] = array('', 'ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SEP','OCT','NOV','DIC');
+        $data['medioBanner'] = $this->sortSliceArray($this->publicity_db->getPublicidad(2), 2);
         
         // Get View
         $this->load->view('web/vwSporttv', $data);
+    }
+    
+    /**
+     * Obtiene un array sorting and sliced
+     */
+    public function sortSliceArray($array, $count){
+        shuffle($array);
+        if (count($array) > $count){
+            $array = array_slice($array, 0, $count);
+        }
+        return $array;
     }
     
 

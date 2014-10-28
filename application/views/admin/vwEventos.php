@@ -50,7 +50,7 @@ $this->load->view('admin/vwHeader');
 										<th width="250px">Nombre</th>
 										<th width="210px">Lugar</th>
 										<th width="200px">Ciudad</th>
-										<th width="120px">Fecha
+										<th width="120px">Fecha&nbsp;&nbsp;&nbsp;&nbsp;
                                         <a class="arrowUp" id="date" value="event">
                                         <img src="../assets/img/web/arrowGreen2.png"></a>
                                         <a class="arrowDown" id="date" value="event">
@@ -119,6 +119,21 @@ $this->load->view('admin/vwHeader');
                         
                         <!-- primera columna -->
                     	<div class="small-12 medium-6 large-6 columns">
+                            
+                           <div class="row">
+                               <div class="medium-4 columns">
+                               		<br />
+                                    <label class="field"><input id="checkEventFav" type="checkbox" name="destacado"/> Destacado</label>
+                               </div>
+                               <div class="medium-6 columns">
+                                    <label id="lblEventDate" class="field">*Fecha Inicio
+                                        <input type="datetime-local" id="dtEventDate" class="radius" />
+                                    </label>
+                                    <small id="alertEventDate" class="error" style="display:none"></small>     
+                               </div>
+                               <div class="medium-2 columns">&nbsp;</div>
+                            </div>
+                            
                             <div class="row">
                                 <div class="small-12 medium-11 large-10 columns">
                                     <label class="field" id="lblEventName">*Nombre
@@ -129,8 +144,24 @@ $this->load->view('admin/vwHeader');
                                     </small>
                                 </div>
                             </div>
+                            
+                            <div class="row">
+                                
+                            </div>
+                            
                             <div class="row">
                                 <div class="small-12 medium-11 large-10 columns">
+                                    <label class="field" id="lblEventInfo">*Descripcion
+                                        <textarea type="text" id="txtEventInfo" class="radius" rows="5"></textarea>
+                                    </label>
+                                    <small id="alertInfo" class="error" style="display:none">
+                                    	Campo vacio. Por favor escriba la descripcion del evento
+                                    </small>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="medium-5 columns">
                                     <label id="lblEventPlace" class="field">*Lugar
                                         <input type="text" id="txtEventPlace" class="radius"/>
                                     </label>
@@ -138,35 +169,77 @@ $this->load->view('admin/vwHeader');
                                     	Campo Vacio. Escriba el lugar del evento
                                     </small>
                                 </div>
-                            </div>
-                            <div class="row">
-                            	<div class="small-12 medium-11 large-10 columns">
+                                <div class="medium-5 columns">
                                     <label id="lblEventCity" class="field" >*Ciudad
                                     	<input type="text" id="txtEventCity" list="cityList" autocomplete="on" class="radius" />
-                                            <datalist id="cityList"> </datalist>
+                                        <datalist id="cityList"> </datalist>
                                     </label>
                                     <small id="alertCity" class="error" style="display:none">
                                     	Ciudad incorrecta. Por favor escriba una ciudad existente
                                     </small>
                                 </div>
-                            </div>
-                            <div class="row">
-                            	<div class="small-12 medium-11 large-10 columns">
-                                    <label id="lblEventWord" class="field">*Palabra Clave
-                                            <input type="text" id="txtEventWord" class="radius"></textarea>
-                                    </label>
-                                    <small id="alertWord" class="error" style="display:none">
-                                    	Campo vacio. Por favor escriba una palabra clave
-                                    </small>
-                                </div>
+                                <div class="medium-2 columns">&nbsp;</div>
                             </div>
                             
-                           <div class="row">
-                                <div class="small-12 medium-11 large-10 columns" id="imagen">
-                                    <label class="field">Destacado</label>
-                                    </br>
-                                    <input id="checkEventFav" type="checkbox" name="destacado"/>
+                            <div class="row">
+                                <div class="medium-5 columns">
+                                    <label id="lblEventType" class="field" >*Categoria
+                                    	<input type="text" id="txtEventType" list="typeList" autocomplete="on" class="radius" />
+                                        <datalist id="typeList"> </datalist>
+                                    </label>
+                                    <small id="alertType" class="error" style="display:none">
+                                    	Categoria incorrecta. Por favor escriba una categoria existente
+                                    </small>
                                 </div>
+                                <div class="medium-5 columns">
+                                    <label id="lblEventWord" class="field">*Palabra Cupon Destacado
+                                        <input type="text" id="txtEventWord" class="radius"></textarea>
+                                    </label>
+                                    <small id="alertWord" class="error" style="display:none">
+                                    	Campo vacio. Por favor escriba una palabra para destacados
+                                    </small>
+                                </div>
+                                <div class="medium-2 columns">&nbsp;</div>
+                            </div>
+                        
+                            <div class="row">
+                            	<div class="medium-5 columns">
+                                    <label id="lblEventTags" class="field">Palabras Clave
+                                        <input type="text" id="txtEventTags" class="radius"></textarea>
+                                    </label>
+                                    <small id="alertTags" class="error" style="display:none">
+                                    	Campo vacio. Por favor escriba al menos una palabra clave
+                                    </small>
+                                </div>
+                                <div class="medium-5 columns">
+                                    <label id="lblEventEndDate" class="field">fecha final
+                                        <input type="datetime-local" id="dtEventEndDate" class="radius"></textarea>
+                                    </label>
+                                    <small id="alertEndDate" class="error" style="display:none">
+                                    	Fecha Incorrect. Por favor seleciona una fecha mayor a la fecha inicial.
+                                    </small>
+                                </div>
+                                <div class="medium-2 columns">&nbsp;</div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="medium-5 columns">
+                                    <label id="lblEventLatitude" class="field">*Latitud
+                                        <input type="text" id="txtEventLatitude" class="radius"/>
+                                    </label>
+                                    <small id="alertLatitude" class="error" style="display:none">
+                                    	Campo Vacio. Escriba la latitud del evento
+                                    </small>
+                                </div>
+                                <div class="medium-5 columns">
+                                    <label id="lblEventLongitude" class="field" >*Longitud
+                                    	<input type="text" id="txtEventLongitude" class="radius" />
+                                    </label>
+                                    <small id="alertLongitude" class="error" style="display:none">
+                                    	Campo vacio. Escriba la longitud del evento
+                                    </small>
+                                </div>
+                                <div class="medium-2 columns">&nbsp;</div>
                             </div>
                             
                         </div>
@@ -178,22 +251,22 @@ $this->load->view('admin/vwHeader');
                             <div class="row">
                                 <div class="small-12 medium-11 large-10 columns" id="imagen">
                                 	<label id="lblEventImage" class="field">*Imagen</label>
-                                    <a><img id="imgImagen" src="http://placehold.it/500x300&text=[ad]"/></a>
+                                    <a><img class="imgImagen" id="imgImagen" src="http://placehold.it/500x300&text=[ad]"/></a>
                                     <input type="hidden" id="imagenName" value="0" />
                                     <input style="display:none" type="file" id="fileImagen" style="color:#003" name="archivos[]" multiple />
                                     <small id="alertImage" class="error small-9 medium-11 large-10 columns" style="display:none"></small>
                                 </div>
                             </div>
-                            <br/><br/>
-                            
+                            <br />
                             <div class="row">
-                                <div class="small-12 medium-11 large-10 columns">
-                                    <label id="lblEventDate" class="field">*Fecha
-                                        <input type="date" id="dtEventDate" class="radius" />
-                                    </label>
-                                    <small id="alertEventDate" class="error" style="display:none"></small>                                    
+                                <div class="small-12 medium-11 large-10 columns" id="imagen">
+                                	<label id="lblEventImage2" class="field">*Imagen 2</label>
+                                    <a><img class="imgImagen imgAutoSize" id="imgImagen2" src="http://placehold.it/500x300&text=[ad]"/></a>
+                                    <input style="display:none" type="file" id="fileImagen2" style="color:#003" name="archivos[]" multiple />
+                                    <small id="alertImage2" class="error small-9 medium-11 large-10 columns" style="display:none"></small>
                                 </div>
                             </div>
+                            <br/><br/>
                             
                              <div class="row">
                                 <div class="small-8 medium-9 large-6 columns">

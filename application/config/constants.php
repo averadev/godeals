@@ -46,6 +46,7 @@ define('SHAPE',URL.'api/ShapeHoverSVG/');
 define('SHARE',URL.'api/shareButtons/');
 define('SHOW',URL.'api/VerticalShowcaseSlider/');
 define('WEATHER',URL.'api/simpleWeather/');
+define('MODAL',URL.'api/jQueryModal/src/');
 
 
 

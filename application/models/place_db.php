@@ -118,9 +118,127 @@ Class place_db extends CI_MODEL
         $this->db->where('type', $type);
         return  $this->db->get()->result();
     }
+	
+	/*
+	* alfredo chi
+	*/
     
-    
-
-
+	/*
+	* obtiene todos los lugares activos
+	*/
+	public function getAllActive(){
+        $this->db->select('place.id, place.name, place.title, place.txtMin, place.txtMax, place.weatherKey,');
+		$this->db->select('city.name as nameCity');
+        $this->db->from('place');
+		$this->db->join('city', 'place.cityId = city.id');
+        $this->db->where('place.status = 1');
+        return  $this->db->get()->result();
+    }
+	
+	/*
+	** obtiene todos los datos de un lugar por id
+	*/
+	public function getId($id){
+        $this->db->select('place.id, place.name, place.title, place.txtMin, place.txtMax, place.weatherKey,');
+		$this->db->select('place.cityId, place.longitude, place.latitude, place.image, city.name as nameCity');
+        $this->db->from('place');
+		$this->db->join('city', 'place.cityId = city.id');
+		$this->db->where('place.id', $id);
+        $this->db->where('place.status = 1');
+        return  $this->db->get()->result();
+    }
+	
+	/*
+	** obtiene todos los datos de un comercio por forenkeys
+	*/
+	public function getXrefByIds($placeId , $partnerId){
+        $this->db->select('xref_place_partner.partnerId, xref_place_partner.type, partner.name');
+        $this->db->from('xref_place_partner');
+		$this->db->join('partner', 'partner.id = xref_place_partner.partnerId');
+		$this->db->where('xref_place_partner.placeId', $placeId);
+		$this->db->where('xref_place_partner.partnerId', $partnerId);
+        return  $this->db->get()->result();	
+    }
+	
+	
+	/*
+	* obtiene todos los registros de la palabra dada
+	*/
+	public function getallSearch($dato,$column,$order){
+		$this->db->select('place.id, place.name, place.title, place.txtMin, place.txtMax, place.weatherKey,');
+		$this->db->select('city.name as nameCity');
+        $this->db->from('place');
+		$this->db->join('city', 'place.cityId = city.id');
+        $this->db->where('place.status = 1');
+		$this->db->where('(place.name LIKE \'%'.$dato.'%\' OR city.name LIKE \'%'.$dato.'%\' 
+		OR place.weatherKey LIKE \'%' . $dato . '%\')', NULL); 
+		$this->db->order_by($column , $order);
+        return  $this->db->get()->result();
+	}
+	
+	public function getXrefActive($id){
+		$this->db->select('xref_place_partner.partnerId, xref_place_partner.type, partner.name, partner.info');
+        $this->db->from('xref_place_partner');
+		$this->db->join('partner', 'partner.id = xref_place_partner.partnerId');
+		$this->db->where('xref_place_partner.placeId', $id);
+        return  $this->db->get()->result();	
+	}
+	
+	public function getallSearchXref($idPlace,$dato){
+		$this->db->select('xref_place_partner.partnerId, xref_place_partner.type, partner.name, partner.info');
+        $this->db->from('xref_place_partner');
+		$this->db->join('partner', 'partner.id = xref_place_partner.partnerId');
+		$this->db->where('xref_place_partner.placeId', $idPlace);
+		$this->db->where('(partner.name LIKE \'%'.$dato.'%\')', NULL);
+        return  $this->db->get()->result();
+	}
+	
+	public function getAllGalleryById($placeId){
+		$this->db->select('place_photo.id, place_photo.image');
+        $this->db->from('place_photo');
+		$this->db->where('place_photo.placeId', $placeId);
+        return  $this->db->get()->result();
+	}
+	
+	/*
+	* inserta datos en la tabla place
+	*/
+	
+	public function insertPlace($data){
+		$this->db->insert('place', $data);
+	}
+	
+	public function insertXref($data){
+		$this->db->insert('xref_place_partner', $data);
+	}
+	
+	public function insertGallery($data){
+		$this->db->insert_batch('place_photo', $data);
+	}
+	
+	/*
+	** actualiza los datos del lugar
+	*/
+	
+	public function updatePlace($data){
+		$this->db->where('id', $data['id']);
+		$this->db->update('place', $data);
+	}
+	
+	public function updateXref($data,$partnerId){
+		$this->db->where('placeId', $data['placeId']);
+		$this->db->where('partnerId', $partnerId);
+		$this->db->update('xref_place_partner', $data);
+	}
+	
+	/*
+	** elimina los datos de xref_place_partner
+	*/
+	
+	public function deleteXref($data){
+		$this->db->where('placeId', $data['placeId']);
+		$this->db->where('partnerId', $data['partnerId']);
+		$this->db->delete('xref_place_partner', $data);
+	}
 }
 //end model

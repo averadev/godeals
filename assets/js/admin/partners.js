@@ -68,12 +68,12 @@ $(document).ready(function(){
    		}
    		else {
 	   		if (event.keyCode < 95) {
-		   		if (event.keyCode < 48 || event.keyCode > 57) {
+		   		if (event.keyCode < 48 && event.keyCode != 9 || event.keyCode > 57) {
 			   		event.preventDefault();
 				}
 			} 
        		 else {
-				if (event.keyCode < 96 || event.keyCode > 105 && event.keyCode != 109 && event.keyCode != 189 && event.keyCode != 110) {
+				if (event.keyCode < 96 || event.keyCode > 105 && event.keyCode != 109 && event.keyCode != 189 && event.keyCode != 110 && event.keyCode != 190) {
 					event.preventDefault();
 				}
 			}
@@ -118,7 +118,7 @@ $(window).load(function(){
   $('#fileImagen').change(function(e) {
 	  $('#alertImage').hide();
 	  $('#lblPartnerImage').removeClass('error');
-	  $('#imgImagen').attr("src","http://placehold.it/500x300&text=[ad]");
+	  $('#imgImagen').attr("src","http://placehold.it/200x200&text=[200x200]");
 	  if($('#imagenName').val() != 0){
 		 $('#imgImagen').attr("src",URL_IMG + "app/coupon/max/" + $('#imagenName').val())
 	  }
@@ -130,7 +130,7 @@ $(window).load(function(){
       imageType = /image.*/;
     
       if (!file.type.match(imageType)){
-		  $('#imgImagen').attr("src","http://placehold.it/500x300&text=[ad]");
+		  $('#imgImagen').attr("src","http://placehold.it/200x200&text=[200x200]");
 		  document.getElementById('fileImagen').value ='';
 		  if($('#imagenName').val() != 0){
 			  $('#imgImagen').attr("src",URL_IMG + "app/coupon/max/" + $('#imagenName').val())
@@ -201,7 +201,6 @@ function showPartner(id){
             id:id
         },
         success: function(data){
-            console.log(data);
             $('#txtPartnerName').val(data[0].name);
             $('#selMapCat').append("<option selected value='" +  data[0].idCatMap + "'>"+data[0].categoryName + "</option>" );
             $('#txtPartnerAddress').val(data[0].address);
@@ -212,6 +211,7 @@ function showPartner(id){
             $('#imgImagen').attr("src",URL_IMG + "app/logo/" + data[0].logo)
             $('#imagenName').val(data[0].logo);
             $('#imgImagen').attr("hidden",data[0].logo)
+            $('#txtPartnerInfo').val(data[0].info);
             $('#txtPartnerLatitude').val(data[0].latitude);
             $('#txtPartnerLongitude').val(data[0].longitude);
             $('#vistaPartners').hide();
@@ -377,7 +377,8 @@ function ajaxSavePartner(nameImage,id){
             twitter:twitter,
             facebook:facebook,
             latitude:latitude,
-            longitude:longitude		
+            longitude:longitude,
+			info:$('#txtPartnerInfo').val().trim()
         },
         success: function(data){
             ajaxMostrarTabla(column,order,"../admin/partners/getAllSearch",(numPag-1),"partner");
@@ -418,6 +419,13 @@ function validations(){
         $('#alertPartnerLatitude').show();
         $('#lblPartnerLatitude').addClass('error');
         $('#txtPartnerLatitude').focus();
+        result = false;
+    }
+	
+	if($('#txtPartnerInfo').val().trim().length == 0){
+        $('#alertPartnerInfo').show();
+        $('#lblPartnerInfo').addClass('error');
+        $('#txtPartnerInfo').focus();
         result = false;
     }
 	
@@ -509,7 +517,7 @@ function limpiarCampos(){
     $('#txtPartnerMail').val("");
     $('#txtPartnerTwitter').val("");
     $('#txtPartnerFacebook').val("");
-    $('#imgImagen').attr("src","http://placehold.it/500x300&text=[ad]");
+    $('#imgImagen').attr("src","http://placehold.it/200x200&text=[200x200]");
     document.getElementById('fileImagen').value ='';
     $('#txtPartnerLatitude').val("");
     $('#txtPartnerLongitude').val("");
@@ -526,6 +534,7 @@ function ocultarAlertas(){
     $('#alertPartnerLatitude').hide();
     $('#alertPartnerLongitude').hide();
 	$('#alertImage').hide();
+	$('#alertPartnerInfo').hide();
 
     $('#lblPartnerName').removeClass('error');
     $('#lblPartnerMapCat').removeClass('error');
@@ -538,6 +547,7 @@ function ocultarAlertas(){
     $('#lblPartnerLongitude').removeClass('error');
 	$('#lblPartnerImage').removeClass('error');
 	$('#lblPartnerImage').removeClass('error');
+	$('#lblPartnerInfo').removeClass('error');
 }
 
 	function validateEmail(){

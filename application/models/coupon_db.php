@@ -10,7 +10,7 @@ Class coupon_db extends CI_MODEL
      * Obtiene el registro del catalogo
      */
     public function get($id){
-        $this->db->select ('coupon.id, coupon.image, coupon.description, coupon.clauses, coupon.validity, coupon.partnerId');
+        $this->db->select ('coupon.id, coupon.image, coupon.description, coupon.detail, coupon.clauses, coupon.validity, coupon.partnerId');
         $this->db->select ('coupon.cityId, partner.name as partnerName, city.name as cityName, partner.logo');
         $this->db->from('coupon');
         $this->db->join('partner', 'coupon.partnerId = partner.id ');

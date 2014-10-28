@@ -17,6 +17,7 @@ class Productos extends CI_Controller {
         $this->load->database('default');
         $this->load->model('catalogo_db');
         $this->load->model('coupon_db');
+        $this->load->model('publicity_db');
     }
 
     /**
@@ -26,6 +27,11 @@ class Productos extends CI_Controller {
         // Get data from database
         $data['elements'] = $this->catalogo_db->getAllCatalog(1);
         $data['coupons'] = $this->coupon_db->getByType(1);
+        $data['medioBanner'] = $this->sortSliceArray($this->publicity_db->getPublicidad(2), 2);
+        $data['lateral'] = $this->publicity_db->getPublicidad(3);
+        shuffle($data['lateral']);
+        $data['cintillo'] = $this->publicity_db->getPublicidad(4);
+        shuffle($data['cintillo']);
         $data['total'] = count($data['coupons']);
         $data['todas'] = $data['total'];
         $data['sel'] = 0;
@@ -44,6 +50,11 @@ class Productos extends CI_Controller {
         // Get data from database
         $data['elements'] = $this->catalogo_db->getAllCatalog(1);
         $data['coupons'] = $this->coupon_db->getByTypeCat(1, $categorie);
+        $data['medioBanner'] = $this->sortSliceArray($this->publicity_db->getPublicidad(2), 2);
+        $data['lateral'] = $this->publicity_db->getPublicidad(3);
+        shuffle($data['lateral']);
+        $data['cintillo'] = $this->publicity_db->getPublicidad(4);
+        shuffle($data['cintillo']);
         $data['total'] = count($data['coupons']);
         $data['todas'] = count($this->coupon_db->getByType(1));
         $data['sel'] = $categorie;
@@ -54,5 +65,15 @@ class Productos extends CI_Controller {
         $this->load->view('web/vwProductos', $data);
     }
     
+    /**
+     * Obtiene un array sorting and sliced
+     */
+    public function sortSliceArray($array, $count){
+        shuffle($array);
+        if (count($array) > $count){
+            $array = array_slice($array, 0, $count);
+        }
+        return $array;
+    }
 
 }

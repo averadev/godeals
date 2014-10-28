@@ -18,8 +18,9 @@
         
         <!-- Publicidad -->
         <div class="row publicidad">
-            <div class="medium-6 columns"><img class="publish" src="http://placehold.it/500x300&text=[ad]"/></div>
-            <div class="medium-6 columns"><img class="publish" src="http://placehold.it/500x300&text=[ad]"/></div>
+            <?php foreach ($medioBanner as $item):?>
+                <div class="medium-6 columns"><img class="publish" src="<?php echo base_url().IMG; ?>app/publicity/mediobanner/<?php echo $item->image;?>"/></div>
+            <?php endforeach;?>
         </div>
         
         <?php $this->load->view('web/vwMainMenu'); ?>

@@ -218,13 +218,24 @@ $this->load->view('admin/vwHeader');
                             <div class="row">
                                 <div class="small-12 medium-11 large-10 columns" id="imagen">
                                 	<label id="lblPartnerImage" class="field"><strong>*Imagen</strong></label>
-                                    <a><img id="imgImagen" src="http://placehold.it/500x300&text=[ad]"/></a>
+                                    <a><img id="imgImagen" style="width:200px;height:200px;border:solid 1px #a5a5a5;" src="http://placehold.it/200x200&text=[200x200]"/></a>
                                     <input type="hidden" id="imagenName" value="0" />
                                     <input style="display:none" type="file" id="fileImagen" style="color:#003" name="archivos[]" multiple />
                                     <small id="alertImage" class="error" style="display:none"></small>
                                 </div>
                             </div>
                             <br/><br/>
+                            
+                            <div class="row">
+                            	<div class="small-12 medium-11 large-10 columns">
+                                    <label id="lblPartnerInfo" class="field"><strong>*Informacion</strong>
+                                    	<textarea id="txtPartnerInfo" class="radius"></textarea>
+                                    </label>
+                                    <small id="alertPartnerInfo" class="error" style="display:none">
+                                    	Campo vacio. Por favor escriba la informacion del cliente
+                                    </small>
+                                </div>
+                            </div>
                             
                             <div class="row">
                                 <div class="small-12 medium-11 large-10 columns">
@@ -247,7 +258,7 @@ $this->load->view('admin/vwHeader');
                                     </small>
                                 </div>
                             </div>
-                            <br/><br/><br/>
+                            <br/>
                             
                             
                             <div class="row">
