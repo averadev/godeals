@@ -184,9 +184,11 @@ $this->load->view('admin/vwHeader');
                             	</div>
 							</div>
                             <div class="row">
-                                <div class="small-8 medium-9 large-6 columns">
+                                <div class="small-12 medium-12 large-12 columns">
       								<button  id="btnAssignTrade" class="bntSave button small success radius ">
       								Asignar Comercio</button>
+                                    <button  id="btnGaleria" class="bntSave button small success radius ">
+      								Galeria</button>
                                 </div>
                                 <div class="loading small-2 medium-2 large-2 columns" id="load1"></div>
 							</div>
@@ -251,7 +253,63 @@ $this->load->view('admin/vwHeader');
                        
                 </div>
                  
-            </div><!--- fin div "FormPublicity" --->
+            </div><!--- fin div "FormPlace" --->
+            
+            <div id="galleryPlace" style="display:none">
+            	
+                <!--- formulario de galeria --->
+					
+					<div class="row">
+                        <h3  class="text-center">Galeria</h3>
+                        <!-- primera columna -->
+                        <div class="small-12 medium-12 large-12 columns">
+                    	<div class="small-12 medium-6 large-6 columns">
+                            
+                            <div class="row">
+                                <div class="small-12 medium-11 large-10 columns">
+                                	<label id="lblImageGallery"><strong>*Imagen galeria</strong></label>
+                                    <a><img id="imgImageGallery" src="http://placehold.it/500x300&text=[ad]" style="width:300px; height:200px;"/></a>
+                                    <input style="display:none" type="file" id="fileImageGallery" name="archivos[]" multiple />
+                                    <small id="alertImageGallery" class="error small-9 medium-11 large-10 columns" 
+                                    style="display:none"></small>
+                                </div>
+                            </div>
+                            </br>
+                            <div class="row">
+                                <div class="medium-10 columns">
+                                <button id="btnAddGallery" class="button tiny success radius ">agregar</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- fin primera columna -->    
+                        
+                        <!-- segunda columna -->
+                    	<div class="small-12 medium-6 large-6 columns">
+                            
+                            <div class="row">
+                            	<div id="gridImages" class="small-12 medium-12 large-12 columns">
+                                </div>
+                            </div>
+                            <br/><br/>
+                            
+                             <div class="row">
+                                <div class="small-8 medium-6 large-6 columns">
+                                    <button id="btnCancelGallery" class="button small alert radius bntSave">
+                                    Cancelar</button>
+                                    <button id="btnSaveGallery" class="btnS2 button small success radius bntSave">
+                                    Guardar</button>
+                                </div>
+                                <div class="loading small-2 medium-2 large-2 columns" id="load2">
+                                </div>
+                            </div>
+                            
+                        </div>   
+                        
+                    </div>
+					<!--- fin del formulario de galleria --->
+                    </div>
+                
+            </div>
     </div>
 </div>
 

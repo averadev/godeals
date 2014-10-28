@@ -235,6 +235,22 @@ input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0px 1000px white inset;
 }
 
+
 .imgAutoSize{
 	height:auto;	
 }
+
+	/**********place**********/
+
+#imgImageMiniGallery{
+	width:220px;
+	height:150px;
+	border:3px solid #000;	
+}
+	
+#imgPlacegallery{
+	float:left;
+}
+
+	/*****fin place ******/
+

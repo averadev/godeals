@@ -193,6 +193,13 @@ Class place_db extends CI_MODEL
         return  $this->db->get()->result();
 	}
 	
+	public function getAllGalleryById($placeId){
+		$this->db->select('place_photo.id, place_photo.image');
+        $this->db->from('place_photo');
+		$this->db->where('place_photo.placeId', $placeId);
+        return  $this->db->get()->result();
+	}
+	
 	/*
 	* inserta datos en la tabla place
 	*/
@@ -203,6 +210,10 @@ Class place_db extends CI_MODEL
 	
 	public function insertXref($data){
 		$this->db->insert('xref_place_partner', $data);
+	}
+	
+	public function insertGallery($data){
+		$this->db->insert_batch('place_photo', $data);
 	}
 	
 	/*
