@@ -261,7 +261,7 @@ $this->load->view('admin/vwHeader');
                             <div class="row">
                                 <div class="small-12 medium-11 large-10 columns" id="imagen">
                                 	<label id="lblEventImage2" class="field">*Imagen 2</label>
-                                    <a><img class="imgImagen" id="imgImagen2" src="http://placehold.it/500x300&text=[ad]"/></a>
+                                    <a><img class="imgImagen imgAutoSize" id="imgImagen2" src="http://placehold.it/500x300&text=[ad]"/></a>
                                     <input style="display:none" type="file" id="fileImagen2" style="color:#003" name="archivos[]" multiple />
                                     <small id="alertImage2" class="error small-9 medium-11 large-10 columns" style="display:none"></small>
                                 </div>

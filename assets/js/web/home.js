@@ -14,9 +14,8 @@ $(function() {
     
     // On load window modal
     $( ".openModal" ).click(function() {
-        $('#imgFull').attr('src', URL_IMG+"app/coupon/max/00.png");
-        $('#modalContent').html('');
-        $('#couponModal').foundation('reveal', 'open');
+        $.prompt("<div class='loadC'></div>", 
+        {title: $(this).attr('attr-description')});
         
         $.ajax({
             type: "POST",
@@ -26,24 +25,26 @@ $(function() {
                 id: $(this).attr('attr-id')
             },
             success: function(data){
-                var template = "<image class='logoModal' src='"+URL_IMG+"app/logo/"+data.logo+"' />";
-                template += "<p><a attr-id='"+data.partnerId+"'>"+data.partnerName+"</a> en ";
-                template += "<a attr-id='"+data.cityId+"'>"+data.cityName+"</a></p>";
-                template += "<p>"+data.description+"</p>";
-                template += "<p class='modalDetail'>"+data.detail+"</p>";
-                template += "<a href='#' class='button'>Agregar</a>";
                 
-                $('#imgFull').attr('src', URL_IMG+"app/coupon/max/"+data.image);
-                $('#modalContent').html(template);
+                var template = "<image class='logoModal' src='"+URL_IMG+"app/logo/"+data.logo+"' />";
+                template += "<p class='detailComercio'><a attr-id='"+data.partnerId+"'>"+data.partnerName+"</a> <br/> ";
+                template += "<a attr-id='"+data.cityId+"'>"+data.cityName+"</a></p>";
+                template += "<p class='detailValidity'>"+data.validity+"</p>";
+                template += "<p class='detailDesc'><b>Detalle:</b><br/>"+data.detail+"</p>";
+                template += "<p class='detailTerminos'><b>Términos y Condiciones:</b><br/>"+data.clauses+"</p>";
+                
+                
+                
+                template = "<div class='descCupon'>" + template + "</div>";
+                
+                var imgCupon = "<image src='"+URL_IMG+"app/coupon/max/"+data.image+"' />";
+                
+                $("div.jqi .jqimessage").html(imgCupon + template);
             }
         });
     });
     $( "#eventClose" ).click(function() {
         $('#couponModal').foundation('reveal', 'close');
-    });
-    
-    $( "#showApps" ).click(function() {
-        $( "#slideout_inner" ).toggle( "slide" );
     });
     
    

@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="<?php echo base_url().FOUND; ?>css/foundation.css" />
         <link rel="stylesheet" href="<?php echo base_url().SHAPE; ?>css/component.css" />
         <link rel="stylesheet" href="<?php echo base_url().CAPTION; ?>css/component.css" />
+        <link rel="stylesheet" href="<?php echo base_url().MODAL; ?>jquery-impromptu.css" />
 		<script type="text/javascript" src="<?php echo base_url().FOUND; ?>js/vendor/modernizr.js"></script>
         <link rel="stylesheet" href="<?php echo base_url().CSS; ?>web/home.css" />
         <link rel="stylesheet" href="<?php echo base_url().CSS; ?>web/productos.css" />
@@ -15,18 +16,7 @@
     <body>
         
         <!-- Modal Cupones -->
-        <div id="couponModal" class="reveal-modal" data-reveal>
-            <div id="topbarEvent">
-                <img id="eventFb" src="<?php echo base_url().IMG; ?>web/eventFb.png">
-                <img id="eventTw" src="<?php echo base_url().IMG; ?>web/eventTw.png">
-                <img id="eventClose" src="<?php echo base_url().IMG; ?>web/eventClose.png">
-            </div>
-            <div class="large-10 medium-9 columns nospc">
-                <center><img id="imgFull" src="<?php echo base_url().IMG; ?>app/coupon/max/00.png"></center>
-            </div>
-            <div class="large-2 medium-3 columns nospc" id="modalContent">
-            </div>
-        </div>
+        
                 
         <?php $this->load->view('web/vwStickyMenu'); ?>
         
@@ -79,13 +69,12 @@
                             ?>
                                 <li>
                                     <figure class="couponObj">
-                                        <img  class="openModal"src="<?php echo base_url().IMG; ?>app/coupon/min/<?php echo $coupons[$count]->image;?>">
+                                        <img  class="openModal" attr-id="<?php echo $coupons[$count]->id;?>" attr-description="<?php echo $coupons[$count]->description;?>" src="<?php echo base_url().IMG; ?>app/coupon/min/<?php echo $coupons[$count]->image;?>">
                                         <figcaption>
                                             <h3><?php echo $coupons[$count]->description;?></h3>
                                             <span>
-                                                <u class="linkPartner" attr-id="<?php echo $coupons[$count]->partnerId;?>"><?php echo $coupons[$count]->partnerName;?></u> in 
-                                                <u class="linkCity" attr-id="<?php echo $coupons[$count]->partnerId;?>"><?php echo $coupons[$count]->cityName;?></u></span>
-                                            <a class="openModal" attr-id="<?php echo $coupons[$count]->id;?>">Look</a>
+                                                <u class="linkPartner" attr-id="<?php echo $coupons[$count]->partnerId;?>"><?php echo $coupons[$count]->partnerName;?></u>
+                                            <a class="openModal" attr-id="<?php echo $coupons[$count]->id;?>" attr-description="<?php echo $coupons[$count]->description;?>"></a>
                                         </figcaption>
                                     </figure>
                                 </li>
@@ -125,13 +114,12 @@
                                     ?>
                                         <li>
                                             <figure class="couponObj">
-                                                <img  class="openModal"src="<?php echo base_url().IMG; ?>app/coupon/min/<?php echo $coupons[$count]->image;?>">
+                                                <img  class="openModal" attr-id="<?php echo $coupons[$count]->id;?>" attr-description="<?php echo $coupons[$count]->description;?>" src="<?php echo base_url().IMG; ?>app/coupon/min/<?php echo $coupons[$count]->image;?>">
                                                 <figcaption>
                                                     <h3><?php echo $coupons[$count]->description;?></h3>
                                                     <span>
-                                                        <u class="linkPartner" attr-id="<?php echo $coupons[$count]->partnerId;?>"><?php echo $coupons[$count]->partnerName;?></u> in 
-                                                        <u class="linkCity" attr-id="<?php echo $coupons[$count]->partnerId;?>"><?php echo $coupons[$count]->cityName;?></u></span>
-                                                    <a class="openModal" attr-id="<?php echo $coupons[$count]->id;?>">Look</a>
+                                                        <u class="linkPartner" attr-id="<?php echo $coupons[$count]->partnerId;?>"><?php echo $coupons[$count]->partnerName;?></u>
+                                                    <a class="openModal" attr-id="<?php echo $coupons[$count]->id;?>" attr-description="<?php echo $coupons[$count]->description;?>"></a>
                                                 </figcaption>
                                             </figure>
                                         </li>
@@ -172,6 +160,7 @@
         <script type="text/javascript" src="<?php echo base_url().SHAPE; ?>js/snap.svg-min.js"></script>
         <script type="text/javascript" src="<?php echo base_url().SHAPE; ?>js/hovers.js"></script>
         <script type="text/javascript" src="<?php echo base_url().CAPTION; ?>js/toucheffects.js"></script>
+        <script type="text/javascript" src="<?php echo base_url().MODAL; ?>jquery-impromptu.js"></script>
         <script type="text/javascript" src="<?php echo base_url(); ?>assets/api/hachiko/hachiko.min.js"></script>
         <script type="text/javascript" src="<?php echo base_url().JS; ?>web/productos.js"></script>
     </body>

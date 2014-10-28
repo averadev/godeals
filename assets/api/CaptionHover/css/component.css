@@ -31,27 +31,29 @@
 	top: 0;
 	left: 0;
 	padding: 20px;
-	background: #2c3f52;
-	color: #ed4e6e;
+    background: url('../../../img/web/bgCuponCmp.png') no-repeat;
+	color: #1aa702;
 }
 
 .cs-style-2 figcaption h3 {
 	margin: 0;
 	padding: 0;
 	color: #fff;
+    line-height: 1;
+    font-size: 16px !important;
+    max-width: 190px;
 }
 
 .cs-style-2 figcaption span:before {
-	content: 'by ';
+	content: 'Por ';
 }
 
 .cs-style-2 figcaption a {
 	text-align: center;
-	padding: 5px 10px;
+	padding: 20px;
 	border-radius: 2px;
 	display: inline-block;
-	background: #ed4e6e;
-	color: #fff;
+    background: url('../../../img/web/btnGoDetail.png') no-repeat;
 }
 
 /* Individual Caption Styles */

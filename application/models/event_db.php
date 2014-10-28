@@ -80,6 +80,7 @@ Class event_db extends CI_MODEL
 		$this->db->select('event.id, event.name, event.place, city.name as city, event.image, event.date, event.fav');
         $this->db->from('event');
         $this->db->join('city', 'event.idCity = city.id ');
+        $this->db->where('event.date >= curdate()');
         $this->db->where('event.status = 1');
         $this->db->order_by("id", "ASC");
         return  $this->db->get()->result();
@@ -92,6 +93,7 @@ Class event_db extends CI_MODEL
 		$this->db->select('event.id, event.name, event.place, city.name as city, event.date');
         $this->db->from('event');
         $this->db->join('city', 'event.idCity = city.id ');
+        $this->db->where('event.date >= curdate()');
 		$this->db->where('event.status = 1');
 		$this->db->where('(event.name LIKE \'%'.$dato.'%\' OR event.place LIKE \'%'.$dato.'%\' 
 		OR city.name LIKE \'%' . $dato . '%\')', NULL); 

@@ -59,6 +59,17 @@ class Eventos extends CI_Controller {
         $this->load->view('web/vwEventos', $data);
     }
     
+    public function getID(){
+        $months = array('', 'Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre');
+        if($this->input->is_ajax_request()){
+            $data = $this->event_db->get($_POST['id']);
+            foreach ($data as $item):
+                $item->fecha = date('d', strtotime($item->date)) . ' de ' . $months[date('n', strtotime($item->date))];
+            endforeach;
+            echo json_encode($data);
+        }
+    }
+    
     /**
      * Obtiene un array sorting and sliced
      */

@@ -63,7 +63,7 @@
 }
 
 .eventos{
-    margin-right: 80px;
+    margin: 0 30px;
 }
 
 .evento{
@@ -87,7 +87,7 @@
 }
 
 .evntImg{
-    height: 280px;
+    height: 240px;
     background-position: right center;
     background-repeat: no-repeat;
 }
@@ -119,6 +119,7 @@
     font-size: 40px;
     font-weight: bold;
     padding-bottom: 10px;
+    line-height: 1 !important;
 }
 .evtTitle2{
     font-size: 30px;
@@ -254,5 +255,11 @@
     position: absolute;
 }
 
+.leftEvent{
+    float: left;
+    max-height: 525px;
+    overflow: hidden;
+    overflow-y: auto;
+}
 
 
