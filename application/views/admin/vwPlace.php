@@ -190,7 +190,6 @@ $this->load->view('admin/vwHeader');
                                     <button  id="btnGaleria" class="bntSave button small success radius ">
       								Galeria</button>
                                 </div>
-                                <div class="loading small-2 medium-2 large-2 columns" id="load1"></div>
 							</div>
 
                     	</div> <!--- fin primera columna --->
@@ -263,7 +262,7 @@ $this->load->view('admin/vwHeader');
                         <h3  class="text-center">Galeria</h3>
                         <!-- primera columna -->
                         <div class="small-12 medium-12 large-12 columns">
-                    	<div class="small-12 medium-6 large-6 columns">
+                    	<div class="small-12 medium-4 large-4 columns">
                             
                             <div class="row">
                                 <div class="small-12 medium-11 large-10 columns">
@@ -284,7 +283,7 @@ $this->load->view('admin/vwHeader');
                         <!-- fin primera columna -->    
                         
                         <!-- segunda columna -->
-                    	<div class="small-12 medium-6 large-6 columns">
+                    	<div class="small-12 medium-8 large-8 columns">
                             
                             <div class="row">
                             	<div id="gridImages" class="small-12 medium-12 large-12 columns">
@@ -293,7 +292,7 @@ $this->load->view('admin/vwHeader');
                             <br/><br/>
                             
                              <div class="row">
-                                <div class="small-8 medium-6 large-6 columns">
+                                <div class="small-10 medium-6 large-6 columns">
                                     <button id="btnCancelGallery" class="button small alert radius bntSave">
                                     Cancelar</button>
                                     <button id="btnSaveGallery" class="btnS2 button small success radius bntSave">
@@ -322,7 +321,3 @@ $this->load->view('admin/vwFooter');
 <script type="text/javascript" src="<?php echo base_url() . FOUND; ?>js/foundation/foundation.accordion.js"></script>
 <script type="text/javascript" src="<?php echo base_url().JS; ?>admin/place.js"></script>
 <script type="text/javascript" src="<?php echo base_url().JS; ?>admin/paginadorYBuscador.js"></script>
-
-
-
-

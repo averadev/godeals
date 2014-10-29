@@ -1,8 +1,7 @@
 // JavaScript Document
 
 numImage = 0;
-valueImageGalleryArray = new Array();
-nameImageGalleryArray = new Array();
+idGalleryDelete = new Array();
 
 //funcio que se llama cada vez que se teclea en el 'imput' city
 $("#txtPlaceCity").keyup(function() { autocomplete(); });
@@ -35,6 +34,7 @@ $("#imgImagen").click(function() {changeImage()});
 	/****galery*****/
 	
 $('#btnSaveGallery').click(function() {eventAddGallery()});
+$('#btnCancelGallery').click(function() {CancelGallery()});
 	
 $("#btnAddGallery").click(function() {addGallery()});
 
@@ -128,6 +128,7 @@ $(document).on('click','#imgDeleteBlack',function(){ deleteGallery(this); });
 		$('#btnSavePlace').hide();
 		$('#btnRegisterPlace').show();
 		$('#btnAssignTrade').hide();
+		$('#btnGaleria').hide();
 		$('#viewPlace').hide();
 		$('#FormPlace').show();	
 	}
@@ -141,6 +142,7 @@ $(document).on('click','#imgDeleteBlack',function(){ deleteGallery(this); });
 		$('#btnRegisterPlace').hide();
 		$('#btnSavePlace').show();
 		$('#btnAssignTrade').show();
+		$('#btnGaleria').show();
 		$('#viewPlace').hide();
 		$('#FormPlace').show();
 	}
@@ -518,6 +520,7 @@ $(document).on('click','#imgDeleteBlack',function(){ deleteGallery(this); });
 // fin visualizar imagen
 	
 	function ShowFormGallery(){
+		cleanGallery();
 		showGallery();
 		$('#FormPlace').hide();
 		$('#galleryPlace').show();
@@ -529,7 +532,7 @@ $(document).on('click','#imgDeleteBlack',function(){ deleteGallery(this); });
 			
 			var gallery = "gallery" + numImage;
 			$('#gridImages').append(
-				"<div id='imgPlacegallery' class='small-6 medium-6 large-6 columns "+ gallery + "'>"+
+				"<div id='imgPlacegallery' class='small-6 medium-6 large-4 columns "+ gallery + "'>"+
             		"<a id='imgDeleteBlack' value='"+ gallery + "'><img src='../assets/img/web/deleteBlack.png' /></a>"+
 					"<img id='imgImageMiniGallery' src='" + $('#imgImageGallery').attr('src')+ "' />"+
 					"<input type='file' id='"+ gallery +"' class='fileGallery' name='gallery[]' multiple style='display:none' />" +
@@ -537,26 +540,59 @@ $(document).on('click','#imgDeleteBlack',function(){ deleteGallery(this); });
                 "</div>"
 			);
 			
-			nameImageGalleryArray.push(gallery);
 			var archivos = document.getElementById("fileImageGallery");
 			archivo = archivos.files;
 			document.getElementById(gallery).files = archivo;
-			valueImageGalleryArray.push(archivo);
 			numImage++;
 			$('#imgImageGallery').attr("src","http://placehold.it/500x300&text=[ad]");
 		}
 	}
 	
 	function deleteGallery(selector){
+		type = $(selector).attr('value').substring(0,7).toLowerCase();
 		valueImage = $(selector).attr('value');
+		if(type != "gallery"){
+			idGalleryDelete.push(valueImage);
+		}
 		$('.' + valueImage).remove();
 	}
 	
 	function eventAddGallery(){
-			uploadGallery()
+		$('.loading').show();
+		$('.loading').html('<img src="../assets/img/web/loading.gif" height="40px" width="40px" />');
+		$('.bntSave').attr('disabled',true);
+		var conTotal = 0;
+		$('.fileGallery').each(function() {
+			conTotal++;
+        });	
+		if(conTotal > 0 && idGalleryDelete.length > 0){
+			uploadGallery(1,1);
+		} else if (conTotal > 0 && idGalleryDelete.length == 0){
+			uploadGallery(1,0);
+		} else if (conTotal == 0 && idGalleryDelete.length > 0){
+			ajaxSaveGallery("",0,1);
+		} else {
+			ajaxMostrarTabla(column,order,"../admin/place/getallSearch",(numPag-1),"place");
+			$('.loading').hide();
+			$('.bntSave').attr('disabled',false);
+			$('#galleryPlace').hide();
+			$('#viewPlace').show();
+			$('#alertMessage').html("Se han actualizado la galeria");
+			$('#divMenssage').show(1000).delay(1500);
+			$('#divMenssage').hide(1000);
+			$('.loading').hide();
+			$('.bntSave').attr('disabled',false);
+			
+		}
 	}
 	
-	function uploadGallery(){
+	function CancelGallery(){
+		cleanGallery();
+		$('#galleryPlace').hide();
+		$('#FormPlace').show();
+	}
+	
+	function uploadGallery(add,save){
 		
 		if(window.XMLHttpRequest) {
  			var Req = new XMLHttpRequest();
@@ -566,10 +602,9 @@ $(document).on('click','#imgDeleteBlack',function(){ deleteGallery(this); });
 		
 		var data = new FormData();
 		
-		$('.fileGallery').each(function(index, element) {
+		$('.fileGallery').each(function() {
 			var archivos = document.getElementById($(this).attr('id'));
 			var archivo = archivos.files;
-			console.log(archivo);
 			data.append($(this).attr('id'),archivo[0]);
         });	
 		
@@ -581,7 +616,7 @@ $(document).on('click','#imgDeleteBlack',function(){ deleteGallery(this); });
 			if (Req.status == 200) {
  	 			//Recibimos la respuesta de php
 				nameImage = Req.responseText;
-				//ajaxSaveGallery(nameImage);
+				ajaxSaveGallery(nameImage,add,save);
 			} else { 
   				//console.log(Req.status); //Vemos que paso.
 			} 		
@@ -591,23 +626,33 @@ $(document).on('click','#imgDeleteBlack',function(){ deleteGallery(this); });
 		
 	}
 	
-	function ajaxSaveGallery(nameImage){
+	function ajaxSaveGallery(nameImage,add,save){
 		
 		numPag = $('ul .current').val();
+		if(add == 1){
+			nameImageGallery = nameImage.split('*_*');
+			nameImageGallery.pop();
+			nameImageGallery = JSON.stringify(nameImageGallery);
+		} else {
+			nameImageGallery = 0;	
+		}
 		
-		nameImageGallery = nameImage.split('*_*');
-		nameImageGallery.pop();
-		nameImageGallery = JSON.stringify(nameImageGallery);
+		if(save == 1){
+			idImage = JSON.stringify(idGalleryDelete);
+		} else {
+			idImage = 0;	
+		}
 		
 		$.ajax({
             	type: "POST",
             	url: "../admin/place/saveGallery",
             	dataType:'json',
             	data: { 
-					add:1,
-					save:0,
+					add:add,
+					save:save,
 					placeId:$('#btnSavePlace').val(),
 					image:nameImageGallery,
+					idImage:idImage
             	},
             	success: function(data){
 					ajaxMostrarTabla(column,order,"../admin/place/getallSearch",(numPag-1),"place");
@@ -625,7 +670,7 @@ $(document).on('click','#imgDeleteBlack',function(){ deleteGallery(this); });
 					$('#viewPlace').show()
 					$('.loading').hide();
 					$('.bntSave').attr('disabled',false);
-					alert("error al insertar galleria")
+					alert("error al actualizar la galleria")
 				}
         	});
 	}
@@ -644,8 +689,8 @@ $(document).on('click','#imgDeleteBlack',function(){ deleteGallery(this); });
             	success: function(data){
 					for(var i = 0;i<data.length;i++){
 						$('#gridImages').append(
-						"<div id='imgPlacegallery' class='small-6 medium-6 large-6 columns "+ i + "'>"+
-            			"<a id='imgDeleteBlack' value='"+ i + "'><img src='../assets/img/web/deleteBlack.png' /></a>"+
+						"<div id='imgPlacegallery' class='small-6 medium-6 large-4 columns "+ data[i].id + "'>"+
+            			"<a id='imgDeleteBlack' value='"+ data[i].id + "'><img src='../assets/img/web/deleteBlack.png' /></a>"+
 						"<img id='imgImageMiniGallery' src='../assets/img/app/visita/galeria/" + data[i].image+ "' />"+
 						"<div id='imgPlacegallery' class='small-12 medium-12 large-12 columns' style='height:25px;'>" +
                 		"</div>"
@@ -682,5 +727,7 @@ $(document).on('click','#imgDeleteBlack',function(){ deleteGallery(this); });
 	function cleanGallery(){
 		document.getElementById('fileImageGallery').value ='';
 		$('#imgImageGallery').attr("src","http://placehold.it/500x300&text=[ad]");
+		$('#gridImages').empty();
+		idGalleryDelete.length = 0;
 	}
 	

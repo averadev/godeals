@@ -147,20 +147,17 @@ class place extends CI_Controller {
 				
 			} 
 			if($_POST['save'] == 1){
-				$update = array(
-					'id'			=> $_POST['id'],
-					'name' 			=> $_POST['name'],
-   					'cityId' 		=> $_POST['cityId'],
-   					'image' 		=> $_POST['image'],
-					'title' 		=> $_POST['title'],
-					'txtMin' 		=> $_POST['txtMin'],
-					'txtMax' 		=> $_POST['txtMan'],
-					'weatherKey' 	=> $_POST['weatherKey'],
-					'latitude' 		=> $_POST['latitude'],
-					'longitude' 	=> $_POST['longitude']
-				);
-				$data = $this->place_db->updatePlace($update);
-				$data = "Se han editado los datos del lugar";
+				$update = array();
+					
+				foreach(json_decode(stripslashes($_POST['idImage'])) as $id){
+					array_push($update, array(
+						'id' 		=> $id,
+   						'status' 	=> 0
+					));
+				}
+					
+				$data = $this->place_db->updateGallery($update);
+				$data = "Se han actualizado la galeria";
 			}
             
             echo json_encode($data);

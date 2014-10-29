@@ -160,7 +160,6 @@ Class place_db extends CI_MODEL
         return  $this->db->get()->result();	
     }
 	
-	
 	/*
 	* obtiene todos los registros de la palabra dada
 	*/
@@ -197,6 +196,7 @@ Class place_db extends CI_MODEL
 		$this->db->select('place_photo.id, place_photo.image');
         $this->db->from('place_photo');
 		$this->db->where('place_photo.placeId', $placeId);
+		$this->db->where('place_photo.status', 1);
         return  $this->db->get()->result();
 	}
 	
@@ -229,6 +229,10 @@ Class place_db extends CI_MODEL
 		$this->db->where('placeId', $data['placeId']);
 		$this->db->where('partnerId', $partnerId);
 		$this->db->update('xref_place_partner', $data);
+	}
+	
+	public function updateGallery($data){
+		$this->db->update_batch('place_photo',$data,'id');
 	}
 	
 	/*
