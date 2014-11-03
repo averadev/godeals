@@ -17,6 +17,8 @@ $(".btnAcceptC").click(function() {eventDelete()});
 $(".btnCancelC").click(function() {eventCancelDelete()});
 
 $("#imgImagen").click(function() {changeImage()});
+$("#imgImagenMin").click(function() {changeImage2()});
+$("#imgImagenApp").click(function() {changeImage3()});
 
 //visualizar imagen
 
@@ -25,7 +27,7 @@ $("#imgImagen").click(function() {changeImage()});
 	 $('#fileImagen').change(function(e) {
 		$('#labelImage').removeClass('error');
 	 	$('#alertImage').hide();
-	 	$('#imgImagen').attr("src","http://placehold.it/500x300&text=[ad]");
+	 	$('#imgImagen').attr("src","http://placehold.it/700x525&text=[700x525]");
 	 	if($('#imagenName').val() != 0){
 		 	$('#imgImagen').attr("src",URL_IMG + "app/coupon/max/" + $('#imagenName').val())
 	 	}
@@ -39,7 +41,7 @@ $("#imgImagen").click(function() {changeImage()});
       imageType = /image.*/;
     
       if (!file.type.match(imageType)){
-		  $('#imgImagen').attr("src","http://placehold.it/500x300&text=[ad]");
+		  $('#imgImagen').attr("src","http://placehold.it/700x525&text=[700x525]");
 		  document.getElementById('fileImagen').value ='';
 		  if($('#imagenName').val() != 0){
 			  $('#imgImagen').attr("src",URL_IMG + "app/coupon/max/" + $('#imagenName').val())
@@ -61,12 +63,106 @@ $("#imgImagen").click(function() {changeImage()});
       var result=e.target.result;
       $('#imgImagen').attr("src",result);
      }
+	 
+	 /// imagen Min /////
+	 
+	  $('#fileImagenMin').change(function(e) {
+		$('#labelImageMin').removeClass('error');
+	 	$('#alertImageMin').hide();
+	 	$('#imgImagenMin').attr("src","http://placehold.it/320x240&text=[320x240]");
+	 	if($('#imagenName').val() != 0){
+		 	$('#imgImagenMin').attr("src",URL_IMG + "app/coupon/min/" + $('#imagenName').val())
+	 	}
+	 	if(e.target.files[0] != undefined){
+			 addImage2(e); 
+	 	}
+	});
+
+     function addImage2(e){
+      var file = e.target.files[0],
+      imageType = /image.*/;
+    
+      if (!file.type.match(imageType)){
+		  $('#imgImagenMin').attr("src","http://placehold.it/320x240&text=[320x240]");
+		  document.getElementById('fileImagenMin').value ='';
+		  if($('#imagenNameMin').val() != 0){
+			  $('#imgImagenMin').attr("src",URL_IMG + "app/coupon/max/" + $('#imagenName').val())
+		  } else {
+			  $('#labelImageMin').addClass('error');
+			  $('#alertImageMin').empty();
+			  $('#alertImageMin').append("Selecione una imagen");
+			  $('#alertImageMin').show();
+		  }
+       return;
+	  }
+  
+      var reader = new FileReader();
+      reader.onload = fileOnload2;
+      reader.readAsDataURL(file);
+     }
+  
+     function fileOnload2(e) {
+      var result=e.target.result;
+      $('#imgImagenMin').attr("src",result);
+     }
+	 
+	 ////// imagen App ////////
+	 
+	 
+	   $('#fileImagenApp').change(function(e) {
+		$('#labelImageApp').removeClass('error');
+	 	$('#alertImageApp').hide();
+	 	$('#imgImagenApp').attr("src","http://placehold.it/320x240&text=[320x240]");
+	 	if($('#imagenName').val() != 0){
+		 	$('#imgImagenApp').attr("src",URL_IMG + "app/coupon/app/" + $('#imagenName').val())
+	 	}
+	 	if(e.target.files[0] != undefined){
+			 addImage3(e); 
+	 	}
+	});
+
+     function addImage3(e){
+      var file = e.target.files[0],
+      imageType = /image.*/;
+    
+      if (!file.type.match(imageType)){
+		  $('#imgImagenApp').attr("src","http://placehold.it/320x240&text=[320x240]");
+		  document.getElementById('fileImagenMin').value ='';
+		  if($('#imagenNameApp').val() != 0){
+			  $('#imgImagenApp').attr("src",URL_IMG + "app/coupon/max/" + $('#imagenName').val())
+		  } else {
+			  $('#labelImageApp').addClass('error');
+			  $('#alertImageApp').empty();
+			  $('#alertImageApp').append("Selecione una imagen");
+			  $('#alertImageApp').show();
+		  }
+       return;
+	  }
+  
+      var reader = new FileReader();
+      reader.onload = fileOnload3;
+      reader.readAsDataURL(file);
+     }
+  
+     function fileOnload3(e) {
+      var result=e.target.result;
+      $('#imgImagenApp').attr("src",result);
+     }
+	 
     });
   });
 
 	//abre el explorador de archivos cuando le das click a la imagen de cupones
 	function changeImage(){
 		$('#fileImagen').click();
+	}
+	
+	function changeImage2(){
+		$('#fileImagenMin').click();
+	}
+	
+	function changeImage3(){
+		$('#fileImagenApp').click();
 	}
 
 // fin visualizar imagen¿
@@ -161,7 +257,7 @@ function finderAutocomplete( palabra, url, datalist){
 			$('.loading').html('<img src="../assets/img/web/loading.gif" height="40px" width="40px" />');
 			$('.bntSave').attr('disabled',true);
 			uploadImage(0);
-		} 
+		}
 	}
 	
 	//llama a la funcion para editar cupones
@@ -175,7 +271,7 @@ function finderAutocomplete( palabra, url, datalist){
 			$('.loading').show();
 			$('.loading').html('<img src="../assets/img/web/loading.gif" height="40px" width="40px" />');
 			$('.bntSave').attr('disabled',true);
-			if(document.getElementById('fileImagen').value == ""){
+			if(document.getElementById('fileImagen').value == "" && document.getElementById('fileImagenMin').value == "" && document.getElementById('fileImagenApp').value == ""){
 				ajaxSaveCoupon(nameImage,id);
 			} else {
 				deleteImage(nameImage,id);
@@ -200,8 +296,6 @@ function finderAutocomplete( palabra, url, datalist){
 	
 	//sube las imagen al directorio assets/img/app/coupon
 	function uploadImage(id){
-		var archivos = document.getElementById("fileImagen");//Damos el valor del input tipo file
- 		var archivo = archivos.files; //obtenemos los valores de la imagen
 		
 		//creamos la variable Request 
 		if(window.XMLHttpRequest) {
@@ -210,9 +304,35 @@ function finderAutocomplete( palabra, url, datalist){
  			var Req = new ActiveXObject("Microsoft.XMLHTTP"); 
  		}
 		
-		var data = new FormData();
-	
-		data.append('archivo',archivo[0]);
+		var data = new FormData(); 
+		
+		var ruta = new Array();
+		
+		if(document.getElementById('fileImagen').value != ""){
+			var archivos = document.getElementById("fileImagen");//Damos el valor del input tipo file
+ 			var archivo = archivos.files; //obtenemos los valores de la imagen
+			data.append('ImageMax',archivo[0]);
+			ruta.push("assets/img/app/coupon/max/");
+		}
+		
+		if(document.getElementById('fileImagenMin').value != ""){
+			var archivos = document.getElementById("fileImagenMin");//Damos el valor del input tipo file
+ 			var archivo = archivos.files; //obtenemos los valores de la imagen
+			data.append('ImageMin',archivo[0]);
+			ruta.push("assets/img/app/coupon/min/");
+		}
+		
+		if(document.getElementById('fileImagenApp').value != ""){
+			var archivos = document.getElementById("fileImagenApp");//Damos el valor del input tipo file
+ 			var archivo = archivos.files; //obtenemos los valores de la imagen
+			data.append('ImageApp',archivo[0]);
+			ruta.push("assets/img/app/coupon/app/");
+		}
+		
+		rutaJson = JSON.stringify(ruta);
+		data.append('ruta',ruta);
+		
+		data.append('nameImage',$('#imagenName').val());
 		
 		//cargamos los parametros para enviar la imagen
 		Req.open("POST", "../admin/cupones/subirImagen", true);
@@ -310,6 +430,8 @@ function finderAutocomplete( palabra, url, datalist){
 				$('#txtValidity').val(data[0].validity);
 				$('#txtClauses').val(data[0].clauses);
 				$('#imgImagen').attr("src",URL_IMG + "app/coupon/max/" + data[0].image)
+				$('#imgImagenMin').attr("src",URL_IMG + "app/coupon/min/" + data[0].image)
+				$('#imgImagenApp').attr("src",URL_IMG + "app/coupon/app/" + data[0].image)
 				$('#imagenName').val(data[0].image);
 				$('#imgImagen').attr("hidden",data[0].image);
 				$('#txtDetail').val(data[0].detail);
@@ -445,26 +567,25 @@ function finderAutocomplete( palabra, url, datalist){
 			result = false;
 		}
 		
-		//valida el formato de la imagen
-		/*if($('#fileImagen').val().length != 0){
-			if($('#fileImagen').get(0).files[0].type != "image/png" 
-			|| $('#fileImagen').get(0).files[0].type != "image/gif"
-			|| $('#fileImagen').get(0).files[0].type != "image/jpeg"
-			|| $('#fileImagen').get(0).files[0].type != "image/jpg")
-			{
-				$('#alertImage').empty();
-				$('#alertImage').append("Formato de imagen incorrecto. Selecione una imagen con el formato jpg , png o gif");
-				$('#alertImage').show();
-				result = false;
-			}	
-		}*/
-		
 		//valida que se haya selecionado una imagen
 		if($('#imagenName').val() == 0 && $('#fileImagen').val().length == 0){
-			$('#alertImage').empty();
-			$('#alertImage').append("Campo vacio. Selecione una imagen");
+			$('#alertImage').html("Campo vacio. Selecione una imagen");
 			$('#alertImage').show();
 			$('#labelImage').addClass('error');
+			result = false;
+		}
+		
+		if($('#imagenName').val() == 0 && $('#fileImagenMin').val().length == 0){
+			$('#alertImageMin').html("Campo vacio. Selecione una imagen");
+			$('#alertImageMin').show();
+			$('#labelImageMin').addClass('error');
+			result = false;
+		}
+		
+		if($('#imagenName').val() == 0 && $('#fileImagenApp').val().length == 0){
+			$('#alertImageApp').html("Campo vacio. Selecione una imagen");
+			$('#alertImageApp').show();
+			$('#labelImageApp').addClass('error');
 			result = false;
 		}
 		
@@ -563,6 +684,8 @@ function finderAutocomplete( palabra, url, datalist){
 		$('#alertIniDate').hide();
 		$('#alertEndDate').hide();
 		$('#alertImage').hide();
+		$('#alertImageMin').hide();
+		$('#alertImageApp').hide();
 		$('#alertCatalogo').hide();
 		
 		$('#labelDescription').removeClass('error');
@@ -576,6 +699,8 @@ function finderAutocomplete( palabra, url, datalist){
 		$('#labelEntretenimiento').removeClass('error');
 		$('#labelProductos').removeClass('error');
 		$('#labelImage').removeClass('error');
+		$('#labelImageMin').removeClass('error');
+		$('#labelImageApp').removeClass('error');
 	}
 	
 	function cleanFields(){
@@ -587,8 +712,12 @@ function finderAutocomplete( palabra, url, datalist){
 		$('#txtDetail').val("");
 		$('#dateIniDate').val("");
 		$('#dateEndDate').val("");
-		$('#imgImagen').attr("src","http://placehold.it/500x300&text=[ad]")
+		$('#imgImagen').attr("src","http://placehold.it/700x525&text=[700x525]")
 		document.getElementById('fileImagen').value ='';
+		$('#imgImagenMin').attr("src","http://placehold.it/320x240&text=[320x240]")
+		document.getElementById('fileImagenMin').value ='';
+		$('#imgImagenApp').attr("src","http://placehold.it/440x330&text=[440x330]")
+		document.getElementById('fileImagenApp').value ='';
 		$('input[type=checkbox]:checked').each(function() {
 			$(this).prop('checked', false);
         });
@@ -596,4 +725,5 @@ function finderAutocomplete( palabra, url, datalist){
 		$('#cityList').empty();
 		$('#divMenssage').hide();
 		$('#divMenssagewarning').hide();
+		$('#imagenName').val(0);
 	}

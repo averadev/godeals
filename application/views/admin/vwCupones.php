@@ -241,15 +241,34 @@ $this->load->view('admin/vwHeader');
                     <div class="small-12 medium-6 large-6 columns">
 
                         <div class="row">
-                            <div class="small-12 medium-10 large-10 columns" id="imagen">
-                        		<label id="labelImage"><strong>*Imagen</strong> </label>
-                                <a><img id="imgImagen" src="http://placehold.it/500x300&text=[ad]"/></a>
-                                <input type="hidden" id="imagenName" 
-                                value="http://placehold.it/500x300&text=[ad]" />
-                                <input style="display:none" type="file" id="fileImagen" style="color:#003" name="archivos[]" multiple />
-                                <small id="alertImage" class="error small-9 medium-11 large-10 columns" style="display:none"></small>
+                            <div class="small-12 medium-8 large-8 columns" id="imagen">
+                        		<label id="labelImage"><strong>*Imagen Max</strong> </label>
+                                <a><img id="imgImagen" src="http://placehold.it/700x525&text=[700x525]"/></a>
+                                <input type="hidden" id="imagenName" value="0" />
+                                <input style="display:none" type="file" id="fileImagen" style="color:#003" 
+                                	name="archivos[]" multiple />
+                                <small id="alertImage" class="error" style="display:none"></small>
+                            </div>
+                            
+                            <div class="small-6 medium-4 large-4 columns" id="imagen">
+                        		<label id="labelImageMin"><strong>*Imagen Min</strong> </label>
+                                <a><img id="imgImagenMin" src="http://placehold.it/320x240&text=[320x240]"/ 
+                                	style="height:100px;"></a>
+                                <input style="display:none" type="file" id="fileImagenMin" style="color:#003" 
+                                	name="archivos[]" multiple />
+                                <small id="alertImageMin" class="error" style="display:none"></small>
+                            </div>
+
+                            <div class="small-6 medium-4 large-4 columns" id="imagen">
+                        		<label id="labelImageApp"><strong>*App</strong> </label>
+                                <a><img id="imgImagenApp" src="http://placehold.it/440x330&text=[440x330]" 
+                                	style="height:100px;"/></a>
+                                <input style="display:none" type="file" id="fileImagenApp" style="color:#003" 
+                                	name="archivos[]" multiple />
+                                <small id="alertImageApp" class="error" style="display:none"></small>
                             </div>
                         </div>
+                        
                         <br/><br/>
                         <div class="row">
                             <div class="small-12 medium-10 large-10 columns">

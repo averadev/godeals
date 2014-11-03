@@ -147,10 +147,17 @@ class Cupones extends CI_Controller {
 	}
 	
 	public function subirImagen(){
-        // Rutas para el guardado
-        $rutaApp="assets/img/app/coupon/app/";
-		$rutaMax="assets/img/app/coupon/max/";
-		$rutaMin="assets/img/app/coupon/min/";
+		
+		$ruta = explode(",",$_POST['ruta']);
+		
+		if($_POST['nameImage'] != "0"){
+			$nombreTimeStamp = $_POST['nameImage'];
+		} else {
+			$fecha = new DateTime();
+        	$nombreTimeStamp = "coupon_" . $fecha->getTimestamp() . ".jpg";
+		}
+		
+		$con = 0;		
   		foreach ($_FILES as $key) {
     		if($key['error'] == UPLOAD_ERR_OK ){//Verificamos si se subio correctamente
       			$nombre = $key['name'];//Obtenemos el nombre del archivo
@@ -158,57 +165,14 @@ class Cupones extends CI_Controller {
       			$tamano= ($key['size'] / 1000)."Kb"; //Obtenemos el tamaño en KB
 				$tipo = $key['type']; //obtenemos el tipo de imagen
 				
-				//definimos el ancho y alto que tendra la imagen
-				$app_ancho = 440;
-				$app_alto = 330;
-                $max_ancho = 700;
-				$max_alto = 525;
-				$min_ancho = 320;
-				$min_alto = 240;
-				list($ancho,$alto)=getimagesize($temporal);
-				//Creamos una imagen en blanco con el ancho y alto final
-				$tmpApp=imagecreatetruecolor($app_ancho,$app_alto);
-                $tmpMax=imagecreatetruecolor($max_ancho,$max_alto);
-				$tmpMin=imagecreatetruecolor($min_ancho,$min_alto);	
+				move_uploaded_file($temporal, $ruta[$con] . $nombreTimeStamp);
 				
-				//detecta si la imagen es png
-				if($tipo == "image/png"){
-					//toma la ruta de la imagen
-					$imagen = imagecreatefrompng($temporal); 
-					
-				//detecta si la imagen es tipo gif 	
-				} else if($tipo == "image/gif"){ 
-					$imagen = imagecreatefromgif($temporal);	
-					
-				} else {
-					//move_uploaded_file($temporal, $ruta . "a.jpg"); //Movemos el archivo temporal a la ruta especificada
-					$imagen = imagecreatefromjpeg($temporal); 
-				}
-				// Obtenemos timestamp para el nombre
-                $fecha = new DateTime();
-                $nombreTimeStamp = $fecha->getTimestamp();
-				
-				//toma la ruta de la imagen a crear
-                $patch_imagenApp=$rutaApp . "coupon_" . $nombreTimeStamp .".jpg";
-                $patch_imagenMax=$rutaMax . "coupon_" . $nombreTimeStamp . ".jpg";
-                $patch_imagenMin=$rutaMin . "coupon_" . $nombreTimeStamp . ".jpg";
-				
-				//Copiamos la imagen sobre la imagen que acabamos de crear en blanco
-                imagecopyresampled($tmpApp, $imagen,0,0,0,0, $app_ancho, $app_alto, $ancho, $alto);
-                imagejpeg($tmpApp, $patch_imagenApp,100);
-                
-                imagecopyresampled($tmpMax, $imagen,0,0,0,0, $max_ancho, $max_alto, $ancho, $alto);
-                imagejpeg($tmpMax, $patch_imagenMax,100);
-                
-                imagecopyresampled($tmpMin, $imagen,0,0,0,0, $min_ancho, $min_alto, $ancho, $alto);
-                imagejpeg($tmpMin, $patch_imagenMin,100);
-                
-                // Response
-				echo "coupon_" . $nombreTimeStamp . ".jpg";
+				$con++;
 				
     		}else{
     		}
-		}	
+		}
+		echo $nombreTimeStamp;
 	}
 	
 	public function deleteImage(){
