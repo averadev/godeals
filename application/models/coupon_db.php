@@ -86,6 +86,63 @@ Class coupon_db extends CI_MODEL
     /**
      * Obtiene todos los registros activos del catalogo
      */
+    public function getByPartner($id){
+        $this->db->select ('coupon.id, coupon.image, coupon.description, coupon.partnerId, coupon.cityId');
+        $this->db->select ('partner.name as partnerName, city.name as cityName');
+        $this->db->from('coupon');
+        $this->db->join('xref_coupon_catalog', 'xref_coupon_catalog.couponId = coupon.id');
+        $this->db->join('catalog', 'catalog.id = xref_coupon_catalog.catalogId ');
+        $this->db->join('partner', 'coupon.partnerId = partner.id ');
+        $this->db->join('city', 'coupon.cityId = city.id ');
+        $this->db->where('coupon.status = 1');
+        $this->db->where('coupon.partnerId', $id);
+        $this->db->where('coupon.iniDate <= curdate()');
+        $this->db->where('coupon.endDate >= curdate()');
+        $this->db->group_by('coupon.id'); 
+        return  $this->db->get()->result();
+    }
+    
+    /**
+     * Obtiene todos los registros activos del catalogo
+     */
+    public function getByPlace($id){
+        $this->db->select ('coupon.id, coupon.image, coupon.description, coupon.partnerId, coupon.cityId');
+        $this->db->select ('partner.name as partnerName, city.name as cityName');
+        $this->db->from('coupon');
+        $this->db->join('xref_coupon_catalog', 'xref_coupon_catalog.couponId = coupon.id');
+        $this->db->join('catalog', 'catalog.id = xref_coupon_catalog.catalogId ');
+        $this->db->join('partner', 'coupon.partnerId = partner.id ');
+        $this->db->join('city', 'coupon.cityId = city.id ');
+        $this->db->where('coupon.status = 1');
+        $this->db->where('city.id', $id);
+        $this->db->where('coupon.iniDate <= curdate()');
+        $this->db->where('coupon.endDate >= curdate()');
+        $this->db->group_by('coupon.id'); 
+        return  $this->db->get()->result();
+    }
+    
+    /**
+     * Obtiene todos los registros activos del catalogo
+     */
+    public function getByTxt($text){
+        $this->db->select ('coupon.id, coupon.image, coupon.description, coupon.partnerId, coupon.cityId');
+        $this->db->select ('partner.name as partnerName, city.name as cityName');
+        $this->db->from('coupon');
+        $this->db->join('xref_coupon_catalog', 'xref_coupon_catalog.couponId = coupon.id');
+        $this->db->join('catalog', 'catalog.id = xref_coupon_catalog.catalogId ');
+        $this->db->join('partner', 'coupon.partnerId = partner.id ');
+        $this->db->join('city', 'coupon.cityId = city.id ');
+        $this->db->where('coupon.status = 1');
+        $this->db->where('(city.name LIKE \'%'.$text.'%\' OR coupon.description LIKE \'%'.$text.'%\' OR coupon.detail LIKE \'%'.$text.'%\' OR partner.name LIKE \'%'.$text.'%\' OR catalog.name LIKE \'%'.$text.'%\')', NULL); 
+        $this->db->where('coupon.iniDate <= curdate()');
+        $this->db->where('coupon.endDate >= curdate()');
+        $this->db->group_by('coupon.id'); 
+        return  $this->db->get()->result();
+    }
+    
+    /**
+     * Obtiene todos los registros activos del catalogo
+     */
     public function getByTypeCat($type, $categorie){
         $this->db->select ('coupon.id, coupon.image, coupon.description, coupon.partnerId, coupon.cityId');
         $this->db->select ('partner.name as partnerName, city.name as cityName');

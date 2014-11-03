@@ -194,6 +194,7 @@ class Sporttv extends CI_Controller {
 	}
 	
 	public function uploadImage(){
+        $rutaApp="assets/img/app/sporttv/app/";
 		$rutaMax="assets/img/app/sporttv/max/";
   		foreach ($_FILES as $key) {
     		if($key['error'] == UPLOAD_ERR_OK ){//Verificamos si se subio correctamente
@@ -203,11 +204,14 @@ class Sporttv extends CI_Controller {
 				$tipo = $key['type']; //obtenemos el tipo de imagen
 				
 				//definimos el ancho y alto que tendra la imagen
-				$max_ancho = 700;
+				$app_ancho = 440;
+				$app_alto = 330;
+                $max_ancho = 700;
 				$max_alto = 525;
 				list($ancho,$alto)=getimagesize($temporal);
 				//Creamos una imagen en blanco con el ancho y alto final
-				$tmpMax=imagecreatetruecolor($max_ancho,$max_alto);
+				$tmpApp=imagecreatetruecolor($app_ancho,$app_alto);
+                $tmpMax=imagecreatetruecolor($max_ancho,$max_alto);
 				
 				//detecta si la imagen es png
 				if($tipo == "image/png"){
@@ -222,20 +226,20 @@ class Sporttv extends CI_Controller {
 				}
 					$fecha = new DateTime();
 					$nombreTimeStamp = $fecha->getTimestamp();
-				
-				//toma la ruta de la imagen a crear
-					$patch_imagenMax=$rutaMax . "sport_" . $nombreTimeStamp .".jpg";
+                
+                $patch_imagenApp=$rutaApp . "sport_" . $nombreTimeStamp .".jpg";
+                $patch_imagenMax=$rutaMax . "sport_" . $nombreTimeStamp . ".jpg";
 				
 				//Copiamos la imagen sobre la imagen que acabamos de crear en blanco
-					imagecopyresampled($tmpMax,$imagen,0,0,0,0,$max_ancho, $max_alto,$ancho,$alto);
-					imagejpeg($tmpMax,$patch_imagenMax,100);
-	
-					//Se destruye variable $img_original para liberar memoria
-					imagedestroy($imagen);
+                imagecopyresampled($tmpApp, $imagen,0,0,0,0, $app_ancho, $app_alto, $ancho, $alto);
+                imagejpeg($tmpApp, $patch_imagenApp,100);
+                
+                imagecopyresampled($tmpMax, $imagen,0,0,0,0, $max_ancho, $max_alto, $ancho, $alto);
+                imagejpeg($tmpMax, $patch_imagenMax,100);
+                
       			
 				//echo json_encode($_FILES);
-				
-					echo "sport_" . $nombreTimeStamp . ".jpg";
+				echo "sport_" . $nombreTimeStamp . ".jpg";
 				
     		}else{
 				

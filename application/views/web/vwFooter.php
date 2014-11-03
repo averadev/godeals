@@ -21,11 +21,11 @@
         </div>
 
         <div class="row spFoot">
-            <div class="medium-1 columns">&nbsp;</div>
+            <div class="medium-3 columns">&nbsp;</div>
             <div class="medium-3 columns">
                 <p>
                     <a class="footMainMenu">Navega</a><br/>
-                    <a class="footSubMenu">Aplicación móvil</a><br/>
+                    <a class="footSubMenu" href="<?php echo base_url(); ?>apps">Aplicación móvil</a><br/>
                     <a class="footSubMenu" href="<?php echo base_url(); ?>faq">Ayuda</a><br/>
                     <a class="footSubMenu" href="<?php echo base_url(); ?>contact">Contacto</a><br/>
                 </p>
@@ -40,14 +40,7 @@
                     <a href="<?php echo base_url(); ?>adondeir" class="footSubMenu">A donde ir</a><br/>
                 </p>
             </div>
-            <div class="medium-1 columns">&nbsp;</div>
-            <div class="medium-3 columns">
-                <p>
-                    <a class="footMainMenu">Acerca de nosotros</a><br/>
-                    <a class="footSubMenu">La empresa</a><br/>
-                    <a class="footSubMenu">Nuestro sistema</a><br/>
-                </p>
-            </div>
+            <div class="medium-2 columns">&nbsp;</div>
         </div>
 
         <div class="row spFootContact">
@@ -60,7 +53,7 @@
                 <img class="leftIcon" src="<?php echo base_url().IMG; ?>web/btnCel.png" />
                 <div class="descContact">
                     <p class="footMainMenu">Descarga Nuestra Aplicación Movil</p>
-                    <p class="footSubMenu">Obten en tu movil los mejores <b>DEALS</b> en tus lugares favoritos. <a class="next">Descargar</a></p>
+                    <p class="footSubMenu">Obten en tu movil los mejores <b>DEALS</b> en tus lugares favoritos. <a href="<?php echo base_url(); ?>apps" class="next">Descargar</a></p>
                 </div>
             </div>
             <div class="small-6 large-6 columns">
@@ -79,10 +72,8 @@
                 <div class="descContact">
                     <p class="footMainMenu">Redes Sociales</p>
                     <p class="footSubMenu"><a class="next">Conectate</a></p>
-                    <a><img src="<?php echo base_url().IMG; ?>web/btnSocial1.png" /></a>
-                    <a><img src="<?php echo base_url().IMG; ?>web/btnSocial2.png" /></a>
-                    <a><img src="<?php echo base_url().IMG; ?>web/btnSocial3.png" /></a>
-                    <a><img src="<?php echo base_url().IMG; ?>web/btnSocial4.png" /></a>
+                    <a target="_blank" href="http://facebook.com/godealsmx"><img src="<?php echo base_url().IMG; ?>web/btnSocial1.png" /></a>
+                    <a target="_blank" href="http://twitter.com/godealsmx"><img src="<?php echo base_url().IMG; ?>web/btnSocial2.png" /></a>
                 </div>
             </div>
             <div class="small-6 large-6 columns">&nbsp;</div>

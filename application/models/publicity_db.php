@@ -73,7 +73,8 @@ Class publicity_db extends CI_MODEL
      * Obtiene todos los registros activos del catalogo
      */
     public function getBanners(){
-        $this->db->select('publicity.id, publicity.image, publicity.partnerId, partner.logo');
+        $this->db->select('publicity.id, publicity.image, publicity.partnerId, partner.logo, partner.name');
+        $this->db->select('(select count(id) from coupon where partnerId = publicity.partnerId and status = 1 and coupon.iniDate <= curdate() and coupon.endDate >= curdate()) as cupones ');
         $this->db->from('publicity');
         $this->db->join('partner', 'publicity.partnerId = partner.id ');
         $this->db->where('publicity.status = 1');

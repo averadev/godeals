@@ -58,6 +58,35 @@ class Eventos extends CI_Controller {
         // Get View
         $this->load->view('web/vwEventos', $data);
     }
+
+    /**
+     * Despliega la pantalla de eventos
+     */
+    public function c(){
+        // Get data from database
+        $data['fav'] = $this->event_db->getFav();
+        $data['available'] = $this->event_db->getAvailable();
+        $data['medioBanner'] = $this->sortSliceArray($this->publicity_db->getPublicidad(2), 2);
+        // Meses
+        $data['month'] = array('', 'ENERO','FEBRERO','MARZO','ABRIL','MAYO','JUNIO','JULIO','AGOSTO','SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE');
+        $data['natMonth'] = array('', 'Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre');
+        $data['minMonth'] = array('', 'ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SEP','OCT','NOV','DIC');
+        
+        // Get Months
+        $curMonth = -1;
+        $lastMonth = -1;
+        $months = array();
+        foreach ($data['available'] as $item):
+            $curMonth = date('n', strtotime($item->date));
+            if ($curMonth != $lastMonth){ 
+                    array_push($months, $data['minMonth'][$curMonth]);
+            }
+            $lastMonth = $curMonth;
+        endforeach;
+        $data['months'] = $months;
+        // Get View
+        $this->load->view('web/vwEventos', $data);
+    }
     
     public function getID(){
         $months = array('', 'Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre');

@@ -37,9 +37,6 @@
             <ul class="tabs" data-tab>
                 <li class="tab-title active"><a href="#panel1">Información</a></li>
                 <li class="tab-title" id="tabMapa"><a href="#panel2">Mapa</a></li>
-                <li class="tab-title"><a href="#panel3">¿Donde Hospedarse?</a></li>
-                <li class="tab-title"><a href="#panel4">¿Donde Comer?</a></li>
-                <li class="tab-title"><a href="#panel5">¿Donde Divertirse?</a></li>
             </ul>
             <div class="tabs-content">
                 <div class="content active" id="panel1">
@@ -49,9 +46,6 @@
                         </div>
                         <div class="medium-4 columns">
                             <div class="socialDestino">
-                                <img src="<?php echo base_url().IMG; ?>web/btnRecomSocial1.png"/>
-                                <img src="<?php echo base_url().IMG; ?>web/btnRecomSocial2.png"/>
-                                <img src="<?php echo base_url().IMG; ?>web/btnRecomSocial3.png"/>
                             </div>
                         </div>
                     </div>
@@ -65,7 +59,7 @@
                             <?php endforeach;?>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row detail">
                         <?php echo $destino->txtMax;?>
                     </div>
                 </div>

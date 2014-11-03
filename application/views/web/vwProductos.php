@@ -21,14 +21,6 @@
         <?php $this->load->view('web/vwStickyMenu'); ?>
         
         
-        <div id="slideout">
-            <div id="slideout_inner">
-                <a><img src="<?php echo base_url().IMG; ?>web/btnApp1.png" /></a><br/>
-                <a><img src="<?php echo base_url().IMG; ?>web/btnApp2.png" /></a>
-            </div>
-            <img id="showApps" src="<?php echo base_url().IMG; ?>web/btnApps.png" alt="Feedback" />
-        </div>
-        
         <?php $this->load->view('web/vwHeader'); ?>
         
         <!-- Publicidad -->

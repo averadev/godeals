@@ -44,9 +44,8 @@
                     </p>
                     <p class="txtDesc">
                         Tel: (998) 884 1357<br/>
-                        
-                        <a class="social" ><img src="<?php echo base_url().IMG; ?>web/btnContactFB.png" /></a>
-                        <a class="social"><img src="<?php echo base_url().IMG; ?>web/btnContactTW.png" /></a>
+                        <a target="_blank" href="http://facebook.com/godealsmx" class="social" ><img src="<?php echo base_url().IMG; ?>web/btnContactFB.png" /></a>
+                        <a target="_blank" href="http://twitter.com/godealsmx" class="social"><img src="<?php echo base_url().IMG; ?>web/btnContactTW.png" /></a>
                     </p>
                 </div>
             </div>
