@@ -56,6 +56,13 @@ class place extends CI_Controller {
         }
     }
 	
+	public function getBannerId(){
+        if($this->input->is_ajax_request()){
+            $data = $this->place_db->getBannerId($_POST['id']);
+            echo json_encode($data);
+        }
+    }
+	
 	public function paginadorArray(){
 		if($this->input->is_ajax_request()){
             $data = $this->place_db->getallSearch($_POST['dato'],$_POST['column'],$_POST['order']);
@@ -81,10 +88,13 @@ class place extends CI_Controller {
 	public function saveEvent(){
 		if($this->input->is_ajax_request()){
 			if($_POST['id'] == 0){
+				
+				$nameImage = json_decode(stripslashes($_POST['image']));
+				
 				$insert = array(
    					'name' 			=> $_POST['name'],
    					'cityId' 		=> $_POST['cityId'],
-   					'image' 		=> $_POST['image'],
+   					'image' 		=> $nameImage[0],
 					'title' 		=> $_POST['title'],
 					'txtMin' 		=> $_POST['txtMin'],
 					'txtMax' 		=> $_POST['txtMan'],
@@ -93,15 +103,16 @@ class place extends CI_Controller {
 					'longitude' 	=> $_POST['longitude'],
 					'status' 		=> 1
 				);
-				$data = $this->place_db->insertPlace($insert);
+				
+				$data = $this->place_db->insertPlace($insert,$nameImage);
 				$data = "Se han agregado un nuevo lugar";
 				
 			} else {
+				
 				$update = array(
 					'id'			=> $_POST['id'],
 					'name' 			=> $_POST['name'],
    					'cityId' 		=> $_POST['cityId'],
-   					'image' 		=> $_POST['image'],
 					'title' 		=> $_POST['title'],
 					'txtMin' 		=> $_POST['txtMin'],
 					'txtMax' 		=> $_POST['txtMan'],
@@ -166,113 +177,62 @@ class place extends CI_Controller {
 	
 	public function uploadImage(){
 		
+  		$ruta = explode(",",$_POST['ruta']);
+		$nameImage = explode(",",$_POST['imageName']);
+		
+		$con = 0;		
   		foreach ($_FILES as $key) {
     		if($key['error'] == UPLOAD_ERR_OK ){//Verificamos si se subio correctamente
       			$nombre = $key['name'];//Obtenemos el nombre del archivo
-      			$temporal = $key['tmp_name']; //Obtenemos la dirrecion del archivo
+      			$temporal = $key['tmp_name']; //Obtenemos el nombre del archivo temporal
       			$tamano= ($key['size'] / 1000)."Kb"; //Obtenemos el tamaño en KB
 				$tipo = $key['type']; //obtenemos el tipo de imagen
 				
-				$ruta="assets/img/app/visita/";
-				$max_ancho = 700;
-				$max_alto = 525;
-				
-				list($ancho,$alto)=getimagesize($temporal);
-				//Creamos una imagen en blanco con el ancho y alto final
-				$tmp=imagecreatetruecolor($max_ancho,$max_alto);
-				
-				//detecta si la imagen es png
-				if($tipo == "image/png"){
-					//toma la ruta de la imagen
-					$imagen = imagecreatefrompng($temporal); 
-				//detecta si la imagen es tipo gif 	
-				} else if($tipo == "image/gif"){ 
-					$imagen = imagecreatefromgif($temporal);	
+				if($nameImage[$con] != "0"){
+					$nombreTimeStamp = $nameImage[$con];
 				} else {
-					//move_uploaded_file($temporal, $ruta . "a.jpg"); //Movemos el archivo temporal a la ruta especificada
-					$imagen = imagecreatefromjpeg($temporal); 
-				}
 					$fecha = new DateTime();
-					$nombreTimeStamp = $fecha->getTimestamp();
+        			$nombreTimeStamp = "adondeIr_" . $fecha->getTimestamp() . $con . ".jpg";
+				}
 				
-				//toma la ruta de la imagen a crear
-					$patch_imagen=$ruta . "adondeir_" . $nombreTimeStamp .".jpg";
+				move_uploaded_file($temporal, $ruta[$con] . $nombreTimeStamp);
 				
-				//Copiamos la imagen sobre la imagen que acabamos de crear en blanco
-					imagecopyresampled($tmp,$imagen,0,0,0,0,$max_ancho, $max_alto,$ancho,$alto);
-					imagejpeg($tmp,$patch_imagen,100);
-					//Se destruye variable $img_original para liberar memoria
-					imagedestroy($imagen);
-      			
-				//echo json_encode($_FILES);
-				
-					echo "adondeir_" . $nombreTimeStamp . ".jpg";
+				$con++;
 				
     		}else{
-				
     		}
+			echo $nombreTimeStamp . "*-*";
 		}
 	}
 	
 	public function uploadImageGallery(){
 		
-		$con = 1;
+		$ruta = explode(",",$_POST['ruta']);
+		
+		if($_POST['nameImage'] != "0"){
+			$nombreTimeStamp = $_POST['nameImage'];
+		} else {
+			$fecha = new DateTime();
+        	$nombreTimeStamp = "coupon_" . $fecha->getTimestamp() . ".jpg";
+		}
+		
+		$con = 0;		
   		foreach ($_FILES as $key) {
     		if($key['error'] == UPLOAD_ERR_OK ){//Verificamos si se subio correctamente
       			$nombre = $key['name'];//Obtenemos el nombre del archivo
-      			$temporal = $key['tmp_name']; //Obtenemos la dirrecion del archivo
+      			$temporal = $key['tmp_name']; //Obtenemos el nombre del archivo temporal
       			$tamano= ($key['size'] / 1000)."Kb"; //Obtenemos el tamaño en KB
 				$tipo = $key['type']; //obtenemos el tipo de imagen
 				
-				$ruta="assets/img/app/visita/galeria/";
-				$max_ancho = 630;
-				$max_alto = 420;
-				$min_ancho = 150;
-				$min_alto = 100;
+				move_uploaded_file($temporal, $ruta[$con] . $nombreTimeStamp);
 				
-				list($ancho,$alto)=getimagesize($temporal);
-				//Creamos una imagen en blanco con el ancho y alto final
-				$tmp=imagecreatetruecolor($max_ancho,$max_alto);
-				$tmp2=imagecreatetruecolor($min_ancho,$min_alto);
-				
-				//detecta si la imagen es png
-				if($tipo == "image/png"){
-					//toma la ruta de la imagen
-					$imagen = imagecreatefrompng($temporal); 
-				//detecta si la imagen es tipo gif 	
-				} else if($tipo == "image/gif"){ 
-					$imagen = imagecreatefromgif($temporal);	
-				} else {
-					//move_uploaded_file($temporal, $ruta . "a.jpg"); //Movemos el archivo temporal a la ruta especificada
-					$imagen = imagecreatefromjpeg($temporal); 
-				}
-				
-				$fecha = new DateTime();
-				$nombreTimeStamp = $fecha->getTimestamp();
-				
-				//toma la ruta de la imagen a crear y asignamos el nombre de las imagenes
-					$patch_imagen_max=$ruta . "gallery_" . $nombreTimeStamp. $con .".jpg";
-					$patch_imagen_min=$ruta . "thumb_gallery_" . $nombreTimeStamp. $con .".jpg";
-				
-				//Copiamos la imagen sobre la imagen que acabamos de crear en blanco
-					imagecopyresampled($tmp,$imagen,0,0,0,0,$max_ancho, $max_alto,$ancho,$alto);
-					imagejpeg($tmp,$patch_imagen_max,100);
-					
-					imagecopyresampled($tmp2,$imagen,0,0,0,0,$min_ancho, $min_alto,$ancho,$alto);
-					imagejpeg($tmp2,$patch_imagen_min,100);
-					//Se destruye variable $img_original para liberar memoria
-					imagedestroy($imagen);
-      			
-				//echo json_encode($_FILES);
-					
-					echo "gallery_" . $nombreTimeStamp. $con .".jpg*_*";
-					
-					$con++;
+				$con++;
 				
     		}else{
-				
     		}
 		}
+		echo $nombreTimeStamp;
+		
 	}
     
 }	

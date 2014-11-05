@@ -149,6 +149,17 @@ Class place_db extends CI_MODEL
     }
 	
 	/*
+	** obtienes las imagenes de place_banner por id
+	*/
+	public function getBannerId($id){
+		$this->db->select('id,image');
+		$this->db->from('place_banner');
+		$this->db->where('placeId',$id);
+		$this->db->where('status = 1');	
+		return $this->db->get()->result();
+	}
+	
+	/*
 	** obtiene todos los datos de un comercio por forenkeys
 	*/
 	public function getXrefByIds($placeId , $partnerId){
@@ -204,8 +215,24 @@ Class place_db extends CI_MODEL
 	* inserta datos en la tabla place
 	*/
 	
-	public function insertPlace($data){
+	public function insertPlace($data,$imageBanner){
 		$this->db->insert('place', $data);
+		$id = $this->db->insert_id();
+		
+		$image = array_shift($imageBanner);
+		
+		$banner = array();
+		foreach($imageBanner as $image){
+			array_push($banner, array(
+				'placeId'		=> $id,
+				'image'			=> $image,
+				'status'		=> 1
+				));	
+		}
+		
+		array_pop($banner);
+		$this->db->insert_batch('place_banner', $banner);
+		
 	}
 	
 	public function insertXref($data){

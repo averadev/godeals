@@ -345,6 +345,7 @@ function finderAutocomplete( palabra, url, datalist){
 		if (Req.status == 200) {
  	 		//Recibimos la respuesta de php
   			var nameImage = Req.responseText;
+			ruta.length = 0;
 			ajaxSaveCoupon(nameImage,id);
 			} else { 
   			//console.log(Req.status); //Vemos que paso.

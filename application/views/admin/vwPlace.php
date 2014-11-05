@@ -184,39 +184,6 @@ $this->load->view('admin/vwHeader');
                             	</div>
 							</div>
                             <div class="row">
-                                <div class="small-12 medium-12 large-12 columns">
-      								<button  id="btnAssignTrade" class="bntSave button small success radius ">
-      								Asignar Comercio</button>
-                                    <button  id="btnGaleria" class="bntSave button small success radius ">
-      								Galeria</button>
-                                </div>
-							</div>
-
-                    	</div> <!--- fin primera columna --->
-                        
-                        <!--- segunda columna columna --->
-                     	<div class="small-12 medium-6 large-6 columns">
-                        	<div class="row">
-                                <div class="small-12 medium-11 large-10 columns" id="imagen">
-                                	<label id="lblPlaceImage" class="field">*Imagen</label>
-                                    <a><img id="imgImagen" src="http://placehold.it/500x300&text=[ad]"/ style="height:100px; width:300px;"></a>
-                                    <input type="hidden" id="imagenName" value="0" />
-                                    <input style="display:none" type="file" id="fileImagen" style="color:#003" name="archivos[]" multiple />
-                                    <small id="alertImage" class="error small-9 medium-11 large-10 columns" style="display:none"></small>
-                                </div>
-                            </div>
-                            <br/><br/>
-                            <div class="row">
-                                <div class="small-12 medium-11 large-10 columns" id="imagen">
-                                	<label id="lblPlaceImage2" class="field">*Imagen 2</label>
-                                    <a><img id="imgImagen2" src="http://placehold.it/500x300&text=[ad]"/ style="height:100px; width:300px;"></a>
-                                    <input type="hidden" id="imagenName2" value="0" />
-                                    <input style="display:none" type="file" id="fileImagen2" style="color:#003" name="archivos[]" multiple />
-                                    <small id="alertImage2" class="error small-9 medium-11 large-10 columns" style="display:none"></small>
-                                </div>
-                            </div>
-                            <br/><br/>
-                            <div class="row">
                         		<div class="small-12 medium-11 large-10 columns">
                             		<label class="field" id="lblPlaceWeatherKey">*Clave
                                 		<input type="text" id="txtPlaceWeatherKey" class="radius"/>
@@ -226,6 +193,48 @@ $this->load->view('admin/vwHeader');
                                 	</small>
                             	</div>
 							</div>
+                            <div class="row">
+                                <div class="small-12 medium-12 large-12 columns">
+      								<button  id="btnAssignTrade" class="bntSave button small success radius ">
+      								Asignar Comercio</button>
+                                    <button  id="btnGaleria" class="bntSave button small success radius ">
+      								Galeria</button>
+                                </div>
+							</div>
+                    	</div> <!--- fin primera columna --->
+                        
+                        <!--- segunda columna columna --->
+                     	<div class="small-12 medium-6 large-6 columns">
+                        	<div class="row">
+                                <div class="small-12 medium-11 large-10 columns" id="imagen">
+                                	<label id="lblPlaceImage" class="field">Banner</label>
+                                    <a><img id="imgImagen" src="http://placehold.it/1000x300&text=[1000x300]"/ style="height:100px; width:300px;"></a>
+                                    <input type="hidden" id="imagenName" value="0" />
+                                    <input style="display:none" type="file" id="fileImagen" style="color:#003" name="archivos[]" multiple />
+                                    <small id="alertImage" class="error small-9 medium-11 large-10 columns" style="display:none"></small>
+                                </div>
+                            </div>
+                            <br/><br/>
+                            <div class="row">
+                                <div class="small-12 medium-11 large-10 columns" id="imagen">
+                                	<label id="lblPlaceImage2" class="field">*Banner 2</label>
+                                    <a><img id="imgImagen2" src="http://placehold.it/1000x300&text=[1000x300]"/ style="height:100px; width:300px;"></a>
+                                    <input type="hidden" id="imagenName2" value="0" />
+                                    <input style="display:none" type="file" id="fileImagen2" style="color:#003" name="archivos[]" multiple />
+                                    <small id="alertImage2" class="error small-9 medium-11 large-10 columns" style="display:none"></small>
+                                </div>
+                            </div>
+                            <br/><br/>
+                            <div class="row">
+                                <div class="small-12 medium-11 large-10 columns" id="imagen">
+                                	<label id="lblPlaceImageApp" class="field">App</label>
+                                    <a><img id="imgImagenApp" src="http://placehold.it/440x330&text=[440x330]"/ style="height:130px; width:120px;"></a>
+                                    <input type="hidden" id="imagenNameApp" value="0" />
+                                    <input style="display:none" type="file" id="fileImagenApp" style="color:#003" name="archivos[]" multiple />
+                                    <small id="alertImageApp" class="error small-9 medium-11 large-10 columns" style="display:none"></small>
+                                </div>
+                            </div>
+                            <br/><br/>
                             <div class="row">
                         		<div class="small-12 medium-11 large-10 columns">
                             		<label class="field" id="lblPlaceLatitude">*latitud
@@ -276,11 +285,19 @@ $this->load->view('admin/vwHeader');
                             
                             <div class="row">
                                 <div class="small-12 medium-11 large-10 columns">
-                                	<label id="lblImageGallery"><strong>*Imagen galeria</strong></label>
-                                    <a><img id="imgImageGallery" src="http://placehold.it/500x300&text=[ad]" style="width:300px; height:200px;"/></a>
+                                	<label id="lblImageGallery"><strong>*galeria</strong></label>
+                                    <a><img id="imgImageGallery" src="http://placehold.it/630x420&text=[630x420]" style="width:300px; height:200px;"/></a>
                                     <input style="display:none" type="file" id="fileImageGallery" name="archivos[]" multiple />
-                                    <small id="alertImageGallery" class="error small-9 medium-11 large-10 columns" 
-                                    style="display:none"></small>
+                                    <small id="alertImageGallery" class="error" style="display:none"></small>
+                                </div>
+                            </div>
+                            </br><br />
+                            <div class="row">
+                                <div class="small-12 medium-11 large-6 columns">
+                                	<label id="lblImageThumb"><strong>thumb</strong></label>
+                                    <a><img id="imgImageThumb" src="http://placehold.it/150x100&text=[150x100]" style="width:150px; height:100px;"/></a>
+                                    <input style="display:none" type="file" id="fileImageThumb" name="archivos[]" multiple />
+                                    <small id="alertImageThumb" class="error" style="display:none"></small>
                                 </div>
                             </div>
                             </br>
