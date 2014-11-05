@@ -40,9 +40,9 @@ $("#imgImageSporttv").click(function() {changeImageBar()});
  			$('#fileImagen').change(function(e) {
 	  		$('#alertImage').hide();
 			$('#lblSporttvImage').removeClass('error');
-			$('#imgImagen').attr("src","http://placehold.it/500x300&text=[ad]");
+			$('#imgImagen').attr("src","http://placehold.it/440x330&text=[440x330]");
 	  		if($('#imagenName').val() != 0){
-		 		$('#imgImagen').attr("src",URL_IMG + "app/sporttv/max/" + $('#imagenName').val())
+		 		$('#imgImagen').attr("src",URL_IMG + "app/sporttv/app/" + $('#imagenName').val())
 	  		}
 			if(e.target.files[0] != undefined){
 				addImage(e); 
@@ -55,10 +55,10 @@ $("#imgImageSporttv").click(function() {changeImageBar()});
       	imageType = /image.*/;
 	
       	if (!file.type.match(imageType)){
-		  	$('#imgImagen').attr("src","http://placehold.it/500x300&text=[ad]");
+		  	$('#imgImagen').attr("src","http://placehold.it/440x330&text=[440x330]");
 		 	 document.getElementById('fileImagen').value ='';
 		  	if($('#imagenName').val() != 0){
-			  	$('#imgImagen').attr("src",URL_IMG + "app/sporttv/max/" + $('#imagenName').val())
+			  	$('#imgImagen').attr("src",URL_IMG + "app/sporttv/app/" + $('#imagenName').val())
 		  	} else {
 			  	$('#alertImage').empty();
 			  	$('#alertImage').append("Selecione una imagen");
@@ -263,7 +263,7 @@ $("#imgImageSporttv").click(function() {changeImageBar()});
 			contBar++;
 			$('datalist').empty();
 			$('#txtSporttvPartner').val("");
-			$('#imgImageSporttv').attr("src","http://placehold.it/500x300&text=[ad]");
+			$('#imgImageSporttv').attr("src","http://placehold.it/440x330&text=[440x330]");
 		 	document.getElementById('fileImageBar').value ='';
 		}
 	}
@@ -505,7 +505,7 @@ $("#imgImageSporttv").click(function() {changeImageBar()});
 					$('#txtSporttvTournament').val(data[0].torneo);
 					$('#txtSporttvType option[value="'+data[0].typeId +'"]').attr('selected', 'selected');
 					$('#dtSporttvDate').val(replaced);
-					$('#imgImagen').attr("src",URL_IMG + "app/sporttv/max/" + data[0].image);
+					$('#imgImagen').attr("src",URL_IMG + "app/sporttv/app/" + data[0].image);
 					$('#imagenName').val(data[0].image);
             	}
         	});
@@ -567,13 +567,20 @@ $("#imgImageSporttv").click(function() {changeImageBar()});
 			result = false;
 		}
 		
+        
+        sizeImage = imgRealSize($("#imgImagen"));
 		if($('#imagenName').val() == 0 && $('#fileImagen').val().length == 0){
 			$('#alertImage').empty();
 			$('#alertImage').append("Campo vacio. Selecione una imagen");
 			$('#alertImage').show();
 			$('#lblSporttvImage').addClass('error');
 			result = false;
-		}
+		}else if(sizeImage.width != 440 || sizeImage.height != 330){
+            $('#alertImage').html("El tamaño no corresponde: 440x330");
+            $('#alertImage').show();
+            $('#labelImage').addClass('error');
+            result = false;
+        }
 		
 		if($('#txtSporttvTournament').val().trim().length == 0){
 			$('#alertTournament').show();
@@ -591,19 +598,31 @@ $("#imgImageSporttv").click(function() {changeImageBar()});
 		
 		return result;
 	}
+
+    function imgRealSize(img) {
+        var image = new Image();
+        image.src = $(img).attr("src");
+        return { 'width': image.naturalWidth, 'height': image.naturalHeight }
+    }
 	
 	//valida el formulario para agregar un nuevo sporttv bar
 	function validationSportBar(){
 		result = true;
 		hideAlertBar();
 		
+        sizeImage = imgRealSize($("#imgImageSporttv"));
 		if($('#fileImageBar').val().length == 0){
 			$('#alertImageBar').empty();
 			$('#alertImageBar').append("Campo vacio. Selecione una imagen");
 			$('#alertImageBar').show();
 			$('#lblSporttvImageBar').addClass('error');
 			result = false;
-		}
+		}else if(sizeImage.width != 440 || sizeImage.height != 330){
+            $('#alertImageBar').html("El tamaño no corresponde: 440x330");
+            $('#alertImageBar').show();
+            $('#lblSporttvImageBar').addClass('error');
+            result = false;
+        }
 		
 		valuePartner = $('#txtSporttvPartner').val();
 		idPartner = $('datalist option[value="' + valuePartner + '"]').attr('id');
@@ -658,12 +677,12 @@ $("#imgImageSporttv").click(function() {changeImageBar()});
 		$('#txtSporttvName').val("");
 		$('#txtSporttvTournament').val("");
 		$('#dtSporttvDate').val("");
-		$('#imgImagen').attr("src","http://placehold.it/500x300&text=[ad]")
+		$('#imgImagen').attr("src","http://placehold.it/440x330&text=[440x330]")
 		document.getElementById('fileImagen').value ='';
 		$('#imagenName').val(0);
 		
 		$('#txtSporttvPartner').val("");
-		$('#imgImageSporttv').attr("src","http://placehold.it/500x300&text=[ad]")
+		$('#imgImageSporttv').attr("src","http://placehold.it/440x330&text=[440x330]")
 		document.getElementById('fileImageBar').value ='';
 		
 		$('#gridImages').empty();	

@@ -112,7 +112,7 @@ $("#imgImagenApp").click(function() {changeImage3()});
 	   $('#fileImagenApp').change(function(e) {
 		$('#labelImageApp').removeClass('error');
 	 	$('#alertImageApp').hide();
-	 	$('#imgImagenApp').attr("src","http://placehold.it/320x240&text=[320x240]");
+	 	$('#imgImagenApp').attr("src","http://placehold.it/440x330&text=[440x330]");
 	 	if($('#imagenName').val() != 0){
 		 	$('#imgImagenApp').attr("src",URL_IMG + "app/coupon/app/" + $('#imagenName').val())
 	 	}
@@ -126,7 +126,7 @@ $("#imgImagenApp").click(function() {changeImage3()});
       imageType = /image.*/;
     
       if (!file.type.match(imageType)){
-		  $('#imgImagenApp').attr("src","http://placehold.it/320x240&text=[320x240]");
+		  $('#imgImagenApp').attr("src","http://placehold.it/440x330&text=[440x330]");
 		  document.getElementById('fileImagenMin').value ='';
 		  if($('#imagenNameApp').val() != 0){
 			  $('#imgImagenApp').attr("src",URL_IMG + "app/coupon/max/" + $('#imagenName').val())
@@ -271,7 +271,9 @@ function finderAutocomplete( palabra, url, datalist){
 			$('.loading').show();
 			$('.loading').html('<img src="../assets/img/web/loading.gif" height="40px" width="40px" />');
 			$('.bntSave').attr('disabled',true);
-			if(document.getElementById('fileImagen').value == "" && document.getElementById('fileImagenMin').value == "" && document.getElementById('fileImagenApp').value == ""){
+			if(document.getElementById('fileImagen').value == "" 
+               && document.getElementById('fileImagenMin').value == "" 
+               && document.getElementById('fileImagenApp').value == ""){
 				ajaxSaveCoupon(nameImage,id);
 			} else {
 				deleteImage(nameImage,id);
@@ -429,9 +431,9 @@ function finderAutocomplete( palabra, url, datalist){
 				$('#cityList').append("<option id='" + data[0].cityId + "' value='" +  data[0].cityName + "' />" );
 				$('#txtValidity').val(data[0].validity);
 				$('#txtClauses').val(data[0].clauses);
-				$('#imgImagen').attr("src",URL_IMG + "app/coupon/max/" + data[0].image)
-				$('#imgImagenMin').attr("src",URL_IMG + "app/coupon/min/" + data[0].image)
-				$('#imgImagenApp').attr("src",URL_IMG + "app/coupon/app/" + data[0].image)
+				$('#imgImagen').attr("src",URL_IMG + "app/coupon/max/" + data[0].image + "?version=" + (new Date().getTime()))
+				$('#imgImagenMin').attr("src",URL_IMG + "app/coupon/min/" + data[0].image + "?version=" + (new Date().getTime()))
+				$('#imgImagenApp').attr("src",URL_IMG + "app/coupon/app/" + data[0].image + "?version=" + (new Date().getTime()))
 				$('#imagenName').val(data[0].image);
 				$('#imgImagen').attr("hidden",data[0].image);
 				$('#txtDetail').val(data[0].detail);
@@ -567,27 +569,47 @@ function finderAutocomplete( palabra, url, datalist){
 			result = false;
 		}
 		
-		//valida que se haya selecionado una imagen
+		// Obtenemos dimensiones
+        sizeImage = imgRealSize($("#imgImagen"));
+        sizeImageMin = imgRealSize($("#imgImagenMin"));
+        sizeImageApp = imgRealSize($("#imgImagenApp"));
+        // Valida que se haya selecionado una imagen
 		if($('#imagenName').val() == 0 && $('#fileImagen').val().length == 0){
 			$('#alertImage').html("Campo vacio. Selecione una imagen");
 			$('#alertImage').show();
 			$('#labelImage').addClass('error');
 			result = false;
-		}
+		}else if(sizeImage.width != 700 || sizeImage.height != 525){
+            $('#alertImage').html("El tamaño no corresponde: 700x525");
+			$('#alertImage').show();
+			$('#labelImage').addClass('error');
+			result = false;
+        }
 		
 		if($('#imagenName').val() == 0 && $('#fileImagenMin').val().length == 0){
 			$('#alertImageMin').html("Campo vacio. Selecione una imagen");
 			$('#alertImageMin').show();
 			$('#labelImageMin').addClass('error');
 			result = false;
-		}
+		}else if(sizeImageMin.width != 320 || sizeImageMin.height != 240){
+            $('#alertImageMin').html("El tamaño no corresponde: 320x240");
+			$('#alertImageMin').show();
+			$('#labelImageMin').addClass('error');
+			result = false;
+        }
 		
 		if($('#imagenName').val() == 0 && $('#fileImagenApp').val().length == 0){
 			$('#alertImageApp').html("Campo vacio. Selecione una imagen");
 			$('#alertImageApp').show();
 			$('#labelImageApp').addClass('error');
 			result = false;
-		}
+		}else if(sizeImageApp.width != 440 || sizeImageApp.height != 330){
+            $('#alertImageApp').html("El tamaño no corresponde: 440x330");
+			$('#alertImageApp').show();
+			$('#labelImageApp').addClass('error');
+			result = false;
+        }
+        
 		
 		//valida que la fecha final sea mayor o igual a la de inicio
 		if($('#dateEndDate').val() < $('#dateIniDate').val()){
@@ -673,6 +695,12 @@ function finderAutocomplete( palabra, url, datalist){
 		
 		return result;
 	}
+
+    function imgRealSize(img) {
+        var image = new Image();
+        image.src = $(img).attr("src");
+        return { 'width': image.naturalWidth, 'height': image.naturalHeight }
+    }
 	
 	function hideAlerts(){
 		$('#alertDescription').hide()

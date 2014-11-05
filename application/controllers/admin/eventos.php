@@ -125,13 +125,17 @@ class Eventos extends CI_Controller {
         }
 	}
 	
-	public function uploadImage(){
+	public function subirImagen(){
+		$ruta = explode(",",$_POST['ruta']);
 		
-        // Rutas para el guardado
-        $rutaApp="assets/img/app/event/app/";
-		$rutaMax="assets/img/app/event/max/";
-		$rutaMed="assets/img/app/event/med/";
-		$rutaMin="assets/img/app/event/min/";
+		if($_POST['nameImage'] != "0"){
+			$nombreTimeStamp = $_POST['nameImage'];
+		} else {
+			$fecha = new DateTime();
+        	$nombreTimeStamp = "coupon_" . $fecha->getTimestamp() . ".jpg";
+		}
+		
+		$con = 0;		
   		foreach ($_FILES as $key) {
     		if($key['error'] == UPLOAD_ERR_OK ){//Verificamos si se subio correctamente
       			$nombre = $key['name'];//Obtenemos el nombre del archivo
@@ -139,152 +143,17 @@ class Eventos extends CI_Controller {
       			$tamano= ($key['size'] / 1000)."Kb"; //Obtenemos el tamaño en KB
 				$tipo = $key['type']; //obtenemos el tipo de imagen
 				
-				//definimos el ancho y alto que tendra la imagen
-				$app_ancho = 440;
-				$app_alto = 330;
-                $max_ancho = 700;
-				$max_alto = 525;
-                $med_ancho = 250;
-				$med_alto = 437;
-				$min_ancho = 320;
-				$min_alto = 240;
-				list($ancho,$alto)=getimagesize($temporal);
-				//Creamos una imagen en blanco con el ancho y alto final
-				$tmpApp=imagecreatetruecolor($app_ancho,$app_alto);
-                $tmpMax=imagecreatetruecolor($max_ancho,$max_alto);
-                $tmpMed=imagecreatetruecolor($med_ancho,$med_alto);
-				$tmpMin=imagecreatetruecolor($min_ancho,$min_alto);	
+				move_uploaded_file($temporal, $ruta[$con] . $nombreTimeStamp);
 				
-				//detecta si la imagen es png
-				if($tipo == "image/png"){
-					//toma la ruta de la imagen
-					$imagen = imagecreatefrompng($temporal); 
-					
-				//detecta si la imagen es tipo gif 	
-				} else if($tipo == "image/gif"){ 
-					$imagen = imagecreatefromgif($temporal);	
-					
-				} else {
-					//move_uploaded_file($temporal, $ruta . "a.jpg"); //Movemos el archivo temporal a la ruta especificada
-					$imagen = imagecreatefromjpeg($temporal); 
-				}
-				// Obtenemos timestamp para el nombre
-                $fecha = new DateTime();
+				$con++;
 				
-				if($_POST['image'] == ""){
-					$nombreTimeStamp = $fecha->getTimestamp();
-					$nombreTimeStamp = "event_" . $nombreTimeStamp .".jpg";
-				} else {
-					$nombreTimeStamp = $_POST['image'];
-				}
-                
-				
-				//toma la ruta de la imagen a crear
-                $patch_imagenApp=$rutaApp . $nombreTimeStamp;
-                $patch_imagenMax=$rutaMax . $nombreTimeStamp;
-                $patch_imagenMed=$rutaMed . $nombreTimeStamp;
-                $patch_imagenMin=$rutaMin . $nombreTimeStamp;
-				
-				//Copiamos la imagen sobre la imagen que acabamos de crear en blanco
-                imagecopyresampled($tmpApp, $imagen,0,0,0,0, $app_ancho, $app_alto, $ancho, $alto);
-                imagejpeg($tmpApp, $patch_imagenApp,100);
-                
-                imagecopyresampled($tmpMax, $imagen,0,0,0,0, $max_ancho, $max_alto, $ancho, $alto);
-                imagejpeg($tmpMax, $patch_imagenMax,100);
-                
-                $xPosc = ($ancho - $med_ancho) / 2;
-                $yPosc = ($alto - $med_alto) / 2;
-                if ($xPosc > 0 && $yPosc > 0){
-                    imagecopyresampled($tmpMed, $imagen,0,0,$xPosc,$yPosc, $med_ancho, $med_alto, $med_ancho, $med_alto);
-                }else{
-                    imagecopyresampled($tmpMed, $imagen,0,0,0,0, $med_ancho, $med_alto, $med_ancho, $med_alto);
-                }
-                imagejpeg($tmpMed, $patch_imagenMed,100);
-                
-                imagecopyresampled($tmpMin, $imagen,0,0,0,0, $min_ancho, $min_alto, $ancho, $alto);
-                imagejpeg($tmpMin, $patch_imagenMin,100);
-                
-                // Response
-				echo $nombreTimeStamp;
-				
-    		}else{
-    		}
-		}	
-	}
-	
-	public function uploadImage2(){
-		$rutaFullWeb="assets/img/app/event/fullweb/";
-		$rutaFullApp="assets/img/app/event/fullapp/";
-  		foreach ($_FILES as $key) {
-    		if($key['error'] == UPLOAD_ERR_OK ){//Verificamos si se subio correctamente
-      			$nombre = $key['name'];//Obtenemos el nombre del archivo
-      			$temporal = $key['tmp_name']; //Obtenemos el nombre del archivo temporal
-      			$tamano= ($key['size'] / 1000)."Kb"; //Obtenemos el tamaño en KB
-				$tipo = $key['type']; //obtenemos el tipo de imagen
-				
-				//definimos el ancho y alto que tendra la imagen
-				$fullWeb_ancho = 700;
-				$fullApp_ancho = 440;
-				list($ancho,$alto)=getimagesize($temporal);
-				$fullWeb_alto = ($fullWeb_ancho / $ancho) * $alto;
-				$fullApp_alto = ($fullApp_ancho / $ancho) * $alto;
-				//Creamos una imagen en blanco con el ancho y alto final
-				$tmpWeb=imagecreatetruecolor($fullWeb_ancho,$fullWeb_alto);
-                $tmpApp=imagecreatetruecolor($fullApp_ancho,$fullApp_alto);
-				
-				//detecta si la imagen es png
-				if($tipo == "image/png"){
-					//toma la ruta de la imagen
-					$imagen = imagecreatefrompng($temporal); 
-					
-				//detecta si la imagen es tipo gif 	
-				} else if($tipo == "image/gif"){ 
-					$imagen = imagecreatefromgif($temporal);	
-					
-				} else {
-					//move_uploaded_file($temporal, $ruta . "a.jpg"); 
-					//Movemos el archivo temporal a la ruta especificada
-					$imagen = imagecreatefromjpeg($temporal); 
-				}
-				
-				//toma la ruta de la imagen a crear
-                $patch_imagenWeb=$rutaFullWeb . $_POST['nameImage'];
-                $patch_imagenApp=$rutaFullApp . $_POST['nameImage'];
-				
-				//Copiamos la imagen sobre la imagen que acabamos de crear en blanco
-                imagecopyresampled($tmpWeb, $imagen,0,0,0,0, $fullWeb_ancho, $fullWeb_alto, $ancho, $alto);
-                imagejpeg($tmpWeb, $patch_imagenWeb,100);
-                
-                imagecopyresampled($tmpApp, $imagen,0,0,0,0, $fullApp_ancho, $fullApp_alto, $ancho, $alto);
-                imagejpeg($tmpApp, $patch_imagenApp,100);
-				
-				echo $alto;
     		}else{
     		}
 		}
+		echo $nombreTimeStamp;
 	}
 	
 	public function deleteImage(){
-		if($this->input->is_ajax_request()){
-            $rutaMax="assets/img/app/event/max/";
-			$rutaMed="assets/img/app/event/med/";
-			$rutaMin="assets/img/app/event/min/";
-			$rutaFullWeb="assets/img/app/event/fullweb/";
-			$rutaFullApp="assets/img/app/event/fullapp/";
-			if($_POST['type'] == 1){
-				unlink($rutaFullWeb . $_POST['deleteImage']);
-				unlink($rutaFullApp . $_POST['deleteImage']);
-			} else if($_POST['type'] == 2){
-				
-			} else {
-				unlink($rutaFullWeb . $_POST['deleteImage']);
-				unlink($rutaFullApp . $_POST['deleteImage']);
-				unlink($rutaMax . $_POST['deleteImage']);
-				unlink($rutaMed . $_POST['deleteImage']);
-				unlink($rutaMin . $_POST['deleteImage']);
-			}
-			
-        }
 	}
     
 }	

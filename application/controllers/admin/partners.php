@@ -158,7 +158,7 @@ class Partners extends CI_Controller {
      
     public function uploadImage(){
 
-        $rutaMax="assets/img/app/logo/";
+        $ruta = "assets/img/app/logo/";
         
         foreach ($_FILES as $key) {
             if($key['error'] == UPLOAD_ERR_OK ){//Verificamos si se subio correctamente
@@ -166,47 +166,16 @@ class Partners extends CI_Controller {
                 $temporal = $key['tmp_name']; //Obtenemos el nombre del archivo temporal
                 $tamano= ($key['size'] / 1000)."Kb"; //Obtenemos el tamaño en KB
                 $tipo = $key['type']; //obtenemos el tipo de imagen
-
-                //definimos el ancho y alto que tendra la imagen
-                $max_ancho = 200;
-                $max_alto = 200;
-
-                list($ancho,$alto)=getimagesize($temporal);
-                //Creamos una imagen en blanco con el ancho y alto final
-                $tmp=imagecreatetruecolor($max_ancho,$max_alto);	
-
-                //detecta si la imagen es png
-                if($tipo == "image/png"){
-                        //toma la ruta de la imagen
-                        $imagen = imagecreatefrompng($temporal); 
-
-                //detecta si la imagen es tipo gif 	
-                } else if($tipo == "image/gif"){ 
-                        $imagen = imagecreatefromgif($temporal);	
-
-                } else {
-                      $imagen = imagecreatefromjpeg($temporal); 
-                }
-
+                
                 //se crea nombre  a partir del timestamp
                 $fecha = new DateTime();
-                $nombreTimeStamp = $fecha->getTimestamp();
+                $nombreTimeStamp = "partner_" . $fecha->getTimestamp() .".jpg";
+                move_uploaded_file($temporal, $ruta . $nombreTimeStamp);
+                
+                echo $nombreTimeStamp;
 
-                //toma la ruta de la imagen a crear
-                $patch_imagenMax=$rutaMax . "partner_" . $nombreTimeStamp .".jpg";
-
-                //Copiamos la imagen sobre la imagen que acabamos de crear en blanco
-                imagecopyresampled($tmp,$imagen,0,0,0,0,$max_ancho, $max_alto,$ancho,$alto);
-                imagejpeg($tmp,$patch_imagenMax,100);
-
-                //Se destruye variable $img_original para liberar memoria
-                imagedestroy($imagen);
-
-                echo "partner_" . $nombreTimeStamp . ".jpg";
-
-            }else{                
             }
-	}	
+        }	
     }
      
     public function deleteImage(){

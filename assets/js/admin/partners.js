@@ -120,7 +120,7 @@ $(window).load(function(){
 	  $('#lblPartnerImage').removeClass('error');
 	  $('#imgImagen').attr("src","http://placehold.it/200x200&text=[200x200]");
 	  if($('#imagenName').val() != 0){
-		 $('#imgImagen').attr("src",URL_IMG + "app/coupon/max/" + $('#imagenName').val())
+		 $('#imgImagen').attr("src",URL_IMG + "app/logo/" + $('#imagenName').val())
 	  }
       addImage(e); 
      });
@@ -133,7 +133,7 @@ $(window).load(function(){
 		  $('#imgImagen').attr("src","http://placehold.it/200x200&text=[200x200]");
 		  document.getElementById('fileImagen').value ='';
 		  if($('#imagenName').val() != 0){
-			  $('#imgImagen').attr("src",URL_IMG + "app/coupon/max/" + $('#imagenName').val())
+			  $('#imgImagen').attr("src",URL_IMG + "app/logo/" + $('#imagenName').val())
 		  } else {
 			  $('#alertImage').empty();
 			  $('#alertImage').append("Selecione una imagen");
@@ -430,13 +430,19 @@ function validations(){
     }
 	
 	//valida que se haya selecionado una imagen
+    sizeImage = imgRealSize($("#imgImagen"));
     if($('#imagenName').val() == 0 && $('#fileImagen').val().length == 0){
         $('#alertImage').empty();
         $('#alertImage').append("Campo vacio. Selecione una imagen");
         $('#alertImage').show();
 		$('#lblPartnerImage').addClass('error');
         result = false;
-	}
+	}else if(sizeImage.width != 200 || sizeImage.height != 200){
+        $('#alertImage').html("El tamaño no corresponde: 200x200");
+        $('#alertImage').show();
+        $('#labelImage').addClass('error');
+        result = false;
+    }
 	
 	if( $('#alertPartnerMail').text() == "correo existente. Porfavor Selecione otro"){
 			$('#alertPartnerMail').html("correo existente. Porfavor Selecione otro");
@@ -507,6 +513,12 @@ function validations(){
     }*/
     
     return result;
+}
+
+function imgRealSize(img) {
+    var image = new Image();
+    image.src = $(img).attr("src");
+    return { 'width': image.naturalWidth, 'height': image.naturalHeight }
 }
 
 function limpiarCampos(){

@@ -369,12 +369,40 @@ $("#imgImagen").click(function() {changeImage()});
 		} 
 		
 		//valida que se haya seleccionado una imagen
+        sizeImage = imgRealSize($("#imgImagen"));
 		if($('#imagenName').val() == 0 && $('#fileImagen').val().length == 0){
 			$('#alertImage').html("Campo vacio. Selecione una imagen");
 			$('#alertImage').show();
 			$('#lblPublicityImage').addClass('error');
 			result = false;
-		}
+		}else{
+            if($('#sltPublicityCategory').val() == 1 && (sizeImage.width != 1000 || sizeImage.height != 350)){
+                $('#alertImage').html("El tamaño no corresponde: 1000x350");
+                $('#alertImage').show();
+                $('#lblPublicityImage').addClass('error');
+                result = false;
+            }else if($('#sltPublicityCategory').val() == 2 && (sizeImage.width != 450 || sizeImage.height != 270)){
+                $('#alertImage').html("El tamaño no corresponde: 450x270");
+                $('#alertImage').show();
+                $('#lblPublicityImage').addClass('error');
+                result = false;
+            }else if($('#sltPublicityCategory').val() == 3 && (sizeImage.width != 220 || sizeImage.height != 620)){
+                $('#alertImage').html("El tamaño no corresponde: 220x620");
+                $('#alertImage').show();
+                $('#lblPublicityImage').addClass('error');
+                result = false;
+            }else if($('#sltPublicityCategory').val() == 4 && (sizeImage.width != 650 || sizeImage.height != 100)){
+                $('#alertImage').html("El tamaño no corresponde: 650x100");
+                $('#alertImage').show();
+                $('#lblPublicityImage').addClass('error');
+                result = false;
+            }else if($('#sltPublicityCategory').val() == 5 && (sizeImage.width != 444 || sizeImage.height != 80)){
+                $('#alertImage').html("El tamaño no corresponde: 444x80");
+                $('#alertImage').show();
+                $('#lblPublicityImage').addClass('error');
+                result = false;
+            }
+        }
 		
 		//detecta que la fecha de inicio sea mayor o igual a la fecha actual
 		if($('#dtPublicityIniDate').val() < fechaActual && originalDate == ""){
@@ -442,6 +470,12 @@ $("#imgImagen").click(function() {changeImage()});
 		
 		return result;
 	}
+
+    function imgRealSize(img) {
+        var image = new Image();
+        image.src = $(img).attr("src");
+        return { 'width': image.naturalWidth, 'height': image.naturalHeight }
+    }
 	
 	function hideAlert(){
 		$('#alertPartner').hide();

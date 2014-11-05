@@ -118,28 +118,18 @@ class publicity extends CI_Controller {
 		switch($_POST['category']){
 			case 1:
 				$ruta="assets/img/app/publicity/banner/";
-				$max_ancho = 1000;
-				$max_alto = 350;
 				break;
 			case 2:
 				$ruta="assets/img/app/publicity/mediobanner/";
-				$max_ancho = 450;
-				$max_alto = 270;
 				break;
 			case 3:
 				$ruta="assets/img/app/publicity/lateral/";
-				$max_ancho = 220;
-				$max_alto = 620;
 				break;
 			case 4:
 				$ruta="assets/img/app/publicity/cintillo/";
-				$max_ancho = 650;
-				$max_alto = 100;
                 break;
 			case 5:
 				$ruta="assets/img/app/publicity/movil/";
-				$max_ancho = 444;
-				$max_alto = 80;
                 break;
 		}
 		
@@ -149,38 +139,13 @@ class publicity extends CI_Controller {
       			$temporal = $key['tmp_name']; //Obtenemos la dirrecion del archivo
       			$tamano= ($key['size'] / 1000)."Kb"; //Obtenemos el tamaño en KB
 				$tipo = $key['type']; //obtenemos el tipo de imagen
-				
-				list($ancho,$alto)=getimagesize($temporal);
-				//Creamos una imagen en blanco con el ancho y alto final
-				$tmp=imagecreatetruecolor($max_ancho,$max_alto);
-				
-				//detecta si la imagen es png
-				if($tipo == "image/png"){
-					//toma la ruta de la imagen
-					$imagen = imagecreatefrompng($temporal); 
-				//detecta si la imagen es tipo gif 	
-				} else if($tipo == "image/gif"){ 
-					$imagen = imagecreatefromgif($temporal);	
-				} else {
-					//move_uploaded_file($temporal, $ruta . "a.jpg"); //Movemos el archivo temporal a la ruta especificada
-					$imagen = imagecreatefromjpeg($temporal); 
-				}
+                
+                //se crea nombre  a partir del timestamp
                 $fecha = new DateTime();
-                $nombreTimeStamp = $fecha->getTimestamp();
-
-                //toma la ruta de la imagen a crear
-                $patch_imagen=$ruta . "publicity_" . $nombreTimeStamp .".jpg";
-
-                //Copiamos la imagen sobre la imagen que acabamos de crear en blanco
-                imagecopyresampled($tmp,$imagen,0,0,0,0,$max_ancho, $max_alto,$ancho,$alto);
-                imagejpeg($tmp,$patch_imagen,100);
-                //Se destruye variable $img_original para liberar memoria
-                imagedestroy($imagen);
-
-                echo "publicity_" . $nombreTimeStamp . ".jpg";
-				
-    		}else{
-				
+                $nombreTimeStamp = "publicity_" . $fecha->getTimestamp() .".jpg";
+                move_uploaded_file($temporal, $ruta . $nombreTimeStamp);
+                
+                echo $nombreTimeStamp;
     		}
 		}
 	}

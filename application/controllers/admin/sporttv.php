@@ -194,8 +194,7 @@ class Sporttv extends CI_Controller {
 	}
 	
 	public function uploadImage(){
-        $rutaApp="assets/img/app/sporttv/app/";
-		$rutaMax="assets/img/app/sporttv/max/";
+        $ruta = "assets/img/app/sporttv/app/";
   		foreach ($_FILES as $key) {
     		if($key['error'] == UPLOAD_ERR_OK ){//Verificamos si se subio correctamente
       			$nombre = $key['name'];//Obtenemos el nombre del archivo
@@ -203,43 +202,12 @@ class Sporttv extends CI_Controller {
       			$tamano= ($key['size'] / 1000)."Kb"; //Obtenemos el tamaño en KB
 				$tipo = $key['type']; //obtenemos el tipo de imagen
 				
-				//definimos el ancho y alto que tendra la imagen
-				$app_ancho = 440;
-				$app_alto = 330;
-                $max_ancho = 700;
-				$max_alto = 525;
-				list($ancho,$alto)=getimagesize($temporal);
-				//Creamos una imagen en blanco con el ancho y alto final
-				$tmpApp=imagecreatetruecolor($app_ancho,$app_alto);
-                $tmpMax=imagecreatetruecolor($max_ancho,$max_alto);
-				
-				//detecta si la imagen es png
-				if($tipo == "image/png"){
-					//toma la ruta de la imagen
-					$imagen = imagecreatefrompng($temporal); 
-				//detecta si la imagen es tipo gif 	
-				} else if($tipo == "image/gif"){ 
-					$imagen = imagecreatefromgif($temporal);	
-				} else {
-					//move_uploaded_file($temporal, $ruta . "a.jpg"); //Movemos el archivo temporal a la ruta especificada
-					$imagen = imagecreatefromjpeg($temporal); 
-				}
-					$fecha = new DateTime();
-					$nombreTimeStamp = $fecha->getTimestamp();
+				//se crea nombre  a partir del timestamp
+                $fecha = new DateTime();
+                $nombreTimeStamp = "sport_" . $fecha->getTimestamp() .".jpg";
+                move_uploaded_file($temporal, $ruta . $nombreTimeStamp);
                 
-                $patch_imagenApp=$rutaApp . "sport_" . $nombreTimeStamp .".jpg";
-                $patch_imagenMax=$rutaMax . "sport_" . $nombreTimeStamp . ".jpg";
-				
-				//Copiamos la imagen sobre la imagen que acabamos de crear en blanco
-                imagecopyresampled($tmpApp, $imagen,0,0,0,0, $app_ancho, $app_alto, $ancho, $alto);
-                imagejpeg($tmpApp, $patch_imagenApp,100);
-                
-                imagecopyresampled($tmpMax, $imagen,0,0,0,0, $max_ancho, $max_alto, $ancho, $alto);
-                imagejpeg($tmpMax, $patch_imagenMax,100);
-                
-      			
-				//echo json_encode($_FILES);
-				echo "sport_" . $nombreTimeStamp . ".jpg";
+                echo $nombreTimeStamp;
 				
     		}else{
 				
@@ -255,12 +223,8 @@ class Sporttv extends CI_Controller {
 	}
 	
 	public function uploadImageBar(){
-		$rutaMax="assets/img/app/sporttv/min/";
-		
-		$max_ancho = 320;
-		$max_alto = 240;
-		
-		$i = 0;
+        $i = 0;
+		$ruta = "assets/img/app/sporttv/min/";
 		
   		foreach ($_FILES as $key) {
     		if($key['error'] == UPLOAD_ERR_OK ){//Verificamos si se subio correctamente
@@ -269,35 +233,12 @@ class Sporttv extends CI_Controller {
       			$tamano= ($key['size'] / 1000)."Kb"; //Obtenemos el tamaño en KB
 				$tipo = $key['type']; //obtenemos el tipo de imagen
 				
-				list($ancho,$alto)=getimagesize($temporal);
-				
-				$tmpMax=imagecreatetruecolor($max_ancho,$max_alto);
-				
-				if($tipo == "image/png"){
-					//toma la ruta de la imagen
-					$imagen = imagecreatefrompng($temporal); 
-				//detecta si la imagen es tipo gif 	
-				} else if($tipo == "image/gif"){
-					$imagen = imagecreatefromgif($temporal);	
-				} else {
-					$imagen = imagecreatefromjpeg($temporal); 
-				}
-				
-				$fecha = new DateTime();
-				$nombreTimeStamp = $fecha->getTimestamp();
-				
-				//toma la ruta de la imagen a crear
-				$patch_imagenMax=$rutaMax . "barEvent_" . $nombreTimeStamp . $i .".jpg";
-				
-				//Copiamos la imagen sobre la imagen que acabamos de crear en blanco
-				imagecopyresampled($tmpMax,$imagen,0,0,0,0,$max_ancho, $max_alto,$ancho,$alto);
-				imagejpeg($tmpMax,$patch_imagenMax,100);
-	
-				//Se destruye variable $img_original para liberar memoria
-				imagedestroy($imagen);
-				
-				echo "barEvent_" . $nombreTimeStamp . $i .".jpg*-*";
-				
+				//se crea nombre  a partir del timestamp
+                $fecha = new DateTime();
+                $nombreTimeStamp = "barEvent_" .  $fecha->getTimestamp() . $i .".jpg";
+                move_uploaded_file($temporal, $ruta . $nombreTimeStamp);
+                
+                echo $nombreTimeStamp ."*-*";
 				$i++;
 				
     		}else{

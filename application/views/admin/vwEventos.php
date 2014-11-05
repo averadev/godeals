@@ -192,7 +192,7 @@ $this->load->view('admin/vwHeader');
                                     </small>
                                 </div>
                                 <div class="medium-5 columns">
-                                    <label id="lblEventWord" class="field">*Palabra Cupon Destacado
+                                    <label id="lblEventWord" class="field">Palabra Cupon Destacado
                                         <input type="text" id="txtEventWord" class="radius"></textarea>
                                     </label>
                                     <small id="alertWord" class="error" style="display:none">
@@ -249,21 +249,61 @@ $this->load->view('admin/vwHeader');
                     	<div class="small-12 medium-6 large-6 columns">
                             
                             <div class="row">
-                                <div class="small-12 medium-11 large-10 columns" id="imagen">
-                                	<label id="lblEventImage" class="field">*Imagen</label>
-                                    <a><img class="imgImagen" id="imgImagen" src="http://placehold.it/500x300&text=[ad]"/></a>
+                                <div class="small-12 medium-8 large-8 columns" id="imagen">
+                                    <label id="labelImage"><strong>*Imagen Max</strong> </label>
+                                    <a><img id="imgImagen" src="http://placehold.it/700x525&text=[700x525]"/></a>
                                     <input type="hidden" id="imagenName" value="0" />
-                                    <input style="display:none" type="file" id="fileImagen" style="color:#003" name="archivos[]" multiple />
-                                    <small id="alertImage" class="error small-9 medium-11 large-10 columns" style="display:none"></small>
+                                    <input style="display:none" type="file" id="fileImagen" style="color:#003" 
+                                        name="archivos[]" multiple />
+                                    <small id="alertImage" class="error" style="display:none"></small>
+                                </div>
+
+                                <div class="small-6 medium-4 large-4 columns" id="imagen">
+                                    <label id="labelImageMin"><strong>*Imagen Min</strong> </label>
+                                    <a><img id="imgImagenMin" src="http://placehold.it/320x240&text=[320x240]"/ 
+                                        style="height:100px;"></a>
+                                    <input style="display:none" type="file" id="fileImagenMin" style="color:#003" 
+                                        name="archivos[]" multiple />
+                                    <small id="alertImageMin" class="error" style="display:none"></small>
+                                </div>
+
+                                <div class="small-6 medium-4 large-4 columns" id="imagen">
+                                    <label id="labelImageApp"><strong>*App</strong> </label>
+                                    <a><img id="imgImagenApp" src="http://placehold.it/440x330&text=[440x330]" 
+                                        style="height:100px;"/></a>
+                                    <input style="display:none" type="file" id="fileImagenApp" style="color:#003" 
+                                        name="archivos[]" multiple />
+                                    <small id="alertImageApp" class="error" style="display:none"></small>
                                 </div>
                             </div>
-                            <br />
+                            
+                            <hr>
                             <div class="row">
-                                <div class="small-12 medium-11 large-10 columns" id="imagen">
-                                	<label id="lblEventImage2" class="field">*Imagen 2</label>
-                                    <a><img class="imgImagen imgAutoSize" id="imgImagen2" src="http://placehold.it/500x300&text=[ad]"/></a>
-                                    <input style="display:none" type="file" id="fileImagen2" style="color:#003" name="archivos[]" multiple />
-                                    <small id="alertImage2" class="error small-9 medium-11 large-10 columns" style="display:none"></small>
+                                <div class="small-12 medium-8 large-8 columns" id="imagen">
+                                    <label id="labelImageFull"><strong>*Imagen Full</strong> </label>
+                                    <a><img id="imgImagenFull" src="http://placehold.it/700x525&text=[700x_]"/></a>
+                                    <input type="hidden" id="imagenName" value="0" />
+                                    <input style="display:none" type="file" id="fileImagenFull" style="color:#003" 
+                                        name="archivos[]" multiple />
+                                    <small id="alertImageFull" class="error" style="display:none"></small>
+                                </div>
+
+                                <div class="small-6 medium-4 large-4 columns" id="imagen">
+                                    <label id="labelImageFullApp"><strong>*App Full</strong> </label>
+                                    <a><img id="imgImagenFullApp" src="http://placehold.it/440x330&text=[440x_]" 
+                                        style="height:100px;"/></a>
+                                    <input style="display:none" type="file" id="fileImagenFullApp" style="color:#003" 
+                                        name="archivos[]" multiple />
+                                    <small id="alertImageFullApp" class="error" style="display:none"></small>
+                                </div>
+
+                                <div class="small-6 medium-4 large-4 columns" id="imagen">
+                                    <label id="labelImageDestacado"><strong>Destacado</strong> </label>
+                                    <a><img id="imgImagenDestacado" src="http://placehold.it/250 x 437&text=[250 x 437]"/ 
+                                        style="width:133px;"></a>
+                                    <input style="display:none" type="file" id="fileImagenDestacado" style="color:#003" 
+                                        name="archivos[]" multiple />
+                                    <small id="alertImageDestacado" class="error" style="display:none"></small>
                                 </div>
                             </div>
                             <br/><br/>

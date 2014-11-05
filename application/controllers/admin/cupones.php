@@ -176,12 +176,6 @@ class Cupones extends CI_Controller {
 	}
 	
 	public function deleteImage(){
-		if($this->input->is_ajax_request()){
-			//$rutaMax="assets/img/app/coupon/max/";
-			//$rutaMin="assets/img/app/coupon/min/";
-			//unlink($rutaMax . $_POST['deleteImage']);
-			//unlink($rutaMin . $_POST['deleteImage']);
-		}
 	}
 	
 }
