@@ -8,7 +8,6 @@ $("#btnAddCoupon").click(function() { showFormAdd(); });
 $(document).on('click','#showCoupon',function(){ ShowFormEdit(this); });
 $(document).on('click','#imageDelete',function(){ ShowFormDelete(this); });
 
-
 $('#btnRegisterCoupon').click(function() { eventAdd(); });
 $('#btnSaveCoupon').click(function() { eventEdit(); });
 $("#btnCancel").click(function() {eventCancel()});
@@ -219,6 +218,17 @@ function finderAutocomplete( palabra, url, datalist){
         });
 	}
 	
+	//
+	
+	$( "input[name='days']" ).change(function() {
+		if($(this).val() == 8 && $(this).prop('checked') == true){
+			$('.someDays').prop('checked',false);
+			$('.someDays').attr('disabled',true);
+		} else {
+			$('.someDays').attr('disabled',false);
+		}
+	});
+	
 	//muestra el formulario para agregar cupones
 	function showFormAdd(){
 		cleanFields();
@@ -367,11 +377,16 @@ function finderAutocomplete( palabra, url, datalist){
 		$('input[name=catalog]:checked').each(function() {
 			idCatalog.push($(this).val());
         });
+		var dayArray = new Array();
+		$('input[name=days]:checked').each(function() {
+			dayArray.push($(this).val());
+        });
 		var timer = 0;
 		$('input[name=tiempoLimitado]:checked').each(function() {
 			timer = 1;
         });
 		var jsonIdCatalog = JSON.stringify(idCatalog);
+		var jsonDay = JSON.stringify(dayArray);
 		
 		numPag = $('ul .current').val();
 			$.ajax({
@@ -390,7 +405,8 @@ function finderAutocomplete( palabra, url, datalist){
 					detail:$('#txtDetail').val().trim(),
 					iniDate:$('#dateIniDate').val(),
 					endDate:$('#dateEndDate').val(),
-					idCatalog:jsonIdCatalog	
+					idCatalog:jsonIdCatalog,
+					day:jsonDay
             	},
             	success: function(data){
 					ajaxMostrarTabla(column,order,"../admin/cupones/getallSearch",(numPag-1),"coupon");
@@ -462,6 +478,26 @@ function finderAutocomplete( palabra, url, datalist){
 				$('input[name=catalog]').each(function(index, element) {
                     for(var i=0;i<data.length;i++){
 						if($(this).val() == data[i].catalogId){
+							$(this).prop('checked', true);
+						}
+					}
+                });
+				
+            }
+        });
+		
+		$.ajax({
+            type: "POST",
+            url: "../admin/cupones/getDaysOfCoupon",
+            dataType:'json',
+            data: { 
+				couponId:id
+            },
+            success: function(data){
+
+				$('input[name=days]').each(function(index, element) {
+                    for(var i=0;i<data.length;i++){
+						if($(this).val() == data[i].day){
 							$(this).prop('checked', true);
 						}
 					}
@@ -553,6 +589,17 @@ function finderAutocomplete( palabra, url, datalist){
 			$('#alertIniDate').show();
 			$('#labelIniDate').addClass('error');
 			$('#dateIniDate').focus();
+			result = false;
+		}
+		
+		var checkboxDay = 0;
+		$('input[name=days]:checked').each(function() {
+			checkboxDay++;
+        });
+		
+		if(checkboxDay == 0){
+			$('#labelDay').addClass('error');
+			$('#alertDay').show();
 			result = false;
 		}
 		
@@ -716,6 +763,7 @@ function finderAutocomplete( palabra, url, datalist){
 		$('#alertImageMin').hide();
 		$('#alertImageApp').hide();
 		$('#alertCatalogo').hide();
+		$('#alertDay').hide();
 		
 		$('#labelDescription').removeClass('error');
 		$('#labelPartner').removeClass('error');
@@ -730,6 +778,7 @@ function finderAutocomplete( palabra, url, datalist){
 		$('#labelImage').removeClass('error');
 		$('#labelImageMin').removeClass('error');
 		$('#labelImageApp').removeClass('error');
+		$('#labelDay').removeClass('error');
 	}
 	
 	function cleanFields(){

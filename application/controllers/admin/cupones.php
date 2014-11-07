@@ -81,6 +81,13 @@ class Cupones extends CI_Controller {
         }
 	}
 	
+	public function getDaysOfCoupon(){
+		if($this->input->is_ajax_request()){
+            $data = $this->coupon_db->getDaysOfCoupon($_POST['couponId']);
+            echo json_encode($data);
+        }
+	}
+	
 	public function saveCoupon(){
 		if($this->input->is_ajax_request()){
 			
@@ -99,7 +106,7 @@ class Cupones extends CI_Controller {
 				'endDate' => $_POST['endDate'],
 				'status' => 1);
 				
-				$data = $this->coupon_db->insertCoupon($insert,json_decode(stripslashes($_POST['idCatalog'])));
+				$data = $this->coupon_db->insertCoupon($insert,json_decode(stripslashes($_POST['idCatalog'])),json_decode(stripslashes($_POST['day'])));
 				$data = "Se ha agregado un nuevo Cupon";
 			} else {
 				
@@ -126,7 +133,17 @@ class Cupones extends CI_Controller {
 						'catalogId'=> $idC));
 				}
 				
-				$data = $this->coupon_db->updateCoupon($update,$delete,$catalog);
+				$deleteDay = array('couponId' => $_POST['id']);
+				
+				$daySelec = array();
+				$days = json_decode(stripslashes($_POST['day']));
+				foreach($days as $day){
+					array_push($daySelec, array(
+						'couponId' => $_POST['id'],
+						'day'=> $day));
+				}
+				
+				$data = $this->coupon_db->updateCoupon($update,$delete,$catalog,$deleteDay,$daySelec);
 				$data = "Se ha editado los datos del coupon";
 			}
             echo json_encode($data);

@@ -207,11 +207,20 @@ Class coupon_db extends CI_MODEL
         return  $this->db->get()->result();
     }
 	
-	public function updateCoupon($data,$delete,$Catalog){
+	public function getDaysOfCoupon($couponId){
+		$this->db->select('day');
+		$this->db->from('xref_coupon_day');
+		$this->db->where('couponId',$couponId);
+		return $this->db->get()->result();
+	}
+	
+	public function updateCoupon($data,$delete,$Catalog,$deleteDay,$daySelec){
 		$this->db->where('id', $data['id']);
 		$this->db->update('coupon', $data);
 		$this->db->delete('xref_coupon_catalog',$delete);
 		$this->db->insert_batch('xref_coupon_catalog', $Catalog);
+		$this->db->delete('xref_coupon_day',$deleteDay);
+		$this->db->insert_batch('xref_coupon_day', $daySelec);
     }
 	
 	public function deleteCoupon($data){
@@ -219,10 +228,11 @@ Class coupon_db extends CI_MODEL
 		$this->db->update('coupon', $data);
     }
 
-	public function insertCoupon($data,$idCatalog){
+	public function insertCoupon($data,$idCatalog,$days){
 		
 		$this->db->insert('coupon', $data);	
 		$id = $this->db->insert_id();
+		
 		$catalog = array();
 		foreach($idCatalog as $idC){
 			array_push($catalog, array(
@@ -230,6 +240,14 @@ Class coupon_db extends CI_MODEL
 				'catalogId'=> $idC));	
 		}
 		$this->db->insert_batch('xref_coupon_catalog', $catalog);
+		
+		$daySelec = array();
+		foreach($days as $day){
+			array_push($daySelec, array(
+				'couponId' => $id,
+				'day'=> $day));	
+		}
+		$this->db->insert_batch('xref_coupon_day', $daySelec);
 	}
 
 }

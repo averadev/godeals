@@ -144,7 +144,7 @@ $this->load->view('admin/vwHeader');
                             </div>
                         </div>
                         <div class="row">
-                            <div class="small-12 medium-10 large-10 columns">
+                            <div class="small-12 medium-5 large-5 columns">
                                 <label id="labelPartner"><strong>*Socios</strong>
                                     <input type="text" id="txtPartner" list="partnerList" autocomplete="on" class="radius"> 
                                             <datalist id="partnerList"> </datalist>
@@ -153,9 +153,7 @@ $this->load->view('admin/vwHeader');
                                     Partner incorrecto. Por favor escriba un socio existente
                                 </small>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="small-12 medium-10 large-10 columns">
+                            <div class="small-12 medium-5 large-5 columns">
                                 <label id="labelCity"><strong>*Ciudad</strong>
                                     <input type="text" id="txtCity" list="cityList" autocomplete="off" class="radius" />
                                             <datalist id="cityList"> </datalist>
@@ -164,6 +162,10 @@ $this->load->view('admin/vwHeader');
                                     city incorrecto. Por favor escriba una ciudad existente
                                 </small>
                             </div>
+                            <div class="medium-2 columns">&nbsp;</div>
+                        </div>
+                        <div class="row">
+                            
                         </div>
                          <div class="row">
                             <div class="small-12 medium-10 large-10 columns">
@@ -178,14 +180,25 @@ $this->load->view('admin/vwHeader');
                         <div class="row">
                             <div class="small-12 medium-10 large-10 columns">
                                 <label id="labelDetail"><strong>*Descripcion de la promocion</strong>
-                                    <textarea id="txtDetail" class="radius" rows="10"></textarea>
+                                    <textarea id="txtDetail" class="radius" rows="5"></textarea>
                                 </label>
                                 <small id="alertDetail" class="error" style="display:none">
                                     Campo vacion. Por favor escriba la decripcion.
                                 </small>
                             </div>
                         </div>
-
+                        
+                        <div class="row">
+                            <div class="small-12 medium-10 large-10 columns">
+                                <label id="labelClauses"><strong>*Clausulas</strong>
+                                    <textarea id="txtClauses" class="radius" rows="5"></textarea>
+                                </label>
+                                <small id="alertClauses" class="error" style="display:none">
+                                    Campo vacion. Por favor escriba las clausulas.
+                                </small>
+                            </div>
+                        </div>
+                        
                         <!-- columna catalogo entretenimiento -->             
                         <div class="small-6 medium-6 large-6 columns">
                             <div class="row">
@@ -270,16 +283,67 @@ $this->load->view('admin/vwHeader');
                         </div>
                         
                         <br/><br/>
+                        
                         <div class="row">
-                            <div class="small-12 medium-10 large-10 columns">
-                                <label id="labelClauses"><strong>*Clausulas</strong>
-                                    <textarea id="txtClauses" class="radius" rows="10"></textarea>
-                                </label>
-                                <small id="alertClauses" class="error" style="display:none">
-                                    Campo vacion. Por favor escriba las clausulas.
+                            <div class="small-12 medium-10 large-10 columns" id="imagen">
+                                <table id="tableEntretenimiento">
+                                    <tr>
+                                        <th>
+                                            <label id="labelDay"><strong>Tiempo limitado</strong></label>
+                                        <th>
+                                    <tr>
+                                    <tr>
+                                        <td>
+                                            <input value="8" type="checkbox" name="days" class="allDays"/>
+                                            &nbsp;&nbsp;Todos
+                                        </td>
+                                        
+                                        <td>
+                                            <input value="4" type="checkbox" name="days" class="someDays"/>
+                                            &nbsp;&nbsp;Jueves
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input value="1" type="checkbox" name="days" class="someDays"/>
+                                            &nbsp;&nbsp;Lunes
+                                        </td>
+                                        
+                                        <td>
+                                            <input value="5" type="checkbox" name="days" class="someDays"/>
+                                            &nbsp;&nbsp;Viernes
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input value="2" type="checkbox" name="days" class="someDays"/>
+                                            &nbsp;&nbsp;Martes
+                                        </td>
+                                        
+                                        <td>
+                                            <input value="6" type="checkbox" name="days" class="someDays"/>
+                                            &nbsp;&nbsp;Sabado
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input value="3" type="checkbox" name="days" class="someDays"/>
+                                            &nbsp;&nbsp;Miercoles
+                                        </td>
+                                        
+                                        <td>
+                                            <input value="7" type="checkbox" name="days" class="someDays"/>
+                                            &nbsp;&nbsp;Domingo
+                                        </td>
+                                    </tr>
+                                    
+                                    </table>
+                                <small id="alertDay" class="error" style="display:none">
+                                Selecione al menos una opcion
                                 </small>
                             </div>
                         </div>
+                        
                         <div class="row">
                             <div class="small-12 medium-10 large-10 columns" id="imagen">
                                 <table id="tableEntretenimiento">
@@ -295,7 +359,6 @@ $this->load->view('admin/vwHeader');
                                         </td>
                                     </tr>
                                     </table>
-                                <small id="alertImage" class="error" style="display:none"></small>
                             </div>
                         </div>
                         
