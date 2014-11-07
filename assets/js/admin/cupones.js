@@ -218,7 +218,7 @@ function finderAutocomplete( palabra, url, datalist){
         });
 	}
 	
-	//
+	// habilita y deshabilita los dias validos
 	
 	$( "input[name='days']" ).change(function() {
 		if($(this).val() == 8 && $(this).prop('checked') == true){
@@ -799,6 +799,7 @@ function finderAutocomplete( palabra, url, datalist){
 		$('input[type=checkbox]:checked').each(function() {
 			$(this).prop('checked', false);
         });
+		$('.someDays').attr('disabled',false);
 		$('#partnerList').empty();
 		$('#cityList').empty();
 		$('#divMenssage').hide();

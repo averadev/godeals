@@ -289,7 +289,7 @@ $this->load->view('admin/vwHeader');
                                 <table id="tableEntretenimiento">
                                     <tr>
                                         <th>
-                                            <label id="labelDay"><strong>Tiempo limitado</strong></label>
+                                            <label id="labelDay"><strong>Dias Disponibles</strong></label>
                                         <th>
                                     <tr>
                                     <tr>
