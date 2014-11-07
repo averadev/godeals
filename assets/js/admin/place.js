@@ -815,11 +815,22 @@ $(document).on('click','#imgDeleteBlack',function(){ deleteGallery(this); });
 		
 		var data = new FormData();
 		
+		conImage = 0;
+		
 		$('.fileGallery').each(function() {
 			var archivos = document.getElementById($(this).attr('id'));
 			var archivo = archivos.files;
 			data.append($(this).attr('id'),archivo[0]);
+			conImage++;
+        });
+		
+		$('.fileThumb').each(function() {
+			var archivos = document.getElementById($(this).attr('id'));
+			var archivo = archivos.files;
+			data.append($(this).attr('id'),archivo[0]);
         });	
+		
+		data.append('total',conImage);
 		
 		//abrimos la conexion para subir una imagen
 		Req.open("POST", "../admin/place/uploadImageGallery", true);

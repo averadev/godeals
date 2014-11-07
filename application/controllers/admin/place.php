@@ -207,31 +207,30 @@ class place extends CI_Controller {
 	
 	public function uploadImageGallery(){
 		
-		$ruta = explode(",",$_POST['ruta']);
+		$total = $_POST['total'];
 		
-		if($_POST['nameImage'] != "0"){
-			$nombreTimeStamp = $_POST['nameImage'];
-		} else {
+		for($i = 0;$i<$total;$i++){
+			
 			$fecha = new DateTime();
-        	$nombreTimeStamp = "coupon_" . $fecha->getTimestamp() . ".jpg";
+        	$nombreTimeStamp = "gallery_" . $fecha->getTimestamp() . $i . ".jpg";
+			$nombreTimeStampThumb = "thumb_" . $nombreTimeStamp;
+			
+			$gallery = "gallery" . $i;
+			$thumb = "thumb" . $i;
+			
+			$rutaGallery = "assets/img/app/visita/galeria/";
+			$rutaThunb = "assets/img/app/visita/galeria/";
+			
+      		$temporal = $_FILES[$gallery]['tmp_name'];
+			
+			move_uploaded_file($temporal, $rutaGallery . $nombreTimeStamp);
+			
+			$temporal = $_FILES[$thumb]['tmp_name'];
+			
+			move_uploaded_file($temporal, $rutaThunb . $nombreTimeStampThumb);	
+			
+			echo $nombreTimeStamp . "*_*";
 		}
-		
-		$con = 0;		
-  		foreach ($_FILES as $key) {
-    		if($key['error'] == UPLOAD_ERR_OK ){//Verificamos si se subio correctamente
-      			$nombre = $key['name'];//Obtenemos el nombre del archivo
-      			$temporal = $key['tmp_name']; //Obtenemos el nombre del archivo temporal
-      			$tamano= ($key['size'] / 1000)."Kb"; //Obtenemos el tamaño en KB
-				$tipo = $key['type']; //obtenemos el tipo de imagen
-				
-				move_uploaded_file($temporal, $ruta[$con] . $nombreTimeStamp);
-				
-				$con++;
-				
-    		}else{
-    		}
-		}
-		echo $nombreTimeStamp;
 		
 	}
     
