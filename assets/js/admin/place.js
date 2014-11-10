@@ -487,19 +487,45 @@ $(document).on('click','#imgDeleteBlack',function(){ deleteGallery(this); });
 		
 		hideAlert();
 		
+		sizeImageBanner = imgRealSize($("#imgImagen"));
+		sizeImageBanner2 = imgRealSize($("#imgImagen2"));
+		sizeImageApp = imgRealSize($("#imgImagenApp"));
+		
 		if($('#imagenName').val() == 0 && $('#fileImagen').val().length == 0){
 			$('#alertImage').html("Campo vacio. Selecione una imagen");
 			$('#alertImage').show();
 			$('#lblPlaceImage').addClass('error');
 			result = false;
-		}
+		} else if(sizeImageBanner.width != 1000 || sizeImageBanner.height != 300){
+            $('#alertImage').html("El tamaño no corresponde: 1000x300");
+			$('#alertImage').show();
+			$('#lblPlaceImage').addClass('error');
+			result = false;
+        }
 		
 		if($('#imagenName2').val() == 0 && $('#fileImagen2').val().length == 0){
 			$('#alertImage2').html("Campo vacio. Selecione una imagen");
 			$('#alertImage2').show();
 			$('#lblPlaceImage2').addClass('error');
 			result = false;
-		}
+		} else if(sizeImageBanner2.width != 1000 || sizeImageBanner2.height != 300){
+            $('#alertImage2').html("El tamaño no corresponde: 1000x300");
+			$('#alertImage2').show();
+			$('#lblPlaceImage2').addClass('error');
+			result = false;
+        }
+		
+		if($('#imagenNameApp').val() == 0 && $('#fileImagenApp').val().length == 0){
+			$('#alertImageApp').html("Campo vacio. Selecione una imagen");
+			$('#alertImageApp').show();
+			$('#lblPlaceImageapp').addClass('error');
+			result = false;
+		} else if(sizeImageApp.width != 440 || sizeImageApp.height != 330){
+            $('#alertImageApp').html("El tamaño no corresponde: 440x330");
+			$('#alertImageApp').show();
+			$('#lblPlaceImageapp').addClass('error');
+			result = false;
+        }
 		
 		if($('#txtPlaceLongitude').val().trim().length == 0){
 			$('#alertLongitude').show();
@@ -561,6 +587,12 @@ $(document).on('click','#imgDeleteBlack',function(){ deleteGallery(this); });
 		
 		return result;	
 	}
+	
+	function imgRealSize(img) {
+        var image = new Image();
+        image.src = $(img).attr("src");
+        return { 'width': image.naturalWidth, 'height': image.naturalHeight }
+    }
 	
 	function hideAlert(){
 		$('#alertLongitude').hide();
@@ -934,19 +966,33 @@ $(document).on('click','#imgDeleteBlack',function(){ deleteGallery(this); });
 	
 	function validateGallery(){
 		result = true;
+		
+		sizeImageGallery = imgRealSize($("#imgImageGallery"));
+		sizeImageThumb = imgRealSize($("#imgImageThumb"));
+		
 		if($('#imgImageGallery').attr("src") == "http://placehold.it/630x420&text=[630x420]"){
 			$('#alertImageGallery').html("Campo vacio. Selecione una imagen");
 			$('#alertImageGallery').show();
 			$('#lblImageGallery').addClass('error');
 			result = false;
-		}
+		} else if(sizeImageGallery.width != 630 || sizeImageGallery.height != 420){
+            $('#alertImageGallery').html("El tamaño no corresponde: 630x420");
+			$('#alertImageGallery').show();
+			$('#lblImageGallery').addClass('error');
+			result = false;
+        }
 		
 		if($('#imgImageThumb').attr("src") == "http://placehold.it/150x100&text=[150x100]"){
 			$('#alertImageThumb').html("Campo vacio. Selecione una imagen");
 			$('#alertImageThumb').show();
 			$('#lblImageThumb').addClass('error');
 			result = false;
-		}
+		} else if(sizeImageThumb.width != 150 || sizeImageThumb.height != 100){
+            $('#alertImageThumb').html("El tamaño no corresponde: 150x100");
+			$('#alertImageThumb').show();
+			$('#lblImageThumb').addClass('error');
+			result = false;
+        }
 		
 		return result;	
 	}

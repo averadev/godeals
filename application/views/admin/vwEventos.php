@@ -121,16 +121,20 @@ $this->load->view('admin/vwHeader');
                     	<div class="small-12 medium-6 large-6 columns">
                             
                            <div class="row">
-                               <div class="medium-4 columns">
-                               		<br />
-                                    <label class="field"><input id="checkEventFav" type="checkbox" name="destacado"/> Destacado</label>
-                               </div>
-                               <div class="medium-6 columns">
+                               
+                               <div class="medium-5 columns">
                                     <label id="lblEventDate" class="field">*Fecha Inicio
                                         <input type="datetime-local" id="dtEventDate" class="radius" />
                                     </label>
                                     <small id="alertEventDate" class="error" style="display:none"></small>     
                                </div>
+                               <div class="medium-5 columns">
+                                    <label id="lblEventEndDate" class="field">fecha final
+                                        <input type="datetime-local" id="dtEventEndDate" class="radius"></textarea>
+                                    </label>
+                                    <small id="alertEndDate" class="error" style="display:none">
+                                    </small>
+                                </div>
                                <div class="medium-2 columns">&nbsp;</div>
                             </div>
                             
@@ -211,14 +215,10 @@ $this->load->view('admin/vwHeader');
                                     	Campo vacio. Por favor escriba al menos una palabra clave
                                     </small>
                                 </div>
-                                <div class="medium-5 columns">
-                                    <label id="lblEventEndDate" class="field">fecha final
-                                        <input type="datetime-local" id="dtEventEndDate" class="radius"></textarea>
-                                    </label>
-                                    <small id="alertEndDate" class="error" style="display:none">
-                                    	Fecha Incorrect. Por favor seleciona una fecha mayor a la fecha inicial.
-                                    </small>
-                                </div>
+                                <div class="medium-4 columns">
+                               		<br />
+                                    <label class="field"><input id="checkEventFav" type="checkbox" name="destacado"/> Destacado</label>
+                               </div>
                                 <div class="medium-2 columns">&nbsp;</div>
                             </div>
                             
@@ -249,10 +249,9 @@ $this->load->view('admin/vwHeader');
                     	<div class="small-12 medium-6 large-6 columns">
                             
                             <div class="row">
-                                <div class="small-12 medium-8 large-8 columns" id="imagen">
+                                <!---<div class="small-12 medium-8 large-8 columns" id="imagen">
                                     <label id="labelImage"><strong>*Imagen Max</strong> </label>
                                     <a><img id="imgImagen" src="http://placehold.it/700x525&text=[700x525]"/></a>
-                                    <input type="hidden" id="imagenName" value="0" />
                                     <input style="display:none" type="file" id="fileImagen" style="color:#003" 
                                         name="archivos[]" multiple />
                                     <small id="alertImage" class="error" style="display:none"></small>
@@ -265,12 +264,12 @@ $this->load->view('admin/vwHeader');
                                     <input style="display:none" type="file" id="fileImagenMin" style="color:#003" 
                                         name="archivos[]" multiple />
                                     <small id="alertImageMin" class="error" style="display:none"></small>
-                                </div>
+                                </div>--->
 
-                                <div class="small-6 medium-4 large-4 columns" id="imagen">
+                                <div class="small-12 medium-8 large-8 columns" id="imagen">
                                     <label id="labelImageApp"><strong>*App</strong> </label>
-                                    <a><img id="imgImagenApp" src="http://placehold.it/440x330&text=[440x330]" 
-                                        style="height:100px;"/></a>
+                                    <a><img id="imgImagenApp" src="http://placehold.it/440x330&text=[440x330]" /></a>
+                                    <input type="hidden" id="imagenName" value="0" />
                                     <input style="display:none" type="file" id="fileImagenApp" style="color:#003" 
                                         name="archivos[]" multiple />
                                     <small id="alertImageApp" class="error" style="display:none"></small>
