@@ -454,6 +454,7 @@ $("#imgImagen").click(function() {changeImage()});
 		if($('#sltPublicityCategory').val() == 0){
 			$('#alertCategory').show();
 			$('#lblPublicityCategory').addClass('error');
+			$('#sltPublicityCategory').focus();
 			result = false;	
 		}
 		

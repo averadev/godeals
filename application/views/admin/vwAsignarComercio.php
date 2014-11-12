@@ -5,68 +5,103 @@ $this->load->view('admin/vwHeader');
 <div class="row">
 	<div class="small-12 medium-12 large-12 columns">
     	<div class="page-header header">
-        	<h1><small>Place</small></h1>
+        	<h1><small>Asignar Comercio</small></h1>
         	<hr/>
     	</div>
     </div>
     
     <div class="place">
+    
+    		 <!--- division "FormPublicity" --->
+            <!--- muestra el formulario para agregar y modificar AsigComer --->
+            <div class="small-12 medium-6 large-5 columns">
+				<div id="FormAsigComer">
+					<div class="row">
+						<div class="small-12 medium-12 large-12 columns">
+							<div class="row">
+                        		<div class="small-12 medium-11 large-10 columns">
+                            		<label class="field" id="lblAsigComerType">*tipo
+                                		<select id="slAsigComerType" class="radius">
+                                        	<option value="0">selecciona una opcion</option>
+                                            <option value="1">Hospedajen</option>
+                                            <option value="2">Restaurante</option>
+                                            <option value="3">Antro/Bar</option>
+                                        </select>
+                               		</label>
+                                	<small id="alertType" class="error" style="display:none">
+                                    	Campo incorrecto. Por favor seleccione una opcion
+                                	</small>
+                            	</div>
+							</div>
+                        	<div class="row">
+                        		<div class="small-12 medium-11 large-10 columns">
+                            		<label class="field" id="lblAsigComerPartner">*socio
+                                		<input type="text" id="txtAsigComerPartner" list="partnerList" 
+                                        autocomplete="on" class="radius"/>
+                                        <datalist id="partnerList"> </datalist>
+                               		</label>
+                                	<small id="alertPartner" class="error" style="display:none">
+                                    	ciudad incorrecto. Por favor escriba una ciudad existente
+                                	</small>
+                            	</div>
+                        	</div>
+                             <div class="row">
+                                <div class="small-8 medium-9 large-6 columns">
+      								
+                                    <div class="row">
+                                <div class="small-8 medium-9 large-6 columns">
+      								<button  id="btnRegisterAsigComer" class="bntSave button small success radius ">
+      								Guardar</button>
+                                </div>
+                                <div class="loading small-2 medium-2 large-2 columns" id="load1"></div>
+							</div>
+                                    
+                                </div>
+                                <div class="loading small-2 medium-2 large-2 columns" id="load1"></div>
+							</div>
+						</div>   
+					</div>   
+				</div>
+            </div><!--- fin div "FormPublicity" --->
+    
             <!--- division "AsigComer" --->
-            <div id="viewAsigComer" >
-            	<div class="row">
-            		<div class="large-12 columns">
-                    
-                    	<!--- divicion del buscador --->
-                		<div id="buscar" class="row collapse">
-                    		<div class="small-8 medium-10 large-10 columns">
-                        		<input class="txtSearch" id="txtSearchAsigComer" type="text" 
-                                placeholder="Busqueda por nombre" />
-                            </div>
-                            <div class="small-4 medium-2 large-2 columns">
-                            	<button class="btnSearch" id="btnSearchAsigComer">
-                                <img src="../assets/img/web/iconSearch.png">Buscar
-                                </button>
-                            </div>
-                        </div> <!---fin de la divicion del buscador --->
+			<div class="small-12 medium-6 large-7 columns">
+				<div id="viewAsigComer" >
+					<div class="row">
+						<div class="large-12 columns">
                         
-                        <!---muestra los mensajes que indican que se inserto los datos --->
-                        <div class="large-11" id="divMenssage" style="display:none">
-							<div data-alert class="alert-box success" id="alertMessage">
+							<!---muestra los mensajes que indican que se inserto los datos --->
+							<div class="large-11" id="divMenssage" style="display:none">
+								<div data-alert class="alert-box success" id="alertMessage">
+								</div>
 							</div>
-						</div>
-						<div class="large-11" id="divMenssagewarning" style="display:none">
-							<div data-alert class="alert-box warning" id="alertMessagewarning">
-								¿Desea eliminar el lugar?
-								<button id="btnCancelC" class="btnCancelE">Cancelar</button>
-								<button id="btnCancelC" class="btnAcceptE">Aceptar</button>
+							<div class="large-11" id="divMenssagewarning" style="display:none">
+								<div data-alert class="alert-box warning" id="alertMessagewarning">
+									¿Desea eliminar el lugar?
+									<button id="btnCancelC" class="btnCancelE">Cancelar</button>
+									<button id="btnCancelC" class="btnAcceptE">Aceptar</button>
+								</div>
 							</div>
-						</div>
-                        <!--- fin de los mensajes --->
+							<!--- fin de los mensajes --->
                         
-                        <!--- divicion que muestra la tabla de publicidad ---> 
-                        <div id="tabla" >
-                         <input type="hidden" id="idPlace" value="<?php echo $idPlace ?>"  />
-                         <input type="hidden" id="valuePartner" value="0"/>
-                        	<table id="tableAsigComer">
-                            	<thead>
-                                	<tr>
-                                    	<td class="titulo" colspan="4">Comercios
-                                        	<button id="btnAddAsigComer" class="btnAdd">Agregar</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                    	<th>#</th>
-                                        <th width="25%">Nombre</th>
-                                        <th width="75%">descripcion</th>
-                                        <th>Eliminar</th>
-                                    </tr>
-                                </thead>
-                            	<tbody>
-                                			<tr>
-                                    			<td class="titulo" colspan="4" style="text-align:center;">
-                                                	Hospedaje
-                                        		</td>
-                                    		</tr>
+							<!--- divicion que muestra la tabla de publicidad ---> 
+							<div id="tabla" >
+								<input type="hidden" id="idPlace" value="<?php echo $idPlace ?>"  />
+								<input type="hidden" id="valuePartner" value="0"/>
+								<table id="tableAsigComer">
+									<thead>
+										<tr>
+											<td class="titulo" colspan="4">Comercios
+											</td>
+										</tr>
+										<tr>
+											<th>#</th>
+											<th width="50%">Nombre</th>
+											<th width="50%">Tipo</th>
+											<th>Eliminar</th>
+										</tr>
+									</thead>
+									<tbody>
                                 	<?php
                                     	$con = 0;
 										foreach($comercio as $item):
@@ -78,11 +113,9 @@ $this->load->view('admin/vwHeader');
                                     		<tr>
                                             	<td><?php echo $con; ?></td>
                                                 <td>
-                                                	<a id="showAsigComer"><?php echo $item->name;?>
-                                                    <input type="hidden" id="idAsigComer" value="<?php echo $item->partnerId;?>" >
-                                                    </a>
+                                                	<?php echo $item->name;?>
                                                 </td>
-                                                <td><?php echo $item->info;?></td>
+                                                <td><?php echo "Hospedaje"; ?></td>
 												<td>
                                                 	<a id="imageDelete" value="<?php echo $item->partnerId;?>">
                                             			<img class="imgDelete" src="../assets/img/web/deleteRed.png"/>
@@ -93,12 +126,6 @@ $this->load->view('admin/vwHeader');
 											}
 										 endforeach;
 										 ?>
-										 
-                                         <tr>
-                                    			<td align="center" class="titulo" colspan="4" style="text-align:center;">
-                                                	Restaurante
-                                        		</td>
-                                    	</tr>
                                          
 										 <?php
 										 foreach($comercio as $item):
@@ -108,11 +135,9 @@ $this->load->view('admin/vwHeader');
                                     		<tr>
                                             	<td><?php echo $con; ?></td>
                                                 <td>
-                                                	<a id="showAsigComer"><?php echo $item->name;?>
-                                                    <input type="hidden" id="idAsigComerplace" value="<?php echo $item->partnerId;?>" >
-                                                    </a>
+                                                	<?php echo $item->name;?>
                                                 </td>
-                                                <td><?php echo $item->info;?></td>
+                                                <td><?php echo "Restaurante"; ?></td>
 												<td>
                                                 	<a id="imageDelete" value="<?php echo $item->partnerId;?>">
                                             			<img class="imgDelete" src="../assets/img/web/deleteRed.png"/>
@@ -124,12 +149,6 @@ $this->load->view('admin/vwHeader');
 										 endforeach;
 										 
 									?>
-										 
-										  <tr>
-                                    			<td align="center" class="titulo" colspan="4" style="text-align:center;">
-                                                	Restaurante
-                                        		</td>
-                                    	</tr>
                                          
 										 <?php
 										 foreach($comercio as $item):
@@ -139,11 +158,9 @@ $this->load->view('admin/vwHeader');
                                     		<tr>
                                             	<td><?php echo $con; ?></td>
                                                 <td>
-                                                	<a id="showAsigComer"><?php echo $item->name;?>
-                                                    <input type="hidden" id="idAsigComer" value="<?php echo $item->partnerId;?>" >
-                                                    </a>
+                                                	<?php echo $item->name;?>
                                                 </td>
-                                                <td><?php echo $item->info;?></td>
+                                                <td><?php echo "Antro/Bar"; ?></td>
 												<td>
                                                 	<a id="imageDelete" value="<?php echo $item->partnerId;?>">
                                             			<img class="imgDelete" src="../assets/img/web/deleteRed.png"/>
@@ -185,78 +202,14 @@ $this->load->view('admin/vwHeader');
                                 class="btnPaginador arrow ultimo"><a>&raquo;</a></li>
 							</ul>
                             <!--- fin del paginador --->
-                        </div> <!--- fin de la divicion tabla --->
-                    </div>
-                </div>    
+							</div> <!--- fin de la divicion tabla --->
+						</div>
+					</div>    
+				</div>
             </div><!--- fin div "viewPublicity" --->
             
             
-            <!--- division "FormPublicity" --->
-            <!--- muestra el formulario para agregar y modificar AsigComer --->
-            <div id="FormAsigComer" style="display:none">
-            	<div class="row">
-                    
-                    <div class="small-12 medium-12 large-12 columns">
-                    	<!--- primera columna --->
-                		<div class="small-12 medium-6 large-6 columns">
-                        
-							<div class="row">
-                        		<div class="small-12 medium-11 large-10 columns">
-                            		<label class="field" id="lblAsigComerType">*tipo
-                                		<select id="slAsigComerType" class="radius">
-                                        	<option value="0">selecciona una opcion</option>
-                                            <option value="1">Hospedajen</option>
-                                            <option value="2">Restaurante</option>
-                                            <option value="3">Antro/Bar</option>
-                                        </select>
-                               		</label>
-                                	<small id="alertType" class="error" style="display:none">
-                                    	Campo incorrecto. Por favor seleccione una opcion
-                                	</small>
-                            	</div>
-							</div>
-                        	<div class="row">
-                        		<div class="small-12 medium-11 large-10 columns">
-                            		<label class="field" id="lblAsigComerPartner">*socio
-                                		<input type="text" id="txtAsigComerPartner" list="partnerList" 
-                                        autocomplete="on" class="radius"/>
-                                        <datalist id="partnerList"> </datalist>
-                               		</label>
-                                	<small id="alertPartner" class="error" style="display:none">
-                                    	ciudad incorrecto. Por favor escriba una ciudad existente
-                                	</small>
-                            	</div>
-                        	</div>
-                             <div class="row">
-                                <div class="small-8 medium-9 large-6 columns">
-      								<button  id="btnNewPartner" class="bntSave button small success radius ">
-      								Agregar Partner</button>
-                                </div>
-                                <div class="loading small-2 medium-2 large-2 columns" id="load1"></div>
-							</div>
-
-                    	</div> <!--- fin primera columna --->
-                        
-                        <!--- segunda columna columna --->
-                     	<div class="small-12 medium-6 large-6 columns">
-                        <br /><br /><br /><br /><br />
-                            <div class="row">
-                                <div class="small-8 medium-9 large-6 columns">
-                                    <button id="btnCancel" class="bntSave button small alert radius ">Cancelar</button>
-      								<button id="btnSaveAsigComer" class="bntSave button small success radius ">
-      								Guardar</button>
-      								<button  id="btnRegisterAsigComer" class="bntSave button small success radius ">
-      								Guardar</button>
-                                </div>
-                                <div class="loading small-2 medium-2 large-2 columns" id="load1"></div>
-							</div>
-                            
-                        </div><!--- fin primera columna --->
-                    </div>   
-                       
-                </div>
-                 
-            </div><!--- fin div "FormPublicity" --->
+           
     </div>
 </div>
 

@@ -87,7 +87,7 @@ class asignarComercio extends CI_Controller {
 				);
 				$data = $this->place_db->insertXref($insert);
 				$data = "Se han agregado un comercio";
-			} else {
+			} /*else {
 				$update = array(
 					'placeId' 		=> $_POST['idPlace'],
    					'partnerId' 	=> $_POST['idPartner'],
@@ -95,7 +95,7 @@ class asignarComercio extends CI_Controller {
 				);
 				$data = $this->place_db->updateXref($update,$_POST['idPartner2']);
 				$data = "Se han editado los datos del comercio";
-			}
+			}*/
             
             echo json_encode($data);
         }

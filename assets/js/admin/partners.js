@@ -479,7 +479,7 @@ function validations(){
     if(idCatMap == undefined){
         $('#alertPartnerMapCat').show();
         $('#lblPartnerMapCat').addClass('error');
-        $('#txtPartnerMapCat').focus();
+        $('#selMapCat').focus();
         result = false;
     }
 	

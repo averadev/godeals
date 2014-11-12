@@ -5,31 +5,16 @@ var dato = "";
 //funcio que se llama cada vez que se teclea en el 'imput' city
 $("#txtAsigComerPartner").keyup(function() { autocomplete(); });
 
-//botones que muestran los diferentes formularios
-$('#btnAddAsigComer').click(function(){showFormAdd()});
-$(document).on('click','#showAsigComer',function(){ ShowFormEdit(this); });
 $(document).on('click','#imageDelete',function(){ ShowFormDelete(this); });
 
 //botones que registras,modifican o eliminan eventos 
 $('#btnRegisterAsigComer').click(function() {eventAdd()});
-$('#btnSaveAsigComer').click(function() {eventEdit()});
-$('#btnCancel').click(function() {eventCancel()});
 
-//botones para el formulario de eliminar eventos
+//botones para el formulario de eliminar asignacion
 $('.btnAcceptE').click(function() {eventDelete()});
 $('.btnCancelE').click(function() {eventCancelDelete()});
 
-$('#btnNewPartner').click(function() {newPartner()});
-
 //paginador//
-
-$('.btnSearch').click(function() { buscador(); });
-
-$('.txtSearch').keyup(function(e){
-    if(e.keyCode ==13){
-	buscador();	
-    }
-});
 
 $(document).on('click','.btnPaginador',function(){ paginador(this); });
 
@@ -54,27 +39,6 @@ $(document).on('click','.btnPaginador',function(){ paginador(this); });
 				}
 			}
 		});	
-	}
-
-	function showFormAdd(){
-		cleanFields();
-		hideAlert();
-		$('#btnSaveAsigComer').hide();
-		$('#btnRegisterAsigComer').show();
-		$('#viewAsigComer').hide();
-		$('#FormAsigComer').show();	
-	}
-	
-	function ShowFormEdit(partnerId){
-		cleanFields();
-		hideAlert();
-		partnerId = $(partnerId).find('input').val();
-		$('#btnSaveAsigComer').val(partnerId); 
-		showsEvent(partnerId);
-		$('#btnRegisterAsigComer').hide();
-		$('#btnSaveAsigComer').show();
-		$('#viewAsigComer').hide();
-		$('#FormAsigComer').show();
 	}
 	
 	function ShowFormDelete(partnerId){
@@ -101,18 +65,6 @@ $(document).on('click','.btnPaginador',function(){ paginador(this); });
 			$('.bntSave').attr('disabled',true);
 			ajaxSaveEvent(0);
 		}	
-	}
-	
-	function eventEdit(){
-		var result;
-		result = validations();
-		partnerId = $('#btnSaveAsigComer').val();
-		if(result){
-			$('.loading').show();
-			$('.loading').html('<img src="../assets/img/web/loading.gif" height="40px" width="40px" />');
-			$('.bntSave').attr('disabled',true);
-			ajaxSaveEvent(partnerId);
-		}
 	}
 	
 	//cancela el formulario de eliminar un lugar
@@ -169,8 +121,7 @@ $(document).on('click','.btnPaginador',function(){ paginador(this); });
             	},
             	success: function(data){
 					ajaxMostrarTabla("../admin/asignarComercio/getallSearch",(numPag-1));
-					$('#FormAsigComer').hide();
-					$('#viewAsigComer').show();
+					cleanFields();
 					$('#alertMessage').html(data);
 					$('#divMenssage').show(1000).delay(1500);
 					$('#divMenssage').hide(1000);
@@ -179,35 +130,12 @@ $(document).on('click','.btnPaginador',function(){ paginador(this); });
             	},
 				error: function(){
 					ajaxMostrarTabla("../admin/asignarComercio/getallSearch",(numPag-1));
-					$('#FormAsigComer').hide();
-					$('#viewAsigComer').show();
+					cleanFields();
 					$('.loading').hide();
 					$('.bntSave').attr('disabled',false);
 					alert("error al insertar datos")
 				}
         	});
-	}
-	
-	function showsEvent(partnerId){
-		$.ajax({
-			type: "POST",
-            url: "../admin/asignarComercio/getXrefByIds",
-            dataType:'json',
-            data: { 
-				placeId:$('#idPlace').val(),
-				partnerId:partnerId
-            },
-            success: function(data){
-				$("#slAsigComerType option[value='"+ data[0].type +"']").attr("selected",true);
-				$('#txtAsigComerPartner').val(data[0].name);
-				$('#partnerList').append("<option id='" + data[0].partnerId + "' value='" +  data[0].name + "' />");
-				$('#valuePartner').val(data[0].name);
-            }
-        });
-	}
-	
-	function newPartner(){
-		window.location.href = "../admin/partners";	 
 	}
 	
 	function validations(){
@@ -315,8 +243,6 @@ $(document).on('click','.btnPaginador',function(){ paginador(this); });
                                 
 				$('.pagination').empty();
 				
-				$('#tableAsigComer tbody').append("<tr><td colspan='4' style='text-align:center;'>Hospedaje</td></tr>");
-				
 				conNum = 0;
 				
 				for(var i = 0;i<10;i++){
@@ -332,17 +258,14 @@ $(document).on('click','.btnPaginador',function(){ paginador(this); });
 							
 						$('#tableAsigComer tbody').append("<tr>" + 
 							"<td>"+(conNum2)+"</td>"+
-							"<td><a id='showAsigComer'>"+data[num].name+"<input type='hidden' " + 
-							"id='idAsigComer' value='" + data[num].partnerId + "' >" +
-							"</a></td>"+
-							"<td>"+data[num].info+"</td>"+
+							"<td>" +data[num].name + "</td>"+
+							"<td>Hospedaje</td>"+
 							"<td><a id='imageDelete' value='" + data[num].partnerId +"'><img id='imgDelete' "+
 							"src='../assets/img/web/deleteRed.png'/></a></td>" +
 							"</tr>");
 						}
                 }
 				
-				$('#tableAsigComer tbody').append("<tr><td colspan='4' style='text-align:center;'>Restaurante</td></tr>");
 				for(var i = 0;i<10;i++){
 					num = cantidadEmpezar + i;
 					//rompe el ciclo si la cantidad de registros devueltos es menor a 10
@@ -355,17 +278,13 @@ $(document).on('click','.btnPaginador',function(){ paginador(this); });
 							conNum2 = conNum + cantidadEmpezar;
 						$('#tableAsigComer tbody').append("<tr>" + 
 							"<td>"+(conNum2)+"</td>"+
-							"<td><a id='showAsigComer'>"+data[num].name+"<input type='hidden' " + 
-							"id='idAsigComer' value='" + data[num].partnerId + "' >" +
-							"</a></td>"+
-							"<td>"+data[num].info+"</td>"+
+							"<td>"+data[num].name+"</td>"+
+							"<td>Restaurante</td>"+
 							"<td><a id='imageDelete' value='" + data[num].partnerId +"'><img id='imgDelete' "+
 							"src='../assets/img/web/deleteRed.png'/></a></td>" +
 							"</tr>");
 						}
                 }
-				
-				$('#tableAsigComer tbody').append("<tr><td colspan='4' style='text-align:center;'>Antro/Bar</td></tr>");
 				
 				for(var i = 0;i<10;i++){
 					num = cantidadEmpezar + i;
@@ -379,10 +298,8 @@ $(document).on('click','.btnPaginador',function(){ paginador(this); });
 							conNum2 = conNum + cantidadEmpezar;
 						$('#tableAsigComer tbody').append("<tr>" + 
 							"<td>"+(conNum2)+"</td>"+
-							"<td><a id='showAsigComer'>"+data[num].name+"<input type='hidden' " + 
-							"id='idAsigComer' value='" + data[num].partnerId + "' >" +
-							"</a></td>"+
-							"<td>"+data[num].info+"</td>"+
+							"<td>"+data[num].name+"</td>"+
+							"<td>Antro/Bar</td>"+
 							"<td><a id='imageDelete' value='" + data[num].partnerId +"'><img id='imgDelete' "+
 							"src='../assets/img/web/deleteRed.png'/></a></td>" +
 							"</tr>");

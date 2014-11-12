@@ -32,6 +32,10 @@ $('.btnCancelE').click(function() {sporttvCancelDelete()});
 $("#imgImagen").click(function() {changeImage()});
 $("#imgImageSporttv").click(function() {changeImageBar()});
 
+$(document).on('keydown','#txtSporttvName',function() {
+		validarCadena();
+});
+
 //visualizar imagen
 
 	$(window).load(function(){
@@ -590,6 +594,15 @@ $("#imgImageSporttv").click(function() {changeImageBar()});
 		}
 		
 		if($('#txtSporttvName').val().trim().length == 0){
+			$('#alertName').html("Campo vacio. Por favor escriba un nombre");
+			$('#alertName').show();
+			$('#lblSporttvName').addClass('error');
+			$('#txtSporttvName').focus();
+			result = false;
+		}
+		
+		if($('#txtSporttvName').val().trim().length > 23){
+			$('#alertName').html("Maximo de palabras alcanzadas. Solo 23 palabras o menos");
 			$('#alertName').show();
 			$('#lblSporttvName').addClass('error');
 			$('#txtSporttvName').focus();
@@ -693,4 +706,10 @@ $("#imgImageSporttv").click(function() {changeImageBar()});
 		
 		$('#divMenssage').hide();
 		$('#divMenssagewarning').hide();
+	}
+	
+	function validarCadena(){
+		if($('#txtSporttvName').val().length > 23 && event.keyCode != 8 && event.keyCode != 9){
+			event.preventDefault();
+		}
 	}

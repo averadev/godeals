@@ -207,29 +207,49 @@ class place extends CI_Controller {
 	
 	public function uploadImageGallery(){
 		
-		$total = $_POST['total'];
-		
-		for($i = 0;$i<$total;$i++){
-			
-			$fecha = new DateTime();
-        	$nombreTimeStamp = "gallery_" . $fecha->getTimestamp() . $i . ".jpg";
-			$nombreTimeStampThumb = "thumb_" . $nombreTimeStamp;
-			
-			$gallery = "gallery" . $i;
-			$thumb = "thumb" . $i;
-			
-			$rutaGallery = "assets/img/app/visita/galeria/";
-			$rutaThunb = "assets/img/app/visita/galeria/";
-			
-      		$temporal = $_FILES[$gallery]['tmp_name'];
-			
-			move_uploaded_file($temporal, $rutaGallery . $nombreTimeStamp);
-			
-			$temporal = $_FILES[$thumb]['tmp_name'];
-			
-			move_uploaded_file($temporal, $rutaThunb . $nombreTimeStampThumb);	
-			
-			echo $nombreTimeStamp . "*_*";
+		$con = 0;
+  		foreach ($_FILES as $key) {
+    		if($key['error'] == UPLOAD_ERR_OK ){//Verificamos si se subio correctamente
+      			$nombre = $key['name'];//Obtenemos el nombre del archivo
+      			$temporal = $key['tmp_name']; //Obtenemos la dirrecion del archivo
+      			$tamano= ($key['size'] / 1000)."Kb"; //Obtenemos el tamaño en KB
+				$tipo = $key['type']; //obtenemos el tipo de imagen
+				
+				$fecha = new DateTime();
+				$nombreTimeStamp = $fecha->getTimestamp();
+				
+				$ruta="assets/img/app/visita/galeria/";
+				
+				$nameGallery = "gallery_" . $nombreTimeStamp . $con . ".jpg";
+				
+				$min_ancho = 150;
+				$min_alto = 100;
+				
+				list($ancho,$alto)=getimagesize($temporal);
+				
+				$tmp2=imagecreatetruecolor($min_ancho,$min_alto);
+				
+				$imagen = imagecreatefromjpeg($temporal); 
+				
+				$patch_imagen_min=$ruta . "thumb_gallery_" . $nombreTimeStamp. $con .".jpg";
+					
+				imagecopyresampled($tmp2,$imagen,0,0,0,0,$min_ancho, $min_alto,$ancho,$alto);
+					
+				//subimos la imagen thumb	
+				imagejpeg($tmp2,$patch_imagen_min,100);
+					
+				imagedestroy($imagen);
+				
+				//subimos la imagen de galleria	
+				move_uploaded_file($temporal, $ruta . $nameGallery);
+					
+					echo $nameGallery . "*_*";
+					
+					$con++;
+				
+    		}else{
+				
+    		}
 		}
 		
 	}

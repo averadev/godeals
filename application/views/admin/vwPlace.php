@@ -292,15 +292,7 @@ $this->load->view('admin/vwHeader');
                                 </div>
                             </div>
                             </br><br />
-                            <div class="row">
-                                <div class="small-12 medium-11 large-6 columns">
-                                	<label id="lblImageThumb"><strong>thumb</strong></label>
-                                    <a><img id="imgImageThumb" src="http://placehold.it/150x100&text=[150x100]" style="width:150px; height:100px;"/></a>
-                                    <input style="display:none" type="file" id="fileImageThumb" name="archivos[]" multiple />
-                                    <small id="alertImageThumb" class="error" style="display:none"></small>
-                                </div>
-                            </div>
-                            </br>
+                            
                             <div class="row">
                                 <div class="medium-10 columns">
                                 <button id="btnAddGallery" class="button tiny success radius ">agregar</button>
@@ -321,7 +313,7 @@ $this->load->view('admin/vwHeader');
                              <div class="row">
                                 <div class="small-10 medium-6 large-6 columns">
                                     <button id="btnCancelGallery" class="button small alert radius bntSave">
-                                    Cancelar</button>
+                                    Regresar</button>
                                     <button id="btnSaveGallery" class="btnS2 button small success radius bntSave">
                                     Guardar</button>
                                 </div>

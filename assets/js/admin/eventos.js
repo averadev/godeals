@@ -32,83 +32,13 @@ $("#imgImagenDestacado").click(function() { $('#fileImagenDestacado').click(); }
 	$(document).on('keydown','#txtEventLatitude, #txtEventLongitude',function() {
 		validarCoordenada();
 	});
+	
+	$(document).on('keydown','#txtEventName',function() {
+		validarCadena();
+	});
 
 	$(window).load(function(){
  		$(function() {
-            // Imagen Max
-           /* $('#fileImagen').change(function(e) {
-                $('#labelImage').removeClass('error');
-                $('#alertImage').hide();
-                $('#imgImagen').attr("src","http://placehold.it/700x525&text=[700x525]");
-                if($('#imagenName').val() != 0){
-                    $('#imgImagen').attr("src",URL_IMG + "app/event/max/" + $('#imagenName').val())
-                }
-                if(e.target.files[0] != undefined){
-                    addImage(e); 
-                }
-            });
-            function addImage(e){
-                var file = e.target.files[0],*/
-               // imageType = /image.*/;
-                /*if (!file.type.match(imageType)){
-                    $('#imgImagen').attr("src","http://placehold.it/700x525&text=[700x525]");
-                    document.getElementById('fileImagen').value ='';
-                    if($('#imagenName').val() != 0){
-                        $('#imgImagen').attr("src",URL_IMG + "app/event/max/" + $('#imagenName').val())
-                    } else {
-                        $('#labelImage').addClass('error');
-                        $('#alertImage').empty();
-                        $('#alertImage').append("Selecione una imagen");
-                        $('#alertImage').show();
-                    }
-                    return;
-                }
-                var reader = new FileReader();
-                reader.onload = fileOnload;
-                reader.readAsDataURL(file);
-            }
-            function fileOnload(e) {
-                var result=e.target.result;
-                $('#imgImagen').attr("src",result);
-            }
-
-            // Imagen Min
-            $('#fileImagenMin').change(function(e) {
-                $('#labelImageMin').removeClass('error');
-                $('#alertImageMin').hide();
-                $('#imgImagenMin').attr("src","http://placehold.it/320x240&text=[320x240]");
-                if($('#imagenName').val() != 0){
-                    $('#imgImagenMin').attr("src",URL_IMG + "app/event/min/" + $('#imagenName').val())
-                }
-                if(e.target.files[0] != undefined){
-                    addImage2(e); 
-                }
-            });
-            function addImage2(e){
-                var file = e.target.files[0],*/
-               // imageType = /image.*/;
-               /* if (!file.type.match(imageType)){
-                    $('#imgImagenMin').attr("src","http://placehold.it/320x240&text=[320x240]");
-                    document.getElementById('fileImagenMin').value ='';
-                    if($('#imagenNameMin').val() != 0){
-                        $('#imgImagenMin').attr("src",URL_IMG + "app/event/min/" + $('#imagenName').val())
-                    } else {
-                        $('#labelImageMin').addClass('error');
-                        $('#alertImageMin').empty();
-                        $('#alertImageMin').append("Selecione una imagen");
-                        $('#alertImageMin').show();
-                    }
-                    return;
-                }
-                var reader = new FileReader();
-                reader.onload = fileOnload2;
-                reader.readAsDataURL(file);
-            }
-            function fileOnload2(e) {
-                var result=e.target.result;
-                $('#imgImagenMin').attr("src",result);
-            }*/
-
             // Imagen App
             $('#fileImagenApp').change(function(e) {
                 $('#labelImageApp').removeClass('error');
@@ -440,20 +370,6 @@ $("#imgImagenDestacado").click(function() { $('#fileImagenDestacado').click(); }
 		
 		var ruta = new Array();
 		
-		/*if(document.getElementById('fileImagen').value != ""){
-			var archivos = document.getElementById("fileImagen");//Damos el valor del input tipo file
- 			var archivo = archivos.files; //obtenemos los valores de la imagen
-			data.append('ImageMax',archivo[0]);
-			ruta.push("assets/img/app/event/max/");
-		}
-		
-		if(document.getElementById('fileImagenMin').value != ""){
-			var archivos = document.getElementById("fileImagenMin");//Damos el valor del input tipo file
- 			var archivo = archivos.files; //obtenemos los valores de la imagen
-			data.append('ImageMin',archivo[0]);
-			ruta.push("assets/img/app/event/min/");
-		}*/
-		
 		if(document.getElementById('fileImagenApp').value != ""){
 			var archivos = document.getElementById("fileImagenApp");//Damos el valor del input tipo file
  			var archivo = archivos.files; //obtenemos los valores de la imagen
@@ -624,52 +540,13 @@ $("#imgImagenDestacado").click(function() { $('#fileImagenDestacado').click(); }
 		}
 		var currentDate =(year + "-" + month + "-" + day);
 		
-		if( $('#txtEventLatitude').val().trim().length == 0){
-			$('#alertLatitude').show();
-			$('#lblEventLatitude').addClass('error');
-			$('#txtEventLatitude').focus();
-			result = false;
-		}
-		
-		if( $('#txtEventLongitude').val().trim().length == 0){
-			$('#alertLongitude').show();
-			$('#lblEventLongitude').addClass('error');
-			$('#txtEventLongitude').focus();
-			result = false;
-		}
-		
         // Obtenemos dimensiones
-        /*sizeImage = imgRealSize($("#imgImagen"));
-        sizeImageMin = imgRealSize($("#imgImagenMin"));*/
         sizeImageApp = imgRealSize($("#imgImagenApp"));
         sizeImageFull = imgRealSize($("#imgImagenFull"));
         sizeImageFullApp = imgRealSize($("#imgImagenFullApp"));
         sizeImageDestacado = imgRealSize($("#imgImagenDestacado"));
-        // Valida que se haya selecionado una imagen
-		/*if($('#imagenName').val() == 0 && $('#fileImagen').val().length == 0){
-			$('#alertImage').html("Campo vacio. Selecione una imagen");
-			$('#alertImage').show();
-			$('#labelImage').addClass('error');
-			result = false;
-		}else if(sizeImage.width != 700 || sizeImage.height != 525){
-            $('#alertImage').html("El tamaño no corresponde: 700x525");
-			$('#alertImage').show();
-			$('#labelImage').addClass('error');
-			result = false;
-        }
-		
-		if($('#imagenName').val() == 0 && $('#fileImagenMin').val().length == 0){
-			$('#alertImageMin').html("Campo vacio. Selecione una imagen");
-			$('#alertImageMin').show();
-			$('#labelImageMin').addClass('error');
-			result = false;
-		}else if(sizeImageMin.width != 320 || sizeImageMin.height != 240){
-            $('#alertImageMin').html("El tamaño no corresponde: 320x240");
-			$('#alertImageMin').show();
-			$('#labelImageMin').addClass('error');
-			result = false;
-        }*/
-		
+        
+		// Valida que se haya selecionado una imagen
 		if($('#imagenName').val() == 0 && $('#fileImagenApp').val().length == 0){
 			$('#alertImageApp').html("Campo vacio. Selecione una imagen");
 			$('#alertImageApp').show();
@@ -725,12 +602,17 @@ $("#imgImagenDestacado").click(function() { $('#fileImagenDestacado').click(); }
 			result = false;
 		}
 		
-		valueCity = $('#txtEventCity').val();
-		idCity = $('#cityList option[value="' + valueCity + '"]').attr('id');
-        if(idCity == undefined){
-			$('#alertCity').show();
-			$('#lblEventCity').addClass('error');
-			$('#txtEventCity').focus();
+		if( $('#txtEventLongitude').val().trim().length == 0){
+			$('#alertLongitude').show();
+			$('#lblEventLongitude').addClass('error');
+			$('#txtEventLongitude').focus();
+			result = false;
+		}
+		
+		if( $('#txtEventLatitude').val().trim().length == 0){
+			$('#alertLatitude').show();
+			$('#lblEventLatitude').addClass('error');
+			$('#txtEventLatitude').focus();
 			result = false;
 		}
         
@@ -740,6 +622,15 @@ $("#imgImagenDestacado").click(function() { $('#fileImagenDestacado').click(); }
 			$('#alertType').show();
 			$('#lblEventType').addClass('error');
 			$('#txtEventType').focus();
+			result = false;
+		}
+		
+		valueCity = $('#txtEventCity').val();
+		idCity = $('#cityList option[value="' + valueCity + '"]').attr('id');
+        if(idCity == undefined){
+			$('#alertCity').show();
+			$('#lblEventCity').addClass('error');
+			$('#txtEventCity').focus();
 			result = false;
 		}
 		
@@ -758,6 +649,15 @@ $("#imgImagenDestacado").click(function() { $('#fileImagenDestacado').click(); }
 		}
 		
 		if($('#txtEventName').val().trim().length == 0){
+			$('#alertName').html("Campo vacio. Por favor escriba un nombre");
+			$('#alertName').show();
+			$('#lblEventName').addClass('error');
+			$('#txtEventName').focus();
+			result = false;
+		}
+		
+		if($('#txtEventName').val().trim().length > 23){
+			$('#alertName').html("Maximo de palabras alcanzadas. Solo 23 palabras o menos");
 			$('#alertName').show();
 			$('#lblEventName').addClass('error');
 			$('#txtEventName').focus();
@@ -825,8 +725,6 @@ $("#imgImagenDestacado").click(function() { $('#fileImagenDestacado').click(); }
 		$('#alertCity').hide();
 		$('#alertType').hide();
 		$('#alertWord').hide();
-		$('#alertImage').hide();
-		$('#alertImageMin').hide();
 		$('#alertImageApp').hide();
         $('#alertImageFull').hide();
 		$('#alertImageFullApp').hide();
@@ -843,8 +741,6 @@ $("#imgImagenDestacado").click(function() { $('#fileImagenDestacado').click(); }
 		$('#lblEventType').removeClass('error');
 		$('#lblEventWord').removeClass('error');
 		$('#lblEventDate').removeClass('error');
-		$('#labelImage').removeClass('error');
-        $('#labelImageMin').removeClass('error');
         $('#labelImageApp').removeClass('error');
         $('#labelImageFull').removeClass('error');
         $('#labelImageFullApp').removeClass('error');
@@ -862,10 +758,6 @@ $("#imgImagenDestacado").click(function() { $('#fileImagenDestacado').click(); }
 		$('#txtEventType').val("");
 		$('#txtEventWord').val("");
 		$('#txtEventInfo').val("");
-		/*$('#imgImagen').attr("src","http://placehold.it/700x525&text=[700x525]")
-		document.getElementById('fileImagen').value ='';
-		$('#imgImagenMin').attr("src","http://placehold.it/320x240&text=[320x240]")
-		document.getElementById('fileImagenMin').value ='';*/
 		$('#imgImagenApp').attr("src","http://placehold.it/440x330&text=[440x330]");
 		document.getElementById('fileImagenApp').value ='';
 		$('#imgImagenFull').attr("src","http://placehold.it/700x525&text=[700x_]");
@@ -905,5 +797,12 @@ $("#imgImagenDestacado").click(function() { $('#fileImagenDestacado').click(); }
 					event.preventDefault();
 				}
 			}
+		}
+	}
+	
+	//valida que la cadena escrita no sobrepase a 23 caracteres
+	function validarCadena(){
+		if($('#txtEventName').val().length > 23 && event.keyCode != 8 && event.keyCode != 9){
+			event.preventDefault();
 		}
 	}
