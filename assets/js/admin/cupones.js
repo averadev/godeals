@@ -409,7 +409,11 @@ function finderAutocomplete( palabra, url, datalist){
 					day:jsonDay
             	},
             	success: function(data){
-					ajaxMostrarTabla(column,order,"../admin/cupones/getallSearch",(numPag-1),"coupon");
+					if(numPag == undefined){
+						ajaxMostrarTabla(column,order,"../admin/cupones/getallSearch",0,"coupon");
+					} else {
+						ajaxMostrarTabla(column,order,"../admin/cupones/getallSearch",(numPag-1),"coupon");
+					}
 					$('#FormEvent').hide();
 					$('#viewEvent').show();
 					$('#alertMessage').empty();
@@ -420,7 +424,11 @@ function finderAutocomplete( palabra, url, datalist){
 					$('.bntSave').attr('disabled',false);
             	},
 				error: function(){
-					ajaxMostrarTabla(column,order,"../admin/cupones/getallSearch",(numPag-1),"coupon");
+					if(numPag == undefined){
+						ajaxMostrarTabla(column,order,"../admin/cupones/getallSearch",0,"coupon");
+					} else {
+						ajaxMostrarTabla(column,order,"../admin/cupones/getallSearch",(numPag-1),"coupon");
+					}
 					$('#FormEvent').hide();
 					$('#viewEvent').show();
 					$('#alertMessage').empty();

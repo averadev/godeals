@@ -457,7 +457,11 @@ $("#imgImagenDestacado").click(function() { $('#fileImagenDestacado').click(); }
 					tags:$('#txtEventTags').val()
             	},
             	success: function(data){
-					ajaxMostrarTabla(column,order,"../admin/eventos/getallSearch",(numPag-1),"event");
+					if(numPag == undefined){
+						ajaxMostrarTabla(column,order,"../admin/eventos/getallSearch",0,"event");
+					} else {
+						ajaxMostrarTabla(column,order,"../admin/eventos/getallSearch",(numPag-1),"event");
+					}
 					$('#FormEvent').hide();
 					$('#viewEvent').show();
 					$('#alertMessage').empty();
@@ -468,7 +472,11 @@ $("#imgImagenDestacado").click(function() { $('#fileImagenDestacado').click(); }
 					$('.bntSave').attr('disabled',false);
             	},
 				error: function(){
-					ajaxMostrarTabla(column,order,"../admin/eventos/getallSearch",(numPag-1),"event");
+					if(numPag == undefined){
+						ajaxMostrarTabla(column,order,"../admin/eventos/getallSearch",0,"event");
+					} else {
+						ajaxMostrarTabla(column,order,"../admin/eventos/getallSearch",(numPag-1),"event");
+					}
 					$('#FormEvent').hide();
 					$('#viewEvent').show();
 					$('.loading').hide();

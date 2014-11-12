@@ -411,7 +411,6 @@ $(document).on('click','#imgDeleteBlack',function(){ deleteGallery(this); });
 					title:$('#txtPlaceTitle').val(),
 					txtMin:$('#txtPlaceTxtMin').val(),
 					txtMan:$('#txtPlaceTxtMax').val(),
-					weatherKey:$('#txtPlaceWeatherKey').val(),
 					latitude:$('#txtPlaceLatitude').val(),
 					longitude:$('#txtPlaceLongitude').val()
             	},
@@ -451,7 +450,6 @@ $(document).on('click','#imgDeleteBlack',function(){ deleteGallery(this); });
 				$('#txtPlaceTitle').val(data[0].title);
 				$('#txtPlaceTxtMin').val(data[0].txtMin);
 				$('#txtPlaceTxtMax').val(data[0].txtMax);
-				$('#txtPlaceWeatherKey').val(data[0].weatherKey);
 				$('#txtPlaceLatitude').val(data[0].latitude);
 				$('#txtPlaceLongitude').val(data[0].longitude);
 				$('#imgImagenApp').attr("src",URL_IMG + "app/visita/app/" + data[0].image);
@@ -541,13 +539,6 @@ $(document).on('click','#imgDeleteBlack',function(){ deleteGallery(this); });
 			result = false;
 		}
 		
-		if($('#txtPlaceWeatherKey').val().trim().length == 0){
-			$('#alertWeatherKey').show();
-			$('#lblPlaceWeatherKey').addClass('error');
-			$('#txtPlaceWeatherKey').focus();
-			result = false;
-		}
-		
 		if($('#txtPlaceTxtMax').val().trim().length == 0){
 			$('#alertTxtMax').show();
 			$('#lblPlaceTxtMax').addClass('error');
@@ -601,7 +592,6 @@ $(document).on('click','#imgDeleteBlack',function(){ deleteGallery(this); });
 		$('#alertImage').hide();
 		$('#alertImage2').hide();
 		$('#alertTxtMin').hide();
-		$('#alertWeatherKey').hide();
 		$('#alertTitle').hide();
 		$('#alertCity').hide();
 		$('#alertName').hide();
@@ -612,7 +602,6 @@ $(document).on('click','#imgDeleteBlack',function(){ deleteGallery(this); });
 		$('#lblPlaceImage').removeClass('error');
 		$('#lblPlaceImage2').removeClass('error');
 		$('#lblPlaceTxtMin').removeClass('error');
-		$('#lblPlaceWeatherKey').removeClass('error');
 		$('#lblPlaceTitle').removeClass('error');
 		$('#lblPlaceCity').removeClass('error');
 		$('#lblPlaceName').removeClass('error');
@@ -623,7 +612,6 @@ $(document).on('click','#imgDeleteBlack',function(){ deleteGallery(this); });
 		$('#txtPlaceCity').val("");
 		$('#cityList').empty();
 		$('#txtPlaceTitle').val("");
-		$('#txtPlaceWeatherKey').val("");
 		$('#txtPlaceTxtMin').val("");
 		$('#imgImagen').attr("src","http://placehold.it/1000x300&text=[1000x300]");
 		$('#imgImagen2').attr("src","http://placehold.it/1000x300&text=[1000x300]");

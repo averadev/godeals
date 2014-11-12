@@ -120,7 +120,12 @@ $(document).on('click','.btnPaginador',function(){ paginador(this); });
 					type:$('#slAsigComerType').val()
             	},
             	success: function(data){
-					ajaxMostrarTabla("../admin/asignarComercio/getallSearch",(numPag-1));
+					if(numPag == undefined){
+						ajaxMostrarTabla("../admin/asignarComercio/getallSearch",(0));
+					} else {
+						ajaxMostrarTabla("../admin/asignarComercio/getallSearch",(numPag-1));	
+					}
+					
 					cleanFields();
 					$('#alertMessage').html(data);
 					$('#divMenssage').show(1000).delay(1500);

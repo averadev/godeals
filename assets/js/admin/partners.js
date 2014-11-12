@@ -381,7 +381,11 @@ function ajaxSavePartner(nameImage,id){
 			info:$('#txtPartnerInfo').val().trim()
         },
         success: function(data){
-            ajaxMostrarTabla(column,order,"../admin/partners/getAllSearch",(numPag-1),"partner");
+			if(numPag == undefined){
+				ajaxMostrarTabla(column,order,"../admin/partners/getAllSearch",0,"partner");
+			} else {
+            	ajaxMostrarTabla(column,order,"../admin/partners/getAllSearch",(numPag-1),"partner");
+			}
             $('#FormularioPartners').hide();
             $('#vistaPartners').show();
             $('#alertMessage').html(data);
@@ -391,7 +395,11 @@ function ajaxSavePartner(nameImage,id){
 			$('.bntSave').attr('disabled',false);
         },
         error: function(data){
-			ajaxMostrarTabla(column,order,"../admin/partners/getAllSearch",(numPag-1),"partner");
+			if(numPag == undefined){
+				ajaxMostrarTabla(column,order,"../admin/partners/getAllSearch",0,"partner");
+			} else {
+            	ajaxMostrarTabla(column,order,"../admin/partners/getAllSearch",(numPag-1),"partner");
+			}
             $('#FormularioPartners').hide();
             $('#vistaPartners').show();
 			$('.loading').hide();

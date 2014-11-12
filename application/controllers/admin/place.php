@@ -98,7 +98,6 @@ class place extends CI_Controller {
 					'title' 		=> $_POST['title'],
 					'txtMin' 		=> $_POST['txtMin'],
 					'txtMax' 		=> $_POST['txtMan'],
-					'weatherKey' 	=> $_POST['weatherKey'],
 					'latitude' 		=> $_POST['latitude'],
 					'longitude' 	=> $_POST['longitude'],
 					'status' 		=> 1
@@ -116,7 +115,6 @@ class place extends CI_Controller {
 					'title' 		=> $_POST['title'],
 					'txtMin' 		=> $_POST['txtMin'],
 					'txtMax' 		=> $_POST['txtMan'],
-					'weatherKey' 	=> $_POST['weatherKey'],
 					'latitude' 		=> $_POST['latitude'],
 					'longitude' 	=> $_POST['longitude']
 				);

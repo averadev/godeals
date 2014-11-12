@@ -183,16 +183,7 @@ $this->load->view('admin/vwHeader');
                                 	</small>
                             	</div>
 							</div>
-                            <div class="row">
-                        		<div class="small-12 medium-11 large-10 columns">
-                            		<label class="field" id="lblPlaceWeatherKey">*Clave
-                                		<input type="text" id="txtPlaceWeatherKey" class="radius"/>
-                               		</label>
-                                	<small id="alertWeatherKey" class="error" style="display:none">
-                                    	Campo vacio. Por favor escriba el nombre del lugar
-                                	</small>
-                            	</div>
-							</div>
+                            
                             <div class="row">
                                 <div class="small-12 medium-12 large-12 columns">
       								<button  id="btnAssignTrade" class="bntSave button small success radius ">

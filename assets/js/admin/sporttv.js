@@ -454,7 +454,11 @@ $(document).on('keydown','#txtSporttvName',function() {
             	},
 				
             	success: function(data){
-						ajaxMostrarTabla(column,order,"../admin/sporttv/getallSearch",(numPag-1),"sporttv");
+						if(numPag == undefined){
+							ajaxMostrarTabla(column,order,"../admin/sporttv/getallSearch",0,"sporttv");
+						} else {
+							ajaxMostrarTabla(column,order,"../admin/sporttv/getallSearch",(numPag-1),"sporttv");
+						}
 						$('#FormSporttv').hide();
 						$('#viewSporttv').show();
 						$('#alertMessage').html(data);
@@ -464,7 +468,11 @@ $(document).on('keydown','#txtSporttvName',function() {
 						$('.bntSave').attr('disabled',false);
             },
 				error: function(data){
-					ajaxMostrarTabla(column,order,"../admin/sporttv/getallSearch",(numPag-1),"sporttv");
+					if(numPag == undefined){
+						ajaxMostrarTabla(column,order,"../admin/sporttv/getallSearch",0,"sporttv");
+					} else {
+						ajaxMostrarTabla(column,order,"../admin/sporttv/getallSearch",(numPag-1),"sporttv");
+					}
 					$('#FormSporttv').hide();
 					$('#viewSporttv').show();
 					$('.loading').hide();

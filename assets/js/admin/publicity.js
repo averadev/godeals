@@ -277,7 +277,11 @@ $("#imgImagen").click(function() {changeImage()});
 					category:$('#sltPublicityCategory').val()
             	},
             	success: function(data){
-					ajaxMostrarTabla(column,order,"../admin/publicity/getallSearch",(numPag-1),"publicity");
+					if(numPag == undefined){
+						ajaxMostrarTabla(column,order,"../admin/publicity/getallSearch",0,"publicity");
+					} else {
+						ajaxMostrarTabla(column,order,"../admin/publicity/getallSearch",(numPag-1),"publicity");
+					}
 					$('#FormPublicity').hide();
 					$('#viewPublicity').show();
 					$('#alertMessage').html(data);
@@ -287,7 +291,11 @@ $("#imgImagen").click(function() {changeImage()});
 					$('.bntSave').attr('disabled',false);
             	},
 				error: function(){
-					ajaxMostrarTabla(column,order,"../admin/publicity/getallSearch",(numPag-1),"publicity");
+					if(numPag == undefined){
+						ajaxMostrarTabla(column,order,"../admin/publicity/getallSearch",0,"publicity");
+					} else {
+						ajaxMostrarTabla(column,order,"../admin/publicity/getallSearch",(numPag-1),"publicity");
+					}
 					$('#FormPublicity').hide();
 					$('#viewPublicity').show();
 					$('.loading').hide();
