@@ -95,6 +95,7 @@ class Eventos extends CI_Controller {
 			} else {
 				$update = array(
 					'id' 			=> $_POST['id'],
+					'name'	 		=> $_POST['name'],
    					'eventTypeId' 	=> $_POST['type'],
    					'word' 			=> $_POST['word'],
 					'info' 			=> $_POST['info'],
