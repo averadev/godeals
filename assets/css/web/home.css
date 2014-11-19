@@ -221,7 +221,8 @@ body {
     margin: 3px 0 0 67px;
     
 }
-.btnAppStore{
+.btnApple img{
+    margin-top: -5px
 }
 
 .headMenu{
@@ -652,6 +653,7 @@ div.jqi .jqimessage {
 
 .detailComercio{
     width: 100%;
+    min-height: 40px;
     padding-left: 50px;
     margin: 20px 0 0 0;
     font-size: 14px;
@@ -661,7 +663,7 @@ div.jqi .jqimessage {
 
 .detailValidity{
     width: 100%;
-    min-height: 27px;
+    min-height: 40px;
     padding-left: 50px;
     margin: 20px 0 0 0;
     font-size: 14px;

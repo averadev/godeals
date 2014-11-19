@@ -23,7 +23,10 @@
         <div class="grayBand">
             <div class="row appTop">
                 <img src="<?php echo base_url().IMG; ?>web/appHead.jpg">
-                <div class='btnAppTop'><a class="btnAppStore" target="_blank" href="https://play.google.com/store/apps/details?id=mx.godeals"><img src="<?php echo base_url().IMG; ?>web/btnApp2.png" /></a><span class="btnAppStore"><img style="margin:10px 0 0 10px;" src="<?php echo base_url().IMG; ?>web/btnApp1.png" /></span></div>
+                <div class='btnAppTop'>
+                    <a class="btnAppStore" target="_blank" href="https://play.google.com/store/apps/details?id=mx.godeals"><img src="<?php echo base_url().IMG; ?>web/btnApp2.png" /></a>
+                    <a class="btnAppStore" target="_blank" href="https://itunes.apple.com/us/app/go-deals/id932481336?l=es"><img src="<?php echo base_url().IMG; ?>web/btnApp1.png" /></a>
+                </div>
             </div>
         </div>
         <div class="row">
@@ -38,7 +41,10 @@
         <div class="grayBand">
             <div class="row appBottom">
                 <img src="<?php echo base_url().IMG; ?>web/appFoot.jpg">
-                <div class='btnAppBottom'><a class="btnAppStore" target="_blank" href="https://play.google.com/store/apps/details?id=mx.godeals"><img src="<?php echo base_url().IMG; ?>web/btnApp2.png" /></a><span class="btnAppStore"><img style="margin:10px 0 0 10px;" src="<?php echo base_url().IMG; ?>web/btnApp1.png" /></span></div>
+                <div class='btnAppBottom'>
+                    <a class="btnAppStore" target="_blank" href="https://play.google.com/store/apps/details?id=mx.godeals"><img src="<?php echo base_url().IMG; ?>web/btnApp2.png" /></a>
+                    <a class="btnAppStore" target="_blank" href="https://itunes.apple.com/us/app/go-deals/id932481336?l=es"><img src="<?php echo base_url().IMG; ?>web/btnApp1.png" /></a>
+                </div>
             </div>
         </div>
         

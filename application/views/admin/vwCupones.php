@@ -299,40 +299,40 @@ $this->load->view('admin/vwHeader');
                                         </td>
                                         
                                         <td>
-                                            <input value="4" type="checkbox" name="days" class="someDays"/>
+                                            <input value="5" type="checkbox" name="days" class="someDays"/>
                                             &nbsp;&nbsp;Jueves
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <input value="1" type="checkbox" name="days" class="someDays"/>
+                                            <input value="2" type="checkbox" name="days" class="someDays"/>
                                             &nbsp;&nbsp;Lunes
                                         </td>
                                         
                                         <td>
-                                            <input value="5" type="checkbox" name="days" class="someDays"/>
+                                            <input value="6" type="checkbox" name="days" class="someDays"/>
                                             &nbsp;&nbsp;Viernes
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <input value="2" type="checkbox" name="days" class="someDays"/>
+                                            <input value="3" type="checkbox" name="days" class="someDays"/>
                                             &nbsp;&nbsp;Martes
                                         </td>
                                         
                                         <td>
-                                            <input value="6" type="checkbox" name="days" class="someDays"/>
+                                            <input value="7" type="checkbox" name="days" class="someDays"/>
                                             &nbsp;&nbsp;Sabado
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <input value="3" type="checkbox" name="days" class="someDays"/>
+                                            <input value="4" type="checkbox" name="days" class="someDays"/>
                                             &nbsp;&nbsp;Miercoles
                                         </td>
                                         
                                         <td>
-                                            <input value="7" type="checkbox" name="days" class="someDays"/>
+                                            <input value="1" type="checkbox" name="days" class="someDays"/>
                                             &nbsp;&nbsp;Domingo
                                         </td>
                                     </tr>

@@ -25,7 +25,7 @@ Class api_db extends CI_MODEL
     /**
      * Obtiene todos los registros activos del catalogo
      */
-    public function getEvent($idApp, $isToFav){
+    public function getEvent($idApp, $isToFav, $nextDays){
         $this->db->select("event.id, event.name as title, event.info, event.eventTypeId, event.place as subtitle1, city.name as subtitle2, event.image, event.date, event.fav");
         $this->db->select ("date_format(event.date, '%l:%i%p') as time", false);
         $this->db->select(" (select count(*) from xref_user_coupon_fav where userId = ".$idApp." and  typeId = 2 and couponId = event.id) as isFav, event.latitude, event.longitude ");
@@ -35,8 +35,12 @@ Class api_db extends CI_MODEL
             $this->db->join('xref_user_coupon_fav', 'event.id = xref_user_coupon_fav.couponId and typeId = 2');
             $this->db->where('userId', $idApp);
         }
+        if ($nextDays >= 0){ 
+            $this->db->where('event.date = DATE_ADD(curdate(), INTERVAL '.$nextDays.' DAY)');
+        }else{
+            $this->db->where('event.date >= curdate()');
+        }
         $this->db->where('event.status = 1');
-        $this->db->where('event.date >= curdate()');
         $this->db->order_by("event.date", "asc");
         return  $this->db->get()->result();
     }
@@ -77,7 +81,7 @@ Class api_db extends CI_MODEL
     /**
      * Obtiene el registro del catalogo
      */
-    public function getSporttv($idApp, $isToFav){
+    public function getSporttv($idApp, $isToFav, $nextDays){
         $this->db->select ('sporttv.id, sporttv.name as title, sporttv.torneo as subtitle1, sporttv.image, date(sporttv.date) as date');
         $this->db->select ("date_format(sporttv.date, '%l:%i%p') as time", false);
         $this->db->select(" (select count(*) from xref_user_coupon_fav where userId = ".$idApp." and  typeId = 6 and couponId = sporttv.id) as isFav ");
@@ -86,6 +90,11 @@ Class api_db extends CI_MODEL
         if ($isToFav){ 
             $this->db->join('xref_user_coupon_fav', 'sporttv.id = xref_user_coupon_fav.couponId and typeId = 6');
             $this->db->where('xref_user_coupon_fav.userId', $idApp);
+        }
+        if ($nextDays >= 0){ 
+            $this->db->where('date(sporttv.date) = DATE_ADD(curdate(), INTERVAL '.$nextDays.' DAY)');
+        }else{
+            $this->db->where('sporttv.date >= curdate()');
         }
         $this->db->where('sporttv.status = 1');
         $this->db->where('sporttv_type.status = 1');
@@ -96,11 +105,12 @@ Class api_db extends CI_MODEL
     /**
      * Obtiene todos los registros activos del catalogo
      */
-    public function getCoupon($idApp, $isToFav, $type){
+    public function getCoupon($idApp, $isToFav, $nextDays, $type){
         $this->db->select ('coupon.id, coupon.image, coupon.detail, coupon.description as title');
         $this->db->select ('city.name as cityName, coupon.clauses, coupon.validity');
         $this->db->select ('partner.name as partnerName, partner.latitude, partner.longitude');
         $this->db->select(" (select count(*) from xref_user_coupon_fav where userId = ".$idApp." and  ( typeId = 3 or typeId = 4 ) and couponId = coupon.id) as isFav ");
+        if ($nextDays >= 0){ $this->db->select("xref_coupon_day.day");}
         $this->db->from('coupon');
         $this->db->join('xref_coupon_catalog', 'xref_coupon_catalog.couponId = coupon.id');
         $this->db->join('catalog', 'catalog.id = xref_coupon_catalog.catalogId ');
@@ -110,6 +120,12 @@ Class api_db extends CI_MODEL
             $this->db->join('xref_user_coupon_fav', 'coupon.id = xref_user_coupon_fav.couponId and ( typeId = 3 or typeId = 4 )');
             $this->db->where('userId', $idApp);
         }
+        if ($nextDays >= 0){ 
+            $this->db->join('xref_coupon_day', 'xref_coupon_day.couponId = coupon.id and (day = DAYOFWEEK(DATE_ADD(curdate(), INTERVAL '.$nextDays.' DAY)))');
+        }else if ($nextDays == -2){
+            $this->db->join('xref_coupon_day', 'xref_coupon_day.couponId = coupon.id and day = 8');
+            
+        }
         $this->db->where('coupon.status = 1');
         $this->db->where('catalog.status = 1');
         if ($type > 0){
@@ -117,6 +133,7 @@ Class api_db extends CI_MODEL
         }
         $this->db->where('coupon.iniDate <= curdate()');
         $this->db->where('coupon.endDate >= curdate()');
+        if ($nextDays >= 0){ $this->db->order_by("xref_coupon_day.day"); }
         $this->db->group_by('coupon.id'); 
         return  $this->db->get()->result();
     }
@@ -207,6 +224,29 @@ Class api_db extends CI_MODEL
         $this->db->order_by("name");
         return  $this->db->get()->result();
     }
+    
+    /**
+     * Obtiene todos los registros activos del catalogo
+     */
+    public function getDate($nextDays){
+        $this->db->select ('DATE_ADD(curdate(), INTERVAL '.$nextDays.' DAY) as date', false);
+        $this->db->from('directory_type');
+        return  $this->db->get()->result()[0]->date;
+    }
+    
+    /**
+     * Obtiene todos los registros activos del catalogo
+     */ 
+	public function getComer(){
+            //id,name,logo
+		$this->db->select ('partner.id, partner.name, partner.logo as image, partner.idCatMap, partner.address, partner.phone');
+        $this->db->select('map_category.name as categoryName, info');
+		$this->db->from('partner');
+		$this->db->join('map_category','partner.idCatMap = map_category.id');
+		$this->db->where('partner.status = 1');
+		$this->db->order_by("id", "asc");
+        return  $this->db->get()->result();
+	}
     
     
 	 /**
