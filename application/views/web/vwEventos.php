@@ -40,7 +40,7 @@
                     <div class="row" data-equalizer>
                         <div class="medium-12 columns" data-equalizer-watch>
                             <div class="evento proxEvento boxShadow">
-                                <div class="evntImg" style="background-image: url('<?php echo base_url().IMG; ?>app/event/min/<?php echo $item->image;?>');">
+                                <div class="evntImg" style="background-image: url('<?php echo base_url().IMG; ?>app/event/app/<?php echo $item->image;?>');">
                                     <div class="evtContent content2">
                                         <p class="evtTitle1"><?php echo $item->name;?></p>
                                         <p class="evtTitle3 textDate">
@@ -82,7 +82,7 @@
                         </div>
                         <div class="medium-11 columns" data-equalizer-watch>
                             <div class="evento boxShadowLite <?php if ($item->fav == 1) {echo "proxEvento";} ?>">
-                                <div class="evntImg2" style="background-image: url('<?php echo base_url().IMG; ?>app/event/min/<?php echo $item->image;?>');">
+                                <div class="evntImg2" style="background-image: url('<?php echo base_url().IMG; ?>app/event/app/<?php echo $item->image;?>');">
                                     <div class="evtContent subEvent">
                                         <p class="evtTitleMin1"><?php echo $item->name;?></p>
                                         <p class="evtTitleMin3"><?php echo $item->place;?>, <?php echo $item->city;?></p>

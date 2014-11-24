@@ -90,12 +90,14 @@
     height: 240px;
     background-position: right center;
     background-repeat: no-repeat;
+	background-size:350px 240px;
 }
 
 .evntImg2{
     height: 180px;
     background-position: right center;
     background-repeat: no-repeat;
+	background-size:390px;
 }
 
 .evtContent{
@@ -158,7 +160,7 @@
 .eventSolapa{
     position: absolute;
     top: 40%;
-    right: 310px;
+    right: 379px;
 }
 
 .circleBase{
