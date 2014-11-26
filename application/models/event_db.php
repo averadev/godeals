@@ -90,7 +90,7 @@ Class event_db extends CI_MODEL
 	*optiene los eventos de la busqueda
 	*/
 	public function getallSearch($dato,$column,$order){
-		$this->db->select('event.id, event.name, event.place, city.name as city, event.date');
+		$this->db->select('event.id, event.name, event.place, city.name as city, event.date,event.fav');
         $this->db->from('event');
         $this->db->join('city', 'event.idCity = city.id ');
         $this->db->where('event.date >= curdate()');

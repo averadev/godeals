@@ -125,6 +125,12 @@ $('.txtSearch').keyup(function(e){
                     
                      case "event":
 					 
+					 	if(data[num].fav == 1){
+							imageAddress= "<img class='tick' src='../assets/img/web/palomita.png'/>";
+					 	} else {
+							imageAddress = 	"";	
+						}
+					 
                        $('#tableEvents tbody').empty();
                         for(var i = 0;i<total;i++){
                             num = parseInt(cantidad) + parseInt((i+1));
@@ -135,6 +141,7 @@ $('.txtSearch').keyup(function(e){
 								"<td>"+data[i].place+"</td>"+
 								"<td>"+data[i].city+"</td>"+
 								"<td>"+data[i].date+"</td>"+
+								"<td>"+imageAddress+"</td>"+
 								"<td><a id='imageDelete' value='" + data[i].id +"'><img id='imgDelete' "+
 								"src='../assets/img/web/deleteRed.png'/></a></td>" +
 								"</tr>");
@@ -323,6 +330,12 @@ $('.txtSearch').keyup(function(e){
 							break;
                                         
                             case "event":
+							
+								if(data[num].fav == 1){
+									imageAddress= "<img class='tick' src='../assets/img/web/palomita.png'/>";
+								} else {
+									imageAddress = 	"";	
+								}
 								
 								$('#tableEvents tbody').append("<tr>" +
 									"<td>"+ (num+1) +"</td>"+
@@ -331,6 +344,7 @@ $('.txtSearch').keyup(function(e){
 									"<td>"+data[num].place+"</td>"+
 									"<td>"+data[num].city+"</td>"+
 									"<td>"+data[num].date+"</td>"+
+									"<td>" + imageAddress + "</td>" +
 									"<td><a id='imageDelete' value='" + data[num].id +"'><img id='imgDelete' "+
 									"src='../assets/img/web/deleteRed.png'/></a></td>" +
 									"</tr>");

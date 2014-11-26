@@ -637,7 +637,7 @@ $(document).on('click','#imgDeleteBlack',function(){ deleteGallery(this); });
    		}
    		else {
 	   		if (event.keyCode < 95) {
-		   		if (event.keyCode < 48 && event.keyCode != 9 || event.keyCode > 57) {
+		   		if (event.keyCode < 48 && event.keyCode != 9 && event.keyCode != 37 && event.keyCode != 39 || event.keyCode > 57) {
 			   		event.preventDefault();
 				}
 			} 

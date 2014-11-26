@@ -90,6 +90,11 @@ table tr td{
 	height:250px;	
 }
 
+.tick{
+	height:25px;
+	width:25px;
+}
+
 .btnAceptarE,#btnCancelarE,.btnCancelE,.btnAcceptE,#btnCancelC,#btnAcceptC{//botones de eliminacion
 	background-color:#000000;
 	background:#000;

@@ -56,6 +56,7 @@ $this->load->view('admin/vwHeader');
                                         <a class="arrowDown" id="date" value="event">
                                         <img src="../assets/img/web/arrowGreen.png"></a>
                                         </th>
+                                        <th width="120px">Destacado</th>
 										<th>Eliminar</th>
 									</tr>
 								</thead>
@@ -75,6 +76,13 @@ $this->load->view('admin/vwHeader');
 											<td><?php echo $item->place;?></td>
 											<td><?php echo $item->city;?></td>
 											<td><?php echo $item->date;?></td>
+                                            <?php 
+												if($item->fav == 1){
+													?><td><img class="tick" src="../assets/img/web/palomita.png"/></td><?php
+												} else {
+													?><td></td><?php
+												}
+											?>
 											<td><a id="imageDelete" value="<?php echo $item->id;?>"><img class="imgDelete" src="../assets/img/web/deleteRed.png"/></a></td>
 										</tr>
 
