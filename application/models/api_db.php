@@ -141,6 +141,29 @@ Class api_db extends CI_MODEL
     /**
      * Obtiene todos los registros activos del catalogo
      */
+    public function getComercioCupon($idApp, $idComer){
+    $this->db->select ('coupon.id, coupon.image, coupon.detail, coupon.description as title');
+        $this->db->select ('coupon.id, coupon.image, coupon.detail, coupon.description as title');
+        $this->db->select ('city.name as cityName, coupon.clauses, coupon.validity');
+        $this->db->select ('partner.name as partnerName, partner.latitude, partner.longitude');
+        $this->db->select(" (select count(*) from xref_user_coupon_fav where userId = ".$idApp." and  ( typeId = 3 or typeId = 4 ) and couponId = coupon.id) as isFav ");
+        $this->db->from('coupon');
+        $this->db->join('xref_coupon_catalog', 'xref_coupon_catalog.couponId = coupon.id');
+        $this->db->join('catalog', 'catalog.id = xref_coupon_catalog.catalogId ');
+        $this->db->join('partner', 'coupon.partnerId = partner.id ');
+        $this->db->join('city', 'coupon.cityId = city.id ');
+        $this->db->where('coupon.partnerId', $idComer);
+        $this->db->where('coupon.status = 1');
+        $this->db->where('catalog.status = 1');
+        $this->db->where('coupon.iniDate <= curdate()');
+        $this->db->where('coupon.endDate >= curdate()');
+        $this->db->group_by('coupon.id'); 
+        return  $this->db->get()->result();
+    }
+    
+    /**
+     * Obtiene todos los registros activos del catalogo
+     */
     public function getCouponSubType($idApp, $subtype){
         $this->db->select ('coupon.id, coupon.image, coupon.detail, coupon.description as title');
         $this->db->select ('city.name as cityName, coupon.clauses, coupon.validity');
@@ -240,10 +263,36 @@ Class api_db extends CI_MODEL
 	public function getComer(){
             //id,name,logo
 		$this->db->select ('partner.id, partner.name, partner.logo as image, partner.idCatMap, partner.address, partner.phone');
-        $this->db->select('map_category.name as categoryName, info');
+        $this->db->select('map_category.name as categoryName, partner.banner, info');
 		$this->db->from('partner');
 		$this->db->join('map_category','partner.idCatMap = map_category.id');
 		$this->db->where('partner.status = 1');
+		$this->db->order_by("id", "asc");
+        return  $this->db->get()->result();
+	}
+    
+    /**
+     * Obtiene todos los registros activos del catalogo
+     */ 
+	public function getComercio($id){
+            //id,name,logo
+		$this->db->select ('partner.id, partner.name, partner.logo as image, partner.idCatMap, partner.address, partner.phone');
+        $this->db->select('map_category.name as categoryName, partner.banner, info');
+		$this->db->from('partner');
+		$this->db->join('map_category','partner.idCatMap = map_category.id');
+		$this->db->where('partner.id', $id);
+		$this->db->order_by("id", "asc");
+        return  $this->db->get()->result();
+	}
+    
+    /**
+     * Obtiene todos los registros activos del catalogo
+     */ 
+	public function getAds(){
+            //id,name,logo
+		$this->db->select('id, message, uuid, latitude, longitude, distance, partnerId');
+		$this->db->from('ads');
+		$this->db->where('status = 1');
 		$this->db->order_by("id", "asc");
         return  $this->db->get()->result();
 	}

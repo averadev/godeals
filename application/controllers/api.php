@@ -336,6 +336,22 @@ class Api extends REST_Controller {
     /**
      * Obtener items
      */
+    public function getAds_get() { 
+        // Verificamos parametros y acceso
+        $message = $this->verifyIsSet(array('idApp'));
+        // Verificamos credenciales
+        if ($message == null) { $message = $this->verifyAccess(); }
+        if ($message == null) {
+            // Obtener servicios
+            $items = $this->api_db->getAds();
+            $message = array('success' => true, 'items' => $items);
+        }
+        $this->response($message, 200);
+    }
+    
+    /**
+     * Obtener items
+     */
     public function getComer_get() { 
         // Verificamos parametros y acceso
         $message = $this->verifyIsSet(array('idApp'));
@@ -346,10 +362,40 @@ class Api extends REST_Controller {
             $items = $this->api_db->getComer();
             // Set extra data
             foreach ($items as $item):
+                $item->idComer = $item->id;
                 $item->fav = 2;
                 $item->path = 'logo/';
             endforeach;
             $message = array('success' => true, 'items' => $items);
+        }
+        $this->response($message, 200);
+    }
+    
+    /**
+     * Obtener items
+     */
+    public function getComercio_get() { 
+        // Verificamos parametros y acceso
+        $message = $this->verifyIsSet(array('idApp', 'idComer'));
+        // Verificamos credenciales
+        if ($message == null) { $message = $this->verifyAccess(); }
+        if ($message == null) {
+            // Obtener servicios
+            $idApp = $this->get('idApp');
+            $idComer = $this->get('idComer');
+            $publicidad = $this->publicity_db->getPublicidad(5);
+            $comercio = $this->api_db->getComercio($idComer);
+            $coupons = $this->api_db->getComercioCupon($idApp, $idComer);
+            // Set extra data
+            foreach ($coupons as $item):
+                    $item->fav = 1;
+                    $item->type = 3;
+                    $item->path = 'coupon/app/';
+                    $item->subtitle1 = $item->partnerName.', '.$item->cityName;
+                    $item->publicidad = $publicidad[array_rand($publicidad, 1)]->image;
+            endforeach;
+            
+            $message = array('success' => true, 'comercio' => $comercio[0], 'items' => $coupons);
         }
         $this->response($message, 200);
     }
